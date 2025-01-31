@@ -18,8 +18,8 @@
 **      @file       .Config/ConfiguredSample.h.in
 **/
 
-#if !defined( SAMPLE_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H )
-#    define   SAMPLE_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H
+#if !defined( TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H )
+#    define   TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H
 
 //========================================================================
 //
@@ -30,7 +30,7 @@
 **    スクリプトによって設定された名前空間。
 **/
 
-#define     SAMPLE_CNF_NS                   @SAMPLE_CNF_NAMESPACE@
+#define     SAMPLE_CNF_NS                   @TSSPLITTER_CNF_NAMESPACE@
 
 /**
 **    名前空間。

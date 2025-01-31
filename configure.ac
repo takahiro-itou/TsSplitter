@@ -16,10 +16,10 @@ dnl   パッケージの情報を指定する。
 dnl
 
 AC_INIT(
-    [Sample],
+    [TsSplitter],
     [0.0.0],
     [BUG-REPORT-ADDRESS],
-    [Sample])
+    [TsSplitter])
 
 dnl
 dnl   ツールの出力ディレクトリを指定する。
@@ -58,8 +58,8 @@ dnl
 dnl   Project Name Space.
 dnl
 
-SAMPLE_CNF_NAMESPACE=Sample
-AC_SUBST(SAMPLE_CNF_NAMESPACE)
+TSSPLITTER_CNF_NAMESPACE=Sample
+AC_SUBST(TSSPLITTER_CNF_NAMESPACE)
 
 
 dnl ----------------------------------------------------------------
