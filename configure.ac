@@ -162,7 +162,7 @@ AC_CONFIG_FILES([
 ])
 
 AC_CONFIG_FILES([
-    Include/TsSplitter/.Config/ConfiguredSample.h
+    Include/TsSplitter/.Config/ConfiguredTsSplitter.h
 ])
 
 dnl

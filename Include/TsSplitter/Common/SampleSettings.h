@@ -25,7 +25,7 @@
 #if defined( TSSPLITTER_USE_PRE_CONFIGURED_MSVC )
 #    include    "TsSplitter/.Config/PreConfigSample.msvc.h"
 #else
-#    include    "TsSplitter/.Config/ConfiguredSample.h"
+#    include    "TsSplitter/.Config/ConfiguredTsSplitter.h"
 #endif
 
 SAMPLE_NAMESPACE_BEGIN
