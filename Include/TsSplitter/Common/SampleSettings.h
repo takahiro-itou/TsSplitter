@@ -23,7 +23,7 @@
 
 //  スクリプトによる設定値が書き込まれたヘッダを読み込む。  //
 #if defined( TSSPLITTER_USE_PRE_CONFIGURED_MSVC )
-#    include    "TsSplitter/.Config/PreConfigSample.msvc.h"
+#    include    "TsSplitter/.Config/PreConfigTsSplitter.msvc.h"
 #else
 #    include    "TsSplitter/.Config/ConfiguredTsSplitter.h"
 #endif
