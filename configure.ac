@@ -72,7 +72,7 @@ m4_include([.M4/ConfigDirectory.m4])
 myac_customize_library_dir([Lib])
 myac_customize_binary_dir([Bin])
 myac_customize_include_dir(
-    [Include], [Sample], [.Config], [Config.h])
+    [Include], [TsSplitter], [.Config], [Config.h])
 
 
 dnl ----------------------------------------------------------------
@@ -162,7 +162,7 @@ AC_CONFIG_FILES([
 ])
 
 AC_CONFIG_FILES([
-    Include/Sample/.Config/ConfiguredSample.h
+    Include/TsSplitter/.Config/ConfiguredSample.h
 ])
 
 dnl
