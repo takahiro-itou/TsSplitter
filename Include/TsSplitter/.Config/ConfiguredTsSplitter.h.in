@@ -36,7 +36,7 @@
 **    名前空間。
 **/
 
-#define     TSSPLITTER_NAMESPACE            SAMPLE_CNF_NS
+#define     TSSPLITTER_NAMESPACE            TSSPLITTER_CNF_NS
 
 #define     SAMPLE_NAMESPACE                TSSPLITTER_NAMESPACE
 #define     SAMPLE_NAMESPACE_BEGIN          TSSPLITTER_NAMESPACE_BEGIN
