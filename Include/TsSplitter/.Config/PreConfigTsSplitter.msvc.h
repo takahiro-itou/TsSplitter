@@ -1,9 +1,9 @@
 ﻿//  -*-  coding: utf-8-with-signature;  mode: c++  -*-  //
 /*************************************************************************
 **                                                                      **
-**                      ---  Library Project.  ---                      **
+**                      -- TS Splitter Project. --                      **
 **                                                                      **
-**          Copyright (C), 2016-2024, Takahiro Itou                     **
+**          Copyright (C), 2025-2025, Takahiro Itou                     **
 **          All Rights Reserved.                                        **
 **                                                                      **
 **          License: (See COPYING or LICENSE files)                     **
@@ -18,8 +18,8 @@
 **      @file       .Config/ConfiguredSample.h.in
 **/
 
-#if !defined( SAMPLE_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H )
-#    define   SAMPLE_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H
+#if !defined( TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H )
+#    define   TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H
 
 //========================================================================
 //
@@ -30,17 +30,21 @@
 **    スクリプトによって設定された名前空間。
 **/
 
-#define     SAMPLE_CNF_NS                   Sample
+#define     TSSPLITTER_CNF_NS               @TSSPLITTER_CNF_NAMESPACE@
 
 /**
 **    名前空間。
 **/
 
-#define     SAMPLE_NAMESPACE                SAMPLE_CNF_NS
+#define     TSSPLITTER_NAMESPACE            SAMPLE_CNF_NS
 
-#define     SAMPLE_NAMESPACE_BEGIN          namespace  SAMPLE_CNF_NS  {
+#define     SAMPLE_NAMESPACE                TSSPLITTER_NAMESPACE
+#define     SAMPLE_NAMESPACE_BEGIN          TSSPLITTER_NAMESPACE_BEGIN
+#define     SAMPLE_NAMESPACE_END            TSSPLITTER_NAMESPACE_END
 
-#define     SAMPLE_NAMESPACE_END            }
+#define     TSSPLITTER_NAMESPACE_BEGIN      namespace  TSSPLITTER_CNF_NS  {
+
+#define     TSSPLITTER_NAMESPACE_END        }
 
 //========================================================================
 //
