@@ -19,7 +19,7 @@
 **/
 
 #include    "TestDriver.h"
-#include    "TsSplitter/Common/SampleSettings.h"
+#include    "TsSplitter/Common/TsSplitterSettings.h"
 
 
 SAMPLE_NAMESPACE_BEGIN

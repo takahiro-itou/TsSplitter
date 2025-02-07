@@ -18,10 +18,10 @@
 **      @file       Common/SampleDocument.h
 **/
 
-#if !defined( SAMPLE_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
-#    define   SAMPLE_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
+#if !defined( TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
+#    define   TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
 
-#include    "SampleSettings.h"
+#include    "TsSplitterSettings.h"
 
 #include    <string>
 
