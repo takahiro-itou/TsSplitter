@@ -49,7 +49,7 @@ Include (${common_cmake_dir}/DefaultBuildOptions.cmake)
 ##    Project Name Space.
 ##
 
-set(TSSPLITTER_CNF_NAMESPACE    Sample)
+set(TSSPLITTER_CNF_NAMESPACE    TsSplitter)
 
 
 ##----------------------------------------------------------------
