@@ -1,9 +1,9 @@
 ﻿//  -*-  coding: utf-8-with-signature;  mode: c++  -*-  //
 /*************************************************************************
 **                                                                      **
-**                      ---  Library Project.  ---                      **
+**                      -- TS Splitter Project. --                      **
 **                                                                      **
-**          Copyright (C), 2016-2024, Takahiro Itou                     **
+**          Copyright (C), 2025-2025, Takahiro Itou                     **
 **          All Rights Reserved.                                        **
 **                                                                      **
 **          License: (See COPYING or LICENSE files)                     **
@@ -18,8 +18,8 @@
 **      @file       .Config/ConfiguredSample.h.in
 **/
 
-#if !defined( SAMPLE_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H )
-#    define   SAMPLE_CONFIG_INCLUDED_CONFIGURED_SAMPLE_H
+#if !defined( TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H )
+#    define   TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H
 
 //========================================================================
 //
@@ -30,17 +30,21 @@
 **    スクリプトによって設定された名前空間。
 **/
 
-#define     SAMPLE_CNF_NS                   Sample
+#define     TSSPLITTER_CNF_NS               @TSSPLITTER_CNF_NAMESPACE@
 
 /**
 **    名前空間。
 **/
 
-#define     SAMPLE_NAMESPACE                SAMPLE_CNF_NS
+#define     TSSPLITTER_NAMESPACE            TSSPLITTER_CNF_NS
 
-#define     SAMPLE_NAMESPACE_BEGIN          namespace  SAMPLE_CNF_NS  {
+#define     SAMPLE_NAMESPACE                TSSPLITTER_NAMESPACE
+#define     SAMPLE_NAMESPACE_BEGIN          TSSPLITTER_NAMESPACE_BEGIN
+#define     SAMPLE_NAMESPACE_END            TSSPLITTER_NAMESPACE_END
 
-#define     SAMPLE_NAMESPACE_END            }
+#define     TSSPLITTER_NAMESPACE_BEGIN      namespace  TSSPLITTER_CNF_NS  {
+
+#define     TSSPLITTER_NAMESPACE_END        }
 
 //========================================================================
 //
@@ -52,7 +56,7 @@
 //    キーワード constexpr  の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_CONSTEXPR_ENABLED@ )
 #    define     SAMPLE_ENABLE_CONSTEXPR             1
 #else
 #    undef      SAMPLE_ENABLE_CONSTEXPR
@@ -73,7 +77,7 @@
 //    キーワード nullptr  の検査。
 //
 
-#if ( 1 )
+#if ( @CONFIG_CHECK_CXX_NULLPTR_ENABLED@ )
 #    define     SAMPLE_ENABLE_NULLPTR               1
 #else
 #    if !defined( nullptr )
@@ -87,7 +91,7 @@
 //    キーワード override の検査。
 //
 
-#if ( 1 )
+#if ( @CONFIG_CHECK_CXX_OVERRIDE_ENABLED@ )
 #    define     SAMPLE_ENABLE_OVERRIDE              1
 #else
 #    if !defined( override )
@@ -101,7 +105,7 @@
 //    キーワード static_assert  の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_STATIC_ASSERT_ENABLED@ )
 #    define     SAMPLE_ENABLE_STATIC_ASSERT         1
 #else
 #    undef      SAMPLE_ENABLE_STATIC_ASSERT
@@ -112,7 +116,7 @@
 //    右辺値参照の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_RVALUEREF_ENABLED@ )
 #    define     SAMPLE_ENABLE_RVALUEREF             1
 #else
 #    undef      SAMPLE_ENABLE_RVALUEREF
@@ -123,7 +127,7 @@
 //    不要なムーブ指定に関する警告の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_PESSIMIZING_MOVE_ERROR@ )
 #    define     SAMPLE_ERROR_PESSIMIZING_MOVE       1
 #else
 #    undef      SAMPLE_ERROR_PESSIMIZING_MOVE
@@ -134,7 +138,7 @@
 //    コピーコンストラクタのデフォルト宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_COPYCTOR_DEFAULT_ENABLED@ )
 #    define     SAMPLE_ENABLE_COPYCTOR_DEFAULT      1
 #else
 #    undef      SAMPLE_ENABLE_COPYCTOR_DEFAULT
@@ -145,7 +149,7 @@
 //    コピーコンストラクタのデリート宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_COPYCTOR_DELETE_ENABLED@ )
 #    define     SAMPLE_ENABLE_COPYCTOR_DELETE       1
 #else
 #    undef      SAMPLE_ENABLE_COPYCTOR_DELETE
@@ -156,7 +160,7 @@
 //    コピー代入演算子のデフォルト宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_COPYOPEQ_DEFAULT_ENABLED@ )
 #    define     SAMPLE_ENABLE_COPYOPEQ_DEFAULT      1
 #else
 #    undef      SAMPLE_ENABLE_COPYOPEQ_DEFAULT
@@ -167,7 +171,7 @@
 //    コピー代入演算子のデリート宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_COPYOPEQ_DELETE_ENABLED@ )
 #    define     SAMPLE_ENABLE_COPYOPEQ_DELETE       1
 #else
 #    undef      SAMPLE_ENABLE_COPYOPEQ_DELETE
@@ -178,7 +182,7 @@
 //    ムーブコンストラクタの宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_MOVECTOR_DECLARE_ENABLED@ )
 #    define     SAMPLE_ENABLE_MOVECTOR_DECLARE      1
 #else
 #    undef      SAMPLE_ENABLE_MOVECTOR_DECLARE
@@ -189,7 +193,7 @@
 //    ムーブコンストラクタのデフォルト宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_MOVECTOR_DEFAULT_ENABLED@ )
 #    define     SAMPLE_ENABLE_MOVECTOR_DEFAULT      1
 #else
 #    undef      SAMPLE_ENABLE_MOVECTOR_DEFAULT
@@ -200,7 +204,7 @@
 //    ムーブコンストラクタのデリート宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_MOVECTOR_DELETE_ENABLED@ )
 #    define     SAMPLE_ENABLE_MOVECTOR_DELETE       1
 #else
 #    undef      SAMPLE_ENABLE_MOVECTOR_DELETE
@@ -211,7 +215,7 @@
 //    ムーブ代入演算子の宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_MOVEOPEQ_DECLARE_ENABLED@ )
 #    define     SAMPLE_ENABLE_MOVEOPEQ_DECLARE      1
 #else
 #    undef      SAMPLE_ENABLE_MOVEOPEQ_DECLARE
@@ -222,7 +226,7 @@
 //    ムーブ代入演算子のデフォルト宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_MOVEOPEQ_DEFAULT_ENABLED@ )
 #    define     SAMPLE_ENABLE_MOVEOPEQ_DEFAULT      1
 #else
 #    undef      SAMPLE_ENABLE_MOVEOPEQ_DEFAULT
@@ -233,7 +237,7 @@
 //    ムーブ代入演算子のデリート宣言の検査。
 //
 
-#if ( 0 )
+#if ( @CONFIG_CHECK_CXX_MOVEOPEQ_DELETE_ENABLED@ )
 #    define     SAMPLE_ENABLE_MOVEOPEQ_DELETE       1
 #else
 #    undef      SAMPLE_ENABLE_MOVEOPEQ_DELETE
