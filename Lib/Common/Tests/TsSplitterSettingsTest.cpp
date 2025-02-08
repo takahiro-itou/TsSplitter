@@ -22,7 +22,7 @@
 #include    "TsSplitter/Common/TsSplitterSettings.h"
 
 
-SAMPLE_NAMESPACE_BEGIN
+TSSPLITTER_NAMESPACE_BEGIN
 
 //========================================================================
 //
@@ -58,7 +58,7 @@ void  TsSplitterSettingsTest::testNameSpace()
     return;
 }
 
-SAMPLE_NAMESPACE_END
+TSSPLITTER_NAMESPACE_END
 
 //========================================================================
 //
