@@ -30,7 +30,7 @@
 **    スクリプトによって設定された名前空間。
 **/
 
-#define     TSSPLITTER_CNF_NS               @TSSPLITTER_CNF_NAMESPACE@
+#define     TSSPLITTER_CNF_NS               TsSplitter
 
 /**
 **    名前空間。
