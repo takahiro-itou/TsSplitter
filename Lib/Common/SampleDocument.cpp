@@ -21,7 +21,7 @@
 #include    "TsSplitter/Common/SampleDocument.h"
 
 
-SAMPLE_NAMESPACE_BEGIN
+TSSPLITTER_NAMESPACE_BEGIN
 namespace  Common  {
 
 namespace  {
@@ -129,4 +129,4 @@ SampleDocument::setMessage(
 //
 
 }   //  End of namespace  Common
-SAMPLE_NAMESPACE_END
+TSSPLITTER_NAMESPACE_END
