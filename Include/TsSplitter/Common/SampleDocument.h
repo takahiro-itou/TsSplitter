@@ -26,7 +26,7 @@
 #include    <string>
 
 
-SAMPLE_NAMESPACE_BEGIN
+TSSPLITTER_NAMESPACE_BEGIN
 namespace  Common  {
 
 //========================================================================
@@ -140,6 +140,6 @@ public:
 };
 
 }   //  End of namespace  Common
-SAMPLE_NAMESPACE_END
+TSSPLITTER_NAMESPACE_END
 
 #endif

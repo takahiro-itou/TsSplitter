@@ -28,8 +28,8 @@
 #    include    "TsSplitter/.Config/ConfiguredTsSplitter.h"
 #endif
 
-SAMPLE_NAMESPACE_BEGIN
+TSSPLITTER_NAMESPACE_BEGIN
 
-SAMPLE_NAMESPACE_END
+TSSPLITTER_NAMESPACE_END
 
 #endif

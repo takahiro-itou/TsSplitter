@@ -22,7 +22,7 @@
 
 #include    <iostream>
 
-using   namespace   SAMPLE_NAMESPACE;
+using   namespace   TSSPLITTER_NAMESPACE;
 
 int  main(int argc, char * argv[])
 {
