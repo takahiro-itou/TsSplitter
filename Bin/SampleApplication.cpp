@@ -48,7 +48,7 @@ parseTsFile(
         }
         ++ num;
         std::cerr   <<  "\rnum = "  <<  num
-                    <<  ", total "  <<  cbTotal << " bytes."
+                    <<  ", total "  <<  cbTotal << " bytes.";
     }
     std::cerr   <<  std::endl;
 
