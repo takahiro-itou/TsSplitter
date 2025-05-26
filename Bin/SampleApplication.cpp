@@ -47,10 +47,10 @@ parseTsFile(
             break;
         }
         ++ num;
-        std::cerr   <<  "num = "    <<  num
+        std::cerr   <<  "\rnum = "  <<  num
                     <<  ", total "  <<  cbTotal << " bytes."
-                    <<  std::endl;
     }
+    std::cerr   <<  std::endl;
 
     std::cerr   <<  "Total : "  <<  num <<  " packets.\n"
                 <<  "Last Read = "  <<  cbRead  <<  " bytes."
