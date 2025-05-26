@@ -38,8 +38,8 @@ parseTsFile(
     std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
 
     size_t  cbRead;
-    size_t  num;
-    size_t  cbTotal;
+    size_t  num     = 0;
+    size_t  cbTotal = 0;
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
         cbTotal += cbRead;
