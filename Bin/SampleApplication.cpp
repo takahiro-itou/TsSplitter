@@ -35,15 +35,21 @@ parseTsFile(
     if ( fp == nullptr ) {
         return ( 0 );
     }
+    std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
 
     size_t  cbRead;
     size_t  num;
+    size_t  cbTotal;
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
+        cbTotal += cbRead;
         if ( cbRead != 188 ) {
             break;
         }
         ++ num;
+        std::cerr   <<  "num = "    <<  num
+                    <<  ", total "  <<  cbTotal << " bytes."
+                    <<  std::endl;
     }
 
     std::cerr   <<  "Total : "  <<  num <<  " packets.\n"
