@@ -38,6 +38,7 @@ dist_noinst_header_files    +=  \
 inclib_header_files         +=  \
         ${inclib_source_dir}/SampleDocument.h       \
         ${inclib_source_dir}/TsSplitterProject.h    \
+        ${inclib_source_dir}/TsSplitterTypes.h      \
         ${extra_library_header_files}
 
 inclib_nodist_header_files  +=
