@@ -24,19 +24,39 @@
 
 using   namespace   TSSPLITTER_NAMESPACE;
 
+size_t
+parseTsFile(
+        const  std::string  &fileName)
+{
+    size_t  PIDs[8192];
+    uint8_t buf[204];
+
+    FILE *  fp  = fopen(fileName.c_str(), "rb");
+    if ( fp == nullptr ) {
+        return ( 0 );
+    }
+
+    size_t  cbRead;
+    size_t  num;
+    for (;;) {
+        cbRead  = fread(buf, 1, 188, fp);
+        if ( cbRead != 188 ) {
+            break;
+        }
+        ++ num;
+    }
+
+    std::cerr   <<  "Total : "  <<  num <<  " packets.\n"
+                <<  "Last Read = "  <<  cbRead  <<  " bytes."
+                <<  std::endl;
+    fclose(fp);
+}
+
 int  main(int argc, char * argv[])
 {
-    Common::SampleDocument  test;
-    std::string     input;
+    if ( argc >= 2 ) {
+        parseTsFile(argv[1]);
+    }
 
-    std::cout   <<  "Input:";
-    std::cin    >>  input;
-
-    test.setMessage(input);
-    std::cout   <<  "The number of alphabet in "
-                <<  input
-                <<  " = "
-                <<  test.countAlphabet()
-                <<  std::endl;
     return ( 0 );
 }
