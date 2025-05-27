@@ -21,7 +21,7 @@
 #if !defined( TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
 #    define   TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
 
-#include    "TsSplitterSettings.h"
+#include    "TsSplitterProject.h"
 
 #include    <string>
 

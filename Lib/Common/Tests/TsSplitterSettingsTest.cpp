@@ -13,28 +13,28 @@
 *************************************************************************/
 
 /**
-**      An Implementation of Test Case 'TsSplitterSettings'.
+**      An Implementation of Test Case 'TsSplitterProject'.
 **
-**      @file       Common/Tests/TsSplitterSettingsTest.cpp
+**      @file       Common/Tests/TsSplitterProjectTest.cpp
 **/
 
 #include    "TestDriver.h"
-#include    "TsSplitter/Common/TsSplitterSettings.h"
+#include    "TsSplitter/Common/TsSplitterProject.h"
 
 
 TSSPLITTER_NAMESPACE_BEGIN
 
 //========================================================================
 //
-//    TsSplitterSettingsTest  class.
+//    TsSplitterProjectTest  class.
 //
 /**
-**    クラス TsSplitterSettings の単体テスト。
+**    クラス TsSplitterProject の単体テスト。
 **/
 
-class  TsSplitterSettingsTest : public  TestFixture
+class  TsSplitterProjectTest : public  TestFixture
 {
-    CPPUNIT_TEST_SUITE(TsSplitterSettingsTest);
+    CPPUNIT_TEST_SUITE(TsSplitterProjectTest);
     CPPUNIT_TEST(testNameSpace);
     CPPUNIT_TEST_SUITE_END();
 
@@ -46,14 +46,14 @@ private:
     void  testNameSpace();
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TsSplitterSettingsTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( TsSplitterProjectTest );
 
 //========================================================================
 //
 //    Tests.
 //
 
-void  TsSplitterSettingsTest::testNameSpace()
+void  TsSplitterProjectTest::testNameSpace()
 {
     return;
 }
