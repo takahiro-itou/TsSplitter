@@ -47,8 +47,10 @@ parseTsFile(
             break;
         }
         ++ numPckt;
-        std::cerr   <<  "\r# of Packet = "  <<  numPckt
-                    <<  ", total "  <<  cbTotal << " bytes.";
+        if ( (numPckt & 16383) == 0 ) {
+            std::cerr   <<  "\r# of Packet = "  <<  numPckt
+                        <<  ", total "  <<  cbTotal << " bytes.";
+        }
     }
     std::cerr   <<  std::endl;
 
