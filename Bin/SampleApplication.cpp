@@ -31,6 +31,7 @@ parseTsFile(
 {
     size_t  PIDs[8192] = { 0 };
     uint8_t buf[204];
+    char    text[1024];
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");
     if ( fp == nullptr ) {
@@ -79,6 +80,15 @@ parseTsFile(
                 <<  "Last Read = "  <<  cbRead  <<  " bytes."
                 <<  std::endl;
     fclose(fp);
+
+    for ( int i = 0; i < 8192; ++ i ) {
+        if ( PIDs[i] ) {
+            sprintf(text,
+                    "PID: 0x%04x  Total:%9ld\n",
+                    i, PIDs[i]);
+            std::cout   <<  text;
+        }
+    }
 
     return ( numPckt );
 }
