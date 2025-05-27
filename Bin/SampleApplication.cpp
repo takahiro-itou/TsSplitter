@@ -20,6 +20,7 @@
 
 #include    "TsSplitter/Common/SampleDocument.h"
 
+#include    <cstdint>
 #include    <cstring>
 #include    <iostream>
 
