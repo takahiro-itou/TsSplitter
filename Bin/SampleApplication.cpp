@@ -41,6 +41,7 @@ parseTsFile(
     size_t  numPckt = 0;
     size_t  cbTotal = 0;
     size_t  numErr  = 0;
+    size_t  numScr  = 0;
 
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
@@ -52,15 +53,22 @@ parseTsFile(
         if ( buf[0] != 0x47 ) {
             ++ numErr;
         }
+        if ( buf[3] & 0xC0 ) {
+            ++ numScr;
+        }
+
         if ( (numPckt & 16383) == 0 ) {
             std::cerr   <<  "\r# of Packet = "  <<  numPckt
                         <<  ", total "  <<  cbTotal << " bytes, "
-                        <<  "#Error = " <<  numErr;
+                        <<  "#Error = " <<  numErr
+                        <<  ", #Scramble = "    <<  numScr;
+
         }
     }
     std::cerr   <<  "\n# of Packet = "  <<  numPckt
                 <<  ", total "  <<  cbTotal << " bytes, "
-                <<  "#Error = " <<  numErr;
+                <<  "#Error = " <<  numErr
+                <<  ", #Scramble = "  <<  numScr;
     std::cerr   <<  std::endl;
 
     std::cerr   <<  "Total : "  <<  numPckt <<  " packets.\n"
