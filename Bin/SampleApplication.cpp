@@ -20,6 +20,7 @@
 
 #include    "TsSplitter/Common/SampleDocument.h"
 
+#include    <cstring>
 #include    <iostream>
 
 using   namespace   TSSPLITTER_NAMESPACE;
@@ -28,7 +29,7 @@ size_t
 parseTsFile(
         const  std::string  &fileName)
 {
-    size_t  PIDs[8192];
+    size_t  PIDs[8192] = { 0 };
     uint8_t buf[204];
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");
@@ -43,6 +44,7 @@ parseTsFile(
     size_t  numErr  = 0;
     size_t  numScr  = 0;
 
+    memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
         cbTotal += cbRead;
@@ -57,6 +59,8 @@ parseTsFile(
             ++ numScr;
         }
 
+        const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
+        ++ PIDs[pid];
         if ( (numPckt & 65535) == 0 ) {
             std::cerr   <<  "\r# of Packet = "  <<  numPckt
                         <<  ", total "  <<  cbTotal << " bytes, "
