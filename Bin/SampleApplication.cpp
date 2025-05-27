@@ -79,6 +79,8 @@ parseTsFile(
                 <<  "Last Read = "  <<  cbRead  <<  " bytes."
                 <<  std::endl;
     fclose(fp);
+
+    return ( numPckt );
 }
 
 int  main(int argc, char * argv[])
