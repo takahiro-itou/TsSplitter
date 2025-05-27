@@ -57,7 +57,7 @@ parseTsFile(
             ++ numScr;
         }
 
-        if ( (numPckt & 16383) == 0 ) {
+        if ( (numPckt & 65535) == 0 ) {
             std::cerr   <<  "\r# of Packet = "  <<  numPckt
                         <<  ", total "  <<  cbTotal << " bytes, "
                         <<  "#Error = " <<  numErr
@@ -65,7 +65,7 @@ parseTsFile(
 
         }
     }
-    std::cerr   <<  "\n# of Packet = "  <<  numPckt
+    std::cerr   <<  "\r# of Packet = "  <<  numPckt
                 <<  ", total "  <<  cbTotal << " bytes, "
                 <<  "#Error = " <<  numErr
                 <<  ", #Scramble = "  <<  numScr;
