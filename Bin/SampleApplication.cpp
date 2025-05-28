@@ -74,6 +74,8 @@ parseTsFile(
     size_t  numErr  = 0;
     size_t  numScr  = 0;
 
+    int     flgPAT  = 1;
+
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
@@ -92,8 +94,9 @@ parseTsFile(
         const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
         ++ PIDs[pid];
 
-        if ( pid == 0x0000 ) {
+        if ( flgPAT && pid == 0x0000 ) {
             parsePAT(buf);
+            flgPAT  = 0;
         }
 
         if ( (numPckt & 65535) == 0 ) {
