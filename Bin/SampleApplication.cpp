@@ -41,6 +41,17 @@ parsePAT(
         printf("\n");
     }
     printf("\n");
+
+    int secLen  = ((p[4 + 2] << 8) & 0x1F00) | (p[4 + 3] & 0x00FF);
+    int program_number;
+    int program_PMT;
+    printf(" PAT section length : %d\n", secLen);
+    for ( int idx = 13; idx < 4 + 1 + secLen - 4; idx += 4 ) {
+        program_number  = ((p[idx] << 8) & 0xFF00) | (p[idx+1] & 0x00FF);
+        program_PMT = ((p[idx+2] << 8) & 0x1F00) | (p[idx+3] & 0x00FF);
+        printf("  0x%04x(%05d), PMT: 0x%04x\n",
+               program_number, program_number, program_PMT);
+    }
 }
 
 size_t
