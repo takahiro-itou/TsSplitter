@@ -60,6 +60,53 @@ parsePAT(
     }
 }
 
+int
+parsePMT(
+        const  int  pid,
+        const  int  pmt_pid,
+        const  uint8_t *  pmt)
+{
+    int secLen  = ((pmt[6] << 8) & 0x0F00) | (pmt[4 + 3] & 0x00FF);
+    int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
+    printf("  PMT section length : %d\n", secLen);
+    printf("  PMT Program Info Length : %d\n", n1);
+    char    text[512];
+
+    int numComp = 0;
+    int pos = n1 + 17;
+    while ( pos < secLen - 4 ) {
+        int stream_type = pmt[pos] & 0x00FF;
+        int element_pid = ((pmt[pos+1] << 8) & 0x01FF) | (pmt[pos+2] & 0x00FF);
+        int es_info_len = ((pmt[pos+3] << 8) & 0x0FFF) | (pmt[pos+4] & 0x00FF);
+        switch ( stream_type ) {
+        case  0x01:
+            sprintf(text, "MPEG1 VIDEO");
+            break;
+        case  0x02:
+            sprintf(text, "MPEG2 VIDEO");
+            break;
+        case  0x06:
+            sprintf(text, "字幕");
+            break;
+        case  0x0d:
+            sprintf(text, "データカルーセル");
+            break;
+        case  0x0f:
+            sprintf(text, "MPEG2 AAC");
+            break;
+        default:
+            sprintf(text, "UNK");
+            break;
+        }
+        printf(" PID: 0x%04x, InfoLen:%d, Type:%d, %s\n",
+               element_pid, es_info_len, stream_type, text);
+        ++  numComp;
+        pos += (es_info_len + 5);
+    }
+
+    return ( numComp );
+}
+
 size_t
 parseTsFile(
         const  std::string  &fileName)
@@ -104,6 +151,15 @@ parseTsFile(
         if ( flgPAT && pid == 0x0000 ) {
             parsePAT(buf, PMTs);
             flgPAT  = 0;
+        }
+
+        if ( ! flgPAT ) {
+            for ( int i = 0; i < 65536; ++ i ) {
+                if ( PMTs[i] == pid ) {
+                    parsePMT(i, pid, buf);
+                    break;
+                }
+            }
         }
 
         if ( (numPckt & 65535) == 0 ) {
