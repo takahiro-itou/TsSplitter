@@ -26,6 +26,23 @@
 
 using   namespace   TSSPLITTER_NAMESPACE;
 
+void
+parsePAT(
+        const  uint8_t * p)
+{
+    printf("DUMP of PAT:\n");
+    for ( int y = 0; y < 188; y += 16 ) {
+        printf("%02x:", y);
+        for ( int x = 0; x < 8; ++ x ) {
+            int idx = (y << 4) + x;
+            if ( idx > 188 ) { break; }
+            printf(" %02x", p[idx]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 size_t
 parseTsFile(
         const  std::string  &fileName)
@@ -63,6 +80,11 @@ parseTsFile(
 
         const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
         ++ PIDs[pid];
+
+        if ( pid == 0x0000 ) {
+            parsePAT(buf);
+        }
+
         if ( (numPckt & 65535) == 0 ) {
             std::cerr   <<  "\r# of Packet = "  <<  numPckt
                         <<  ", total "  <<  cbTotal << " bytes, "
