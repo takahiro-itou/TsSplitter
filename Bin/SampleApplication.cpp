@@ -42,7 +42,7 @@ parsePAT(
     }
     printf("\n");
 
-    int secLen  = ((p[4 + 2] << 8) & 0x1F00) | (p[4 + 3] & 0x00FF);
+    int secLen  = ((p[4 + 2] << 8) & 0x0F00) | (p[4 + 3] & 0x00FF);
     int program_number;
     int program_PMT;
     printf(" PAT section length : %d\n", secLen);
