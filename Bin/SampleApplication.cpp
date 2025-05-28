@@ -66,6 +66,18 @@ parsePMT(
         const  int  pmt_pid,
         const  uint8_t *  pmt)
 {
+    printf("DUMP of PMT:\n");
+    for ( int y = 0; y < 188; y += 16 ) {
+        printf("%02x:", y);
+        for ( int x = 0; x < 16; ++ x ) {
+            int idx = y + x;
+            if ( idx > 188 ) { break; }
+            printf(" %02x", p[idx]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
     int secLen  = ((pmt[6] << 8) & 0x0F00) | (pmt[4 + 3] & 0x00FF);
     int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
     printf("  PMT section length : %d\n", secLen);
@@ -98,7 +110,7 @@ parsePMT(
             sprintf(text, "UNK");
             break;
         }
-        printf(" PID: 0x%04x, InfoLen:%d, Type:%d, %s\n",
+        printf("  PID: 0x%04x, InfoLen:%d, Type:%d, %s\n",
                element_pid, es_info_len, stream_type, text);
         ++  numComp;
         pos += (es_info_len + 5);
