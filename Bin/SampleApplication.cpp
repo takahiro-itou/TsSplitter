@@ -28,7 +28,8 @@ using   namespace   TSSPLITTER_NAMESPACE;
 
 void
 parsePAT(
-        const  uint8_t * p)
+        const  uint8_t * p,
+        int  (& pmt)[65536])
 {
     printf("DUMP of PAT:\n");
     for ( int y = 0; y < 188; y += 16 ) {
@@ -42,6 +43,10 @@ parsePAT(
     }
     printf("\n");
 
+    for ( int pg = 0; pg < 65536; ++ pg ) {
+        pmt[pg] = -1;
+    }
+
     int secLen  = ((p[4 + 2] << 8) & 0x0F00) | (p[4 + 3] & 0x00FF);
     int program_number;
     int program_PMT;
@@ -51,6 +56,7 @@ parsePAT(
         program_PMT = ((p[idx+2] << 8) & 0x1F00) | (p[idx+3] & 0x00FF);
         printf("  0x%04x(%05d), PMT: 0x%04x\n",
                program_number, program_number, program_PMT);
+        pmt[program_number] = program_PMT;
     }
 }
 
@@ -59,6 +65,7 @@ parseTsFile(
         const  std::string  &fileName)
 {
     size_t  PIDs[8192] = { 0 };
+    int     PMTs[65536] = { 0 };
     uint8_t buf[204];
     char    text[1024];
 
@@ -95,7 +102,7 @@ parseTsFile(
         ++ PIDs[pid];
 
         if ( flgPAT && pid == 0x0000 ) {
-            parsePAT(buf);
+            parsePAT(buf, PMTs);
             flgPAT  = 0;
         }
 
