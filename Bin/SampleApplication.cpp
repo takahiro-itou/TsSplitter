@@ -174,6 +174,7 @@ parseTsFile(
             for ( int i = 0; i < 65536; ++ i ) {
                 if ( PMTs[i] == pid ) {
                     parsePMT(i, pid, buf);
+                    PMTs[i] |= 65536;
                     break;
                 }
             }
