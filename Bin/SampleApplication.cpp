@@ -146,6 +146,7 @@ parseTsFile(
     size_t  numScr  = 0;
 
     int     flgPAT  = 1;
+    int     numPMTs = 0;
 
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
@@ -167,13 +168,20 @@ parseTsFile(
 
         if ( flgPAT && pid == 0x0000 ) {
             parsePAT(buf, PMTs);
+
+            for ( int i = 0; i < 65536; ++ i ) {
+                if ( PMTs[i] > 0 ) {
+                    ++ numPMTs;
+                }
+            }
             flgPAT  = 0;
         }
 
-        if ( ! flgPAT ) {
+        if ( numPMTs >= 1 ) {
             for ( int i = 0; i < 65536; ++ i ) {
                 if ( PMTs[i] == pid ) {
                     parsePMT(i, pid, buf);
+                    -- numPMTs;
                     PMTs[i] |= 65536;
                     break;
                 }
