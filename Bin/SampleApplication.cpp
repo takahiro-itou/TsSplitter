@@ -36,7 +36,7 @@ parsePAT(
         printf("%02x:", y);
         for ( int x = 0; x < 16; ++ x ) {
             int idx = y + x;
-            if ( idx > 188 ) { break; }
+            if ( idx >= 188 ) { break; }
             printf(" %02x", p[idx]);
         }
         printf("\n");
