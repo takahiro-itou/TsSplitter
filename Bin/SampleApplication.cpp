@@ -66,6 +66,8 @@ parsePMT(
         const  int  pmt_pid,
         const  uint8_t *  pmt)
 {
+    printf("SID = 0x%04x(%05d), PMT PID = 0x%04x\n",
+           pid, pid, pmt_pid);
     printf("DUMP of PMT:\n");
     for ( int y = 0; y < 188; y += 16 ) {
         printf("%02x:", y);
