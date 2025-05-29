@@ -72,7 +72,7 @@ parsePMT(
         for ( int x = 0; x < 16; ++ x ) {
             int idx = y + x;
             if ( idx > 188 ) { break; }
-            printf(" %02x", p[idx]);
+            printf(" %02x", pmt[idx]);
         }
         printf("\n");
     }
