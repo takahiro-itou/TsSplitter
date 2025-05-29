@@ -90,8 +90,8 @@ parsePMT(
     int pos = n1 + 17;
     while ( pos < secLen - 4 ) {
         int stream_type = pmt[pos] & 0x00FF;
-        int element_pid = ((pmt[pos+1] << 8) & 0x01FF) | (pmt[pos+2] & 0x00FF);
-        int es_info_len = ((pmt[pos+3] << 8) & 0x0FFF) | (pmt[pos+4] & 0x00FF);
+        int element_pid = ((pmt[pos+1] << 8) & 0x1F00) | (pmt[pos+2] & 0x00FF);
+        int es_info_len = ((pmt[pos+3] << 8) & 0x0F00) | (pmt[pos+4] & 0x00FF);
         switch ( stream_type ) {
         case  0x01:
             sprintf(text, "MPEG1 VIDEO");
