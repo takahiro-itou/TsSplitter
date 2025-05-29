@@ -108,6 +108,9 @@ parsePMT(
         case  0x0f:
             sprintf(text, "MPEG2 AAC");
             break;
+        case  0x1b:
+            sprintf(text, "H.264 ワンセグ");
+            break;
         default:
             sprintf(text, "UNK");
             break;
