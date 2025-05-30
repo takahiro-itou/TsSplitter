@@ -26,6 +26,14 @@
 
 using   namespace   TSSPLITTER_NAMESPACE;
 
+struct  PID_Map  {
+    int     sid;
+    int     stream_type;
+    char    text[256];
+};
+
+PID_Map     pid_map[8192];
+
 void
 parsePAT(
         const  uint8_t * p,
