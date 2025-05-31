@@ -126,6 +126,17 @@ parsePMT(
         }
         printf("  PID: 0x%04x, InfoLen:%d, Type:%d, %s\n",
                element_pid, es_info_len, stream_type, text);
+
+        if ( pid_map[element_pid].sid != -1 ) {
+            printf("WARNING! Duplicate PID : 0x%04x, SID=%d, PrevSID=%d\n",
+                   element_pid, sid, pid_map[element_pid].sid);
+        } else {
+            pid_map[element_pid].sid    = sid;
+            sprintf(pid_map[element_pid].text,
+                    "Service:0x%04x(%05d), type=%d, %s",
+                    sid, sid, stream_type, text);
+        }
+
         ++  numComp;
         pos += (es_info_len + 5);
     }
