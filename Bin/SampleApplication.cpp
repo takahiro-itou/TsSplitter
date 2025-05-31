@@ -72,7 +72,8 @@ int
 parsePMT(
         const  int  sid,
         const  int  pmt_pid,
-        const  uint8_t *  pmt)
+        const  uint8_t *  pmt,
+        PID_Map  (& pid_map)[8192])
 {
     printf("SID = 0x%04x(%05d), PMT PID = 0x%04x\n",
            sid, sid, pmt_pid);
@@ -188,7 +189,7 @@ parseTsFile(
         if ( numPMTs >= 1 ) {
             for ( int i = 0; i < 65536; ++ i ) {
                 if ( PMTs[i] == pid ) {
-                    parsePMT(i, pid, buf);
+                    parsePMT(i, pid, buf, pid_map);
                     -- numPMTs;
                     PMTs[i] |= 65536;
                     break;
