@@ -168,6 +168,11 @@ parseTsFile(
     int     flgPAT  = 1;
     int     numPMTs = 0;
 
+    for ( int i = 0; i < 8192; ++ i ) {
+        pid_map[i].sid  = -1;
+        pid_map[i].text[0]  = '\0';
+    }
+
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
