@@ -235,8 +235,8 @@ parseTsFile(
     for ( int i = 0; i < 8192; ++ i ) {
         if ( PIDs[i] ) {
             sprintf(text,
-                    "PID: 0x%04x  Total:%9ld\n",
-                    i, PIDs[i]);
+                    "PID: 0x%04x  Total:%9ld\t%s\n",
+                    i, PIDs[i], pid_map[i].text);
             std::cout   <<  text;
         }
     }
