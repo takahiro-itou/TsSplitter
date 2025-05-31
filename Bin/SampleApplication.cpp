@@ -72,7 +72,8 @@ int
 parsePMT(
         const  int  sid,
         const  int  pmt_pid,
-        const  uint8_t *  pmt)
+        const  uint8_t *  pmt,
+        PID_Map  (& pid_map)[8192])
 {
     printf("SID = 0x%04x(%05d), PMT PID = 0x%04x\n",
            sid, sid, pmt_pid);
@@ -92,7 +93,7 @@ parsePMT(
     int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
     printf("  PMT section length : %d\n", secLen);
     printf("  PMT Program Info Length : %d\n", n1);
-    char    text[512];
+    char    text[128];
 
     int numComp = 0;
     int pos = n1 + 17;
@@ -125,6 +126,17 @@ parsePMT(
         }
         printf("  PID: 0x%04x, InfoLen:%d, Type:%d, %s\n",
                element_pid, es_info_len, stream_type, text);
+
+        if ( pid_map[element_pid].sid != -1 ) {
+            printf("WARNING! Duplicate PID : 0x%04x, SID=%d, PrevSID=%d\n",
+                   element_pid, sid, pid_map[element_pid].sid);
+        } else {
+            pid_map[element_pid].sid    = sid;
+            sprintf(pid_map[element_pid].text,
+                    "Service:0x%04x(%05d), type=%d, %s",
+                    sid, sid, stream_type, text);
+        }
+
         ++  numComp;
         pos += (es_info_len + 5);
     }
@@ -155,6 +167,11 @@ parseTsFile(
 
     int     flgPAT  = 1;
     int     numPMTs = 0;
+
+    for ( int i = 0; i < 8192; ++ i ) {
+        pid_map[i].sid  = -1;
+        pid_map[i].text[0]  = '\0';
+    }
 
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
@@ -188,7 +205,7 @@ parseTsFile(
         if ( numPMTs >= 1 ) {
             for ( int i = 0; i < 65536; ++ i ) {
                 if ( PMTs[i] == pid ) {
-                    parsePMT(i, pid, buf);
+                    parsePMT(i, pid, buf, pid_map);
                     -- numPMTs;
                     PMTs[i] |= 65536;
                     break;
@@ -218,8 +235,8 @@ parseTsFile(
     for ( int i = 0; i < 8192; ++ i ) {
         if ( PIDs[i] ) {
             sprintf(text,
-                    "PID: 0x%04x  Total:%9ld\n",
-                    i, PIDs[i]);
+                    "PID: 0x%04x  Total:%9ld\t%s\n",
+                    i, PIDs[i], pid_map[i].text);
             std::cout   <<  text;
         }
     }
