@@ -93,7 +93,7 @@ parsePMT(
     int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
     printf("  PMT section length : %d\n", secLen);
     printf("  PMT Program Info Length : %d\n", n1);
-    char    text[512];
+    char    text[128];
 
     int numComp = 0;
     int pos = n1 + 17;
