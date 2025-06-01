@@ -18,7 +18,7 @@
 **      @file       Bin/SampleApplication.cpp
 **/
 
-#include    "TsSplitter/Common/SampleDocument.h"
+#include    "TsSplitter/Common/TsSplitterTypes.h"
 
 #include    <cstdint>
 #include    <cstring>
