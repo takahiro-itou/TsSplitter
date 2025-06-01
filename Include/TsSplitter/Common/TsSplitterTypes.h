@@ -38,6 +38,37 @@
 
 TSSPLITTER_NAMESPACE_BEGIN
 
+//========================================================================
+//
+//    Type Definitions.
+//
+
+//----------------------------------------------------------------
+/**
+**    エラーコード。
+**/
+
+enum class  ErrCode
+{
+    /**   正常終了。    **/
+    SUCCESS                 = 0,
+
+    /**   異常終了。エラーの理由は不明または報告なし。  **/
+    FAILURE                 = 1,
+
+    /**   無効なインデックス指定。  **/
+    INDEX_OUT_OF_RANGE      = 2,
+
+    /**   ファイルオープンエラー。  **/
+    FILE_OPEN_ERROR         = 3,
+
+    /**   ファイル入出力エラー。    **/
+    FILE_IO_ERROR           = 4,
+
+    /**   不正なファイル形式。      **/
+    FILE_INVALID_FORMAT     = 5,
+};
+
 TSSPLITTER_NAMESPACE_END
 
 #endif
