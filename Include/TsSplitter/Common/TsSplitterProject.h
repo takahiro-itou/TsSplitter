@@ -18,8 +18,8 @@
 **      @file       Common/TsSplitterSettings.h
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_SETTINGS_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_SETTINGS_H
+#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_PROJECT_H )
+#    define   TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_PROJECT_H
 
 //  スクリプトによる設定値が書き込まれたヘッダを読み込む。  //
 #if defined( TSSPLITTER_USE_PRE_CONFIGURED_MSVC )
