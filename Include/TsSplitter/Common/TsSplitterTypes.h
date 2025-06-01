@@ -69,6 +69,60 @@ enum class  ErrCode
     FILE_INVALID_FORMAT     = 5,
 };
 
+
+//----------------------------------------------------------------
+/**
+**    読み取り専用バッファ。
+**/
+
+typedef     const  void  *      LpcReadBuf;
+
+//--------------------------------------------------------------------------
+/**
+**    読み書き両用バッファ。
+**/
+
+typedef     void  *             LpWriteBuf;
+
+
+//----------------------------------------------------------------
+/**
+**    バイト型。
+**/
+
+typedef     uint8_t             BtByte;
+
+/**
+**    バイト型の読み取り専用バッファ。
+**/
+
+typedef     const  BtByte  *    LpcByteReadBuf;
+
+/**
+**    バイト型の読み書き両用バッファ。
+**/
+
+typedef     BtByte  *           LpByteWriteBuf;
+
+
+//========================================================================
+//
+//    安全なポインタ型のキャスト。
+//
+
+template  <typename  T>
+T  pointer_cast(void  *  p)
+{
+    return ( static_cast<T>(p) );
+}
+
+template  <typename  T>
+T  pointer_cast(const  void  *  p)
+{
+    return ( static_cast<T>(p) );
+}
+
+
 TSSPLITTER_NAMESPACE_END
 
 #endif
