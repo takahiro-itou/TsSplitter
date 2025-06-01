@@ -25,6 +25,16 @@
 #    include    "TsSplitterProject.h"
 #endif
 
+#if !defined( TSSPLITTER_SYS_INCLUDED_CSTDINT )
+#    include    <cstdint>
+#    define   TSSPLITTER_SYS_INCLUDED_CSTDINT
+#endif
+
+#if !defined( TSSPLITTER_SYS_INCLUDED_STDDEF_H )
+#    include    <stddef.h>
+#    define   TSSPLITTER_SYS_INCLUDED_STDDEF_H
+#endif
+
 
 TSSPLITTER_NAMESPACE_BEGIN
 
