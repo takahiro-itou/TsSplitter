@@ -15,10 +15,12 @@ Include (${common_cmake_dir}/BuildCommon/ConfigTarget.cmake)
 ##
 
 set(library_source_files
+       FileReader.cpp
        SampleDocument.cpp
 )
 
 set(inclib_header_files
+        ${inclib_source_dir}/FileReader.h
         ${inclib_source_dir}/SampleDocument.h
         ${inclib_source_dir}/TsSplitterProject.h
         ${inclib_source_dir}/TsSplitterTypes.h
