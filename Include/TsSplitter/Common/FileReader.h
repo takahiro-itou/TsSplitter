@@ -21,4 +21,107 @@
 #if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_READER_H )
 #    define   TSSPLITTER_COMMON_INCLUDED_FILE_READER_H
 
+#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
+#    include    "TsSplitterTypes.h"
+#endif
+
+#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
+#    include    <string>
+#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
+#endif
+
+
+TSSPLITTER_NAMESPACE_BEGIN
+namespace  Common  {
+
+//========================================================================
+//
+//    FileReader  class.
+//
+
+class  FileReader
+{
+
+//========================================================================
+//
+//    Internal Type Definitions.
+//
+
+//========================================================================
+//
+//    Constructor(s) and Destructor.
+//
+public:
+
+    //----------------------------------------------------------------
+    /**   インスタンスを初期化する
+    **  （デフォルトコンストラクタ）。
+    **
+    **/
+    FileReader();
+
+    //----------------------------------------------------------------
+    /**   インスタンスを破棄する
+    **  （デストラクタ）。
+    **
+    **/
+    virtual  ~FileReader();
+
+//========================================================================
+//
+//    Public Member Functions (Implement Pure Virtual).
+//
+
+//========================================================================
+//
+//    Public Member Functions (Overrides).
+//
+
+//========================================================================
+//
+//    Public Member Functions (Pure Virtual Functions).
+//
+
+//========================================================================
+//
+//    Public Member Functions (Virtual Functions).
+//
+
+//========================================================================
+//
+//    Public Member Functions.
+//
+
+//========================================================================
+//
+//    Accessors.
+//
+
+//========================================================================
+//
+//    Protected Member Functions.
+//
+
+//========================================================================
+//
+//    For Internal Use Only.
+//
+
+//========================================================================
+//
+//    Member Variables.
+//
+
+//========================================================================
+//
+//    Other Features.
+//
+public:
+    //  テストクラス。  //
+    friend  class   FileReaderTest;
+};
+
+}   //  End of namespace  Common
+TSSPLITTER_NAMESPACE_END
+
 #endif
