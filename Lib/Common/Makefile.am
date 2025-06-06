@@ -24,6 +24,7 @@ extra_noinst_header_files   =
 
 library_source_files        +=  \
         FileReader.cpp                 \
+        FileWriter.cpp                 \
         SampleDocument.cpp             \
         ${extra_library_source_files}
 
@@ -38,6 +39,7 @@ dist_noinst_header_files    +=  \
 
 inclib_header_files         +=  \
         ${inclib_source_dir}/FileReader.h           \
+        ${inclib_source_dir}/FileWriter.h           \
         ${inclib_source_dir}/SampleDocument.h       \
         ${inclib_source_dir}/TsSplitterProject.h    \
         ${inclib_source_dir}/TsSplitterTypes.h      \
