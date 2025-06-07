@@ -116,6 +116,14 @@ public:
             const  uint8_t *  pmt,
             PID_Map  (& pid_map)[8192]);
 
+    size_t
+    parseTsFile(
+            const  std::string  &fileName);
+
+    size_t
+    parseTsFile(
+            FILE *  fp);
+
 //========================================================================
 //
 //    Accessors.
