@@ -4,8 +4,8 @@
 ##    テストの設定。
 ##
 
-add_test(NAME   TsSplitterSettingsTest
-    COMMAND  $<TARGET_FILE:TsSplitterSettingsTest>
+add_test(NAME   TsSplitterProjectTest
+    COMMAND  $<TARGET_FILE:TsSplitterProjectTest>
 )
 
 ##----------------------------------------------------------------
@@ -13,4 +13,5 @@ add_test(NAME   TsSplitterSettingsTest
 ##    テストプログラムのビルド。
 ##
 
-add_executable(TsSplitterSettingsTest   TsSplitterSettingsTest.cpp)
+add_executable(TsSplitterProjectTest    TsSplitterProjectTest.cpp)
+

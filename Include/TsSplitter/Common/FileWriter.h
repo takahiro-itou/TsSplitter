@@ -13,17 +13,22 @@
 *************************************************************************/
 
 /**
-**      An Interface of SampleDocument class.
+**      An Interface of FileWriter class.
 **
-**      @file       Common/SampleDocument.h
+**      @file       Common/FileWriter.h
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
+#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_WRITER_H )
+#    define   TSSPLITTER_COMMON_INCLUDED_FILE_WRITER_H
 
-#include    "TsSplitterProject.h"
+#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
+#    include    "TsSplitterTypes.h"
+#endif
 
-#include    <string>
+#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
+#    include    <string>
+#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
+#endif
 
 
 TSSPLITTER_NAMESPACE_BEGIN
@@ -31,10 +36,10 @@ namespace  Common  {
 
 //========================================================================
 //
-//    SampleDocument  class.
+//    FileWriter  class.
 //
 
-class  SampleDocument
+class  FileWriter
 {
 
 //========================================================================
@@ -53,14 +58,14 @@ public:
     **  （デフォルトコンストラクタ）。
     **
     **/
-    SampleDocument();
+    FileWriter();
 
     //----------------------------------------------------------------
     /**   インスタンスを破棄する
     **  （デストラクタ）。
     **
     **/
-    virtual  ~SampleDocument();
+    virtual  ~FileWriter();
 
 //========================================================================
 //
@@ -81,15 +86,6 @@ public:
 //
 //    Public Member Functions (Virtual Functions).
 //
-public:
-
-    //----------------------------------------------------------------
-    /**   入力メッセージ中に含まれるアルファベットを数える。
-    **
-    **  @return     半角アルファベット [A-Za-z] の文字数
-    **/
-    virtual  int
-    countAlphabet()  const;
 
 //========================================================================
 //
@@ -100,17 +96,6 @@ public:
 //
 //    Accessors.
 //
-public:
-
-    //----------------------------------------------------------------
-    /**   メッセージを設定する。
-    **
-    **  @param [in] message   入力データ
-    **  @return     void.
-    **/
-    void
-    setMessage(
-            const  std::string  &message);
 
 //========================================================================
 //
@@ -126,9 +111,6 @@ public:
 //
 //    Member Variables.
 //
-private:
-
-    std::string     m_message;
 
 //========================================================================
 //
@@ -136,7 +118,7 @@ private:
 //
 public:
     //  テストクラス。  //
-    friend  class   SampleDocumentTest;
+    friend  class   FileWriterTest;
 };
 
 }   //  End of namespace  Common

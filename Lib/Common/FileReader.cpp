@@ -13,12 +13,12 @@
 *************************************************************************/
 
 /**
-**      An Implementation of SampleDocument class.
+**      An Implementation of FileReader class.
 **
-**      @file       Common/SampleDocument.cpp
+**      @file       Common/FileReader.cpp
 **/
 
-#include    "TsSplitter/Common/SampleDocument.h"
+#include    "TsSplitter/Common/FileReader.h"
 
 
 TSSPLITTER_NAMESPACE_BEGIN
@@ -31,7 +31,7 @@ namespace  {
 
 //========================================================================
 //
-//    SampleDocument  class.
+//    FileReader  class.
 //
 
 //========================================================================
@@ -42,9 +42,9 @@ namespace  {
 //----------------------------------------------------------------
 //    インスタンスを初期化する
 //  （デフォルトコンストラクタ）。
+//
 
-SampleDocument::SampleDocument()
-    : m_message()
+FileReader::FileReader()
 {
 }
 
@@ -53,7 +53,7 @@ SampleDocument::SampleDocument()
 //  （デストラクタ）。
 //
 
-SampleDocument::~SampleDocument()
+FileReader::~FileReader()
 {
 }
 
@@ -77,27 +77,6 @@ SampleDocument::~SampleDocument()
 //    Public Member Functions (Virtual Functions).
 //
 
-//----------------------------------------------------------------
-//    入力メッセージ中に含まれるアルファベットを数える。
-//
-
-int
-SampleDocument::countAlphabet()  const
-{
-    const   size_t  len = this->m_message.length();
-    size_t  cnt = 0;
-    for ( size_t i = 0; i < len; ++ i ) {
-        const  char tmp = this->m_message[i];
-        if ( ('A' <= tmp) && (tmp <= 'Z') ) {
-            ++ cnt;
-        } else if ( ('a' <= tmp) && (tmp <= 'z') ) {
-            ++ cnt;
-        }
-    }
-
-    return ( static_cast<int>(cnt) );
-}
-
 //========================================================================
 //
 //    Public Member Functions.
@@ -107,16 +86,6 @@ SampleDocument::countAlphabet()  const
 //
 //    Accessors.
 //
-
-//----------------------------------------------------------------
-//    メッセージを設定する。
-
-void
-SampleDocument::setMessage(
-        const  std::string  &message)
-{
-    this->m_message = message;
-}
 
 //========================================================================
 //
