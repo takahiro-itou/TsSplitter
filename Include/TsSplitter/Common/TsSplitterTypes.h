@@ -110,6 +110,23 @@ typedef     BtByte  *           LpByteWriteBuf;
 
 typedef     size_t              PacketCount;
 
+/**
+**    サービス ID
+**/
+
+typedef     int                 BtServiceId;
+
+/**
+**    プログラム ID
+**/
+
+typedef     int                 BtProgramId;
+
+/**
+**    PMT (Program Map Table) の PID
+**/
+
+typedef     BtProgramId         PmtPid;
 
 //========================================================================
 //
