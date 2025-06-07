@@ -82,6 +82,37 @@ FileReader::~FileReader()
 //    Public Member Functions.
 //
 
+void
+FileReader::parsePAT(
+        const  uint8_t * p,
+        int  (& pmt)[65536])
+{
+}
+
+int
+FileReader::parsePMT(
+        const  int  sid,
+        const  int  pmt_pid,
+        const  uint8_t *  pmt,
+        PID_Map  (& pid_map)[8192])
+{
+    return ( 0 );
+}
+
+size_t
+FileReader::parseTsFile(
+        const  std::string  &fileName)
+{
+    return ( 0 );
+}
+
+size_t
+FileReader::parseTsFile(
+        FILE *  fp)
+{
+    return ( 0 );
+}
+
 //========================================================================
 //
 //    Accessors.
