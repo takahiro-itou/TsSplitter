@@ -46,6 +46,13 @@ class  FileReader
 //
 //    Internal Type Definitions.
 //
+public:
+
+    struct  PID_Map  {
+        int     sid;
+        int     stream_type;
+        char    text[256];
+    };
 
 //========================================================================
 //
@@ -91,6 +98,7 @@ public:
 //
 //    Public Member Functions.
 //
+public:
 
 //========================================================================
 //
