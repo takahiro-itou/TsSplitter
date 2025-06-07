@@ -13,21 +13,16 @@
 *************************************************************************/
 
 /**
-**      An Interface of FileReader class.
+**      An Interface of ServicePmtTable class.
 **
-**      @file       Common/FileReader.h
+**      @file       Common/ServicePmtTable.h
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_READER_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_FILE_READER_H
+#if !defined( TSSPLITTER_COMMON_INCLUDED_SERVICE_PMT_TABLE_H )
+#    define   TSSPLITTER_COMMON_INCLUDED_SERVICE_PMT_TABLE_H
 
 #if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
 #    include    "TsSplitterTypes.h"
-#endif
-
-#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
-#    include    <string>
-#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
 #endif
 
 
@@ -36,23 +31,16 @@ namespace  Common  {
 
 //========================================================================
 //
-//    FileReader  class.
+//    ServicePmtTable  class.
 //
 
-class  FileReader
+class  ServicePmtTable
 {
 
 //========================================================================
 //
 //    Internal Type Definitions.
 //
-public:
-
-    struct  PID_Map  {
-        int     sid;
-        int     stream_type;
-        char    text[256];
-    };
 
 //========================================================================
 //
@@ -65,14 +53,14 @@ public:
     **  （デフォルトコンストラクタ）。
     **
     **/
-    FileReader();
+    ServicePmtTable();
 
     //----------------------------------------------------------------
     /**   インスタンスを破棄する
     **  （デストラクタ）。
     **
     **/
-    virtual  ~FileReader();
+    virtual  ~ServicePmtTable();
 
 //========================================================================
 //
@@ -98,31 +86,6 @@ public:
 //
 //    Public Member Functions.
 //
-public:
-
-    //----------------------------------------------------------------
-    /**
-    **
-    **/
-    void
-    parsePAT(
-            const  uint8_t * p,
-            int  (& pmt)[65536]);
-
-    int
-    parsePMT(
-            const  int  sid,
-            const  int  pmt_pid,
-            const  uint8_t *  pmt,
-            PID_Map  (& pid_map)[8192]);
-
-    size_t
-    parseTsFile(
-            const  std::string  &fileName);
-
-    size_t
-    parseTsFile(
-            FILE *  fp);
 
 //========================================================================
 //
@@ -150,7 +113,7 @@ public:
 //
 public:
     //  テストクラス。  //
-    friend  class   FileReaderTest;
+    friend  class   ServicePmtTableTest;
 };
 
 }   //  End of namespace  Common

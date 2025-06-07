@@ -13,66 +13,49 @@
 *************************************************************************/
 
 /**
-**      An Interface of FileReader class.
+**      An Implementation of ServicePmtTable class.
 **
-**      @file       Common/FileReader.h
+**      @file       Common/ServicePmtTable.cpp
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_READER_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_FILE_READER_H
-
-#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
-#    include    "TsSplitterTypes.h"
-#endif
-
-#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
-#    include    <string>
-#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
-#endif
+#include    "TsSplitter/Common/ServicePmtTable.h"
 
 
 TSSPLITTER_NAMESPACE_BEGIN
 namespace  Common  {
 
-//========================================================================
-//
-//    FileReader  class.
-//
+namespace  {
 
-class  FileReader
-{
+}   //  End of (Unnamed) namespace.
+
 
 //========================================================================
 //
-//    Internal Type Definitions.
+//    ServicePmtTable  class.
 //
-public:
-
-    struct  PID_Map  {
-        int     sid;
-        int     stream_type;
-        char    text[256];
-    };
 
 //========================================================================
 //
 //    Constructor(s) and Destructor.
 //
-public:
 
-    //----------------------------------------------------------------
-    /**   インスタンスを初期化する
-    **  （デフォルトコンストラクタ）。
-    **
-    **/
-    FileReader();
+//----------------------------------------------------------------
+//    インスタンスを初期化する
+//  （デフォルトコンストラクタ）。
+//
 
-    //----------------------------------------------------------------
-    /**   インスタンスを破棄する
-    **  （デストラクタ）。
-    **
-    **/
-    virtual  ~FileReader();
+ServicePmtTable::ServicePmtTable()
+{
+}
+
+//----------------------------------------------------------------
+//    インスタンスを破棄する
+//  （デストラクタ）。
+//
+
+ServicePmtTable::~ServicePmtTable()
+{
+}
 
 //========================================================================
 //
@@ -98,31 +81,6 @@ public:
 //
 //    Public Member Functions.
 //
-public:
-
-    //----------------------------------------------------------------
-    /**
-    **
-    **/
-    void
-    parsePAT(
-            const  uint8_t * p,
-            int  (& pmt)[65536]);
-
-    int
-    parsePMT(
-            const  int  sid,
-            const  int  pmt_pid,
-            const  uint8_t *  pmt,
-            PID_Map  (& pid_map)[8192]);
-
-    size_t
-    parseTsFile(
-            const  std::string  &fileName);
-
-    size_t
-    parseTsFile(
-            FILE *  fp);
 
 //========================================================================
 //
@@ -139,21 +97,5 @@ public:
 //    For Internal Use Only.
 //
 
-//========================================================================
-//
-//    Member Variables.
-//
-
-//========================================================================
-//
-//    Other Features.
-//
-public:
-    //  テストクラス。  //
-    friend  class   FileReaderTest;
-};
-
 }   //  End of namespace  Common
 TSSPLITTER_NAMESPACE_END
-
-#endif

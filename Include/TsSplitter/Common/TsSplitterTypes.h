@@ -84,7 +84,6 @@ typedef     const  void  *      LpcReadBuf;
 
 typedef     void  *             LpWriteBuf;
 
-
 //----------------------------------------------------------------
 /**
 **    バイト型。
@@ -104,6 +103,30 @@ typedef     const  BtByte  *    LpcByteReadBuf;
 
 typedef     BtByte  *           LpByteWriteBuf;
 
+//----------------------------------------------------------------
+/**
+**    パケット数。
+**/
+
+typedef     size_t              PacketCount;
+
+/**
+**    サービス ID
+**/
+
+typedef     int                 BtServiceId;
+
+/**
+**    プログラム ID
+**/
+
+typedef     int                 BtProgramId;
+
+/**
+**    PMT (Program Map Table) の PID
+**/
+
+typedef     BtProgramId         PmtPid;
 
 //========================================================================
 //
