@@ -84,7 +84,6 @@ typedef     const  void  *      LpcReadBuf;
 
 typedef     void  *             LpWriteBuf;
 
-
 //----------------------------------------------------------------
 /**
 **    バイト型。
@@ -103,6 +102,13 @@ typedef     const  BtByte  *    LpcByteReadBuf;
 **/
 
 typedef     BtByte  *           LpByteWriteBuf;
+
+//----------------------------------------------------------------
+/**
+**    パケット数。
+**/
+
+typedef     size_t              PacketCount;
 
 
 //========================================================================
