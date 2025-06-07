@@ -109,6 +109,13 @@ public:
             const  uint8_t * p,
             int  (& pmt)[65536]);
 
+    int
+    parsePMT(
+            const  int  sid,
+            const  int  pmt_pid,
+            const  uint8_t *  pmt,
+            PID_Map  (& pid_map)[8192]);
+
 //========================================================================
 //
 //    Accessors.
