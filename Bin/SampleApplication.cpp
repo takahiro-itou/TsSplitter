@@ -19,6 +19,7 @@
 **/
 
 #include    "TsSplitter/Common/TsSplitterTypes.h"
+#include    "TsSplitter/Common/FileReader.h"
 
 #include    <cstdint>
 #include    <cstring>
@@ -33,6 +34,7 @@ struct  PID_Map  {
 };
 
 PID_Map     pid_map[8192];
+Common::FileReader  fr;
 
 void
 parsePAT(
@@ -247,7 +249,7 @@ parseTsFile(
 int  main(int argc, char * argv[])
 {
     if ( argc >= 2 ) {
-        parseTsFile(argv[1]);
+        fr.parseTsFile(argv[1]);
     }
 
     return ( 0 );
