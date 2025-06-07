@@ -20,6 +20,9 @@
 
 #include    "TsSplitter/Common/FileReader.h"
 
+#include    <cstring>
+#include    <iostream>
+
 
 TSSPLITTER_NAMESPACE_BEGIN
 namespace  Common  {
