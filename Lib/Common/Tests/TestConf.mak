@@ -5,7 +5,7 @@
 
 extra_tests             =
 TESTS                   =  \
-        TsSplitterSettingsTest  \
+        TsSplitterProjectTest   \
         ${extra_tests}
 
 ##
