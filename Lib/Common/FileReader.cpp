@@ -13,31 +13,81 @@
 *************************************************************************/
 
 /**
-**      サンプルプログラム。
+**      An Implementation of FileReader class.
 **
-**      @file       Bin/SampleApplication.cpp
+**      @file       Common/FileReader.cpp
 **/
 
-#include    "TsSplitter/Common/TsSplitterTypes.h"
 #include    "TsSplitter/Common/FileReader.h"
 
-#include    <cstdint>
 #include    <cstring>
 #include    <iostream>
 
-using   namespace   TSSPLITTER_NAMESPACE;
 
-struct  PID_Map  {
-    int     sid;
-    int     stream_type;
-    char    text[256];
-};
+TSSPLITTER_NAMESPACE_BEGIN
+namespace  Common  {
 
-PID_Map     pid_map[8192];
-Common::FileReader  fr;
+namespace  {
+
+}   //  End of (Unnamed) namespace.
+
+FileReader::PID_Map     pid_map[8192];
+
+//========================================================================
+//
+//    FileReader  class.
+//
+
+//========================================================================
+//
+//    Constructor(s) and Destructor.
+//
+
+//----------------------------------------------------------------
+//    インスタンスを初期化する
+//  （デフォルトコンストラクタ）。
+//
+
+FileReader::FileReader()
+{
+}
+
+//----------------------------------------------------------------
+//    インスタンスを破棄する
+//  （デストラクタ）。
+//
+
+FileReader::~FileReader()
+{
+}
+
+//========================================================================
+//
+//    Public Member Functions (Implement Pure Virtual).
+//
+
+//========================================================================
+//
+//    Public Member Functions (Overrides).
+//
+
+//========================================================================
+//
+//    Public Member Functions (Pure Virtual Functions).
+//
+
+//========================================================================
+//
+//    Public Member Functions (Virtual Functions).
+//
+
+//========================================================================
+//
+//    Public Member Functions.
+//
 
 void
-parsePAT(
+FileReader::parsePAT(
         const  uint8_t * p,
         int  (& pmt)[65536])
 {
@@ -71,7 +121,7 @@ parsePAT(
 }
 
 int
-parsePMT(
+FileReader::parsePMT(
         const  int  sid,
         const  int  pmt_pid,
         const  uint8_t *  pmt,
@@ -147,7 +197,7 @@ parsePMT(
 }
 
 size_t
-parseTsFile(
+FileReader::parseTsFile(
         const  std::string  &fileName)
 {
     size_t  PIDs[8192] = { 0 };
@@ -246,11 +296,27 @@ parseTsFile(
     return ( numPckt );
 }
 
-int  main(int argc, char * argv[])
+size_t
+FileReader::parseTsFile(
+        FILE *  fp)
 {
-    if ( argc >= 2 ) {
-        fr.parseTsFile(argv[1]);
-    }
-
     return ( 0 );
 }
+
+//========================================================================
+//
+//    Accessors.
+//
+
+//========================================================================
+//
+//    Protected Member Functions.
+//
+
+//========================================================================
+//
+//    For Internal Use Only.
+//
+
+}   //  End of namespace  Common
+TSSPLITTER_NAMESPACE_END

@@ -13,54 +13,49 @@
 *************************************************************************/
 
 /**
-**      An Interface of SampleDocument class.
+**      An Implementation of ServicePmtTable class.
 **
-**      @file       Common/SampleDocument.h
+**      @file       Common/ServicePmtTable.cpp
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
-
-#include    "TsSplitterProject.h"
-
-#include    <string>
+#include    "TsSplitter/Common/ServicePmtTable.h"
 
 
 TSSPLITTER_NAMESPACE_BEGIN
 namespace  Common  {
 
-//========================================================================
-//
-//    SampleDocument  class.
-//
+namespace  {
 
-class  SampleDocument
-{
+}   //  End of (Unnamed) namespace.
+
 
 //========================================================================
 //
-//    Internal Type Definitions.
+//    ServicePmtTable  class.
 //
 
 //========================================================================
 //
 //    Constructor(s) and Destructor.
 //
-public:
 
-    //----------------------------------------------------------------
-    /**   インスタンスを初期化する
-    **  （デフォルトコンストラクタ）。
-    **
-    **/
-    SampleDocument();
+//----------------------------------------------------------------
+//    インスタンスを初期化する
+//  （デフォルトコンストラクタ）。
+//
 
-    //----------------------------------------------------------------
-    /**   インスタンスを破棄する
-    **  （デストラクタ）。
-    **
-    **/
-    virtual  ~SampleDocument();
+ServicePmtTable::ServicePmtTable()
+{
+}
+
+//----------------------------------------------------------------
+//    インスタンスを破棄する
+//  （デストラクタ）。
+//
+
+ServicePmtTable::~ServicePmtTable()
+{
+}
 
 //========================================================================
 //
@@ -81,15 +76,6 @@ public:
 //
 //    Public Member Functions (Virtual Functions).
 //
-public:
-
-    //----------------------------------------------------------------
-    /**   入力メッセージ中に含まれるアルファベットを数える。
-    **
-    **  @return     半角アルファベット [A-Za-z] の文字数
-    **/
-    virtual  int
-    countAlphabet()  const;
 
 //========================================================================
 //
@@ -100,17 +86,6 @@ public:
 //
 //    Accessors.
 //
-public:
-
-    //----------------------------------------------------------------
-    /**   メッセージを設定する。
-    **
-    **  @param [in] message   入力データ
-    **  @return     void.
-    **/
-    void
-    setMessage(
-            const  std::string  &message);
 
 //========================================================================
 //
@@ -122,24 +97,5 @@ public:
 //    For Internal Use Only.
 //
 
-//========================================================================
-//
-//    Member Variables.
-//
-private:
-
-    std::string     m_message;
-
-//========================================================================
-//
-//    Other Features.
-//
-public:
-    //  テストクラス。  //
-    friend  class   SampleDocumentTest;
-};
-
 }   //  End of namespace  Common
 TSSPLITTER_NAMESPACE_END
-
-#endif

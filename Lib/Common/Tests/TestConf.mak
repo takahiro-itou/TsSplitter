@@ -5,7 +5,7 @@
 
 extra_tests             =
 TESTS                   =  \
-        TsSplitterSettingsTest  \
+        TsSplitterProjectTest   \
         ${extra_tests}
 
 ##
@@ -31,4 +31,5 @@ test_ldflags_common         +=
 ##    Test Programs.
 ##
 
-TsSplitterSettingsTest_SOURCES  =  TsSplitterSettingsTest.cpp
+TsSplitterProjectTest_SOURCES   =  TsSplitterProjectTest.cpp
+
