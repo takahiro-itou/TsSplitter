@@ -9,4 +9,4 @@
 	url = ../CppUnitDriver.git
 [submodule "submodules/Hashes"]
 	path = submodules/Hashes
-	url = git@gitlab.com:takahiro-itou/Hashes.git
+	url = ../Hashes.git
