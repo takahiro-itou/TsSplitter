@@ -146,9 +146,32 @@ parsePMT(
     return ( numComp );
 }
 
+void
+testCrc32()
+{
+    BtByte  buf[188] = {
+    };
+
+    uint32_t crc = 0xFFFFFFFF;
+    for ( int i = 0; i < 1; ++ i ) {
+        BtByte  dat = buf[i];
+        for ( int b = 0; b < 8; ++ b ) {
+            if ( crc & 0x80000000 ) {
+                crc = (crc << 1) ^ 0x04C11DB7;
+            }
+            if ( dat & 0x80 ) {
+                crc |= 1;
+            }
+        }
+    }
+    crc ^= 0xFFFFFFFF;
+    printf("CRC = %08x\n", crc);
+}
 
 int  main(int argc, char * argv[])
 {
+    testCrc32();
+
     if ( argc >= 2 ) {
         fr.parseTsFile(argv[1]);
     }
