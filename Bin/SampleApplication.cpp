@@ -162,6 +162,8 @@ testCrc32()
         for ( int b = 0; b < 8; ++ b ) {
             if ( crc & 0x80000000 ) {
                 crc = (crc << 1) ^ 0x04C11DB7;
+            } else {
+                crc = (crc << 1);
             }
             if ( dat & 0x80 ) {
                 crc |= 1;
