@@ -158,7 +158,7 @@ testCrc32()
     };
 
     uint32_t crc = 0xFFFFFFFF;
-    for ( int i = 0; i < 35; ++ i ) {
+    for ( int i = 0; i < 33 + 4; ++ i ) {
         BtByte  dat = buf[i];
         for ( int b = 0; b < 8; ++ b ) {
             if ( crc & 0x80000000 ) {
@@ -167,6 +167,7 @@ testCrc32()
             if ( dat & 0x80 ) {
                 crc |= 1;
             }
+            dat <<= 1;
         }
     }
     crc ^= 0xFFFFFFFF;
