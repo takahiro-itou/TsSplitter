@@ -159,7 +159,7 @@ testCrc32()
 #endif
 
     BtByte  buf[188] = {
-        0xff
+        0xFE
     };
 
     uint32_t crc = 0xFFFFFFFF;
