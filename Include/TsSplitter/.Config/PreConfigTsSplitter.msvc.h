@@ -21,6 +21,7 @@
 #if !defined( TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H )
 #    define   TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H
 
+
 //========================================================================
 //
 //    Name Space.
@@ -238,5 +239,13 @@
 #else
 #    undef      TSSPLITTER_ENABLE_MOVEOPEQ_DELETE
 #endif
+
+
+//========================================================================
+//
+//    MS  固有の警告対応
+//
+
+#define     _CRT_SECURE_NO_WARNINGS     1
 
 #endif

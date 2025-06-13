@@ -146,108 +146,44 @@ parsePMT(
     return ( numComp );
 }
 
-size_t
-parseTsFile(
-        const  std::string  &fileName)
+void
+testCrc32()
 {
-    size_t  PIDs[8192] = { 0 };
-    int     PMTs[65536] = { 0 };
-    uint8_t buf[204];
-    char    text[1024];
+    BtByte  buf[188] = {
+        0x00, 0xb0, 0x1d, 0x7f, 0xd1, 0xc1, 0x00, 0x00,
+        0x00, 0x00, 0xe0, 0x10, 0x08, 0x08, 0xe1, 0xf0,
+        0x08, 0x09, 0xe3, 0xf0, 0x08, 0x0a, 0xe4, 0xf0,
+        0x09, 0x88, 0xff, 0xc8, 0xcd, 0xd4, 0xea, 0xe8,
+    };
 
-    FILE *  fp  = fopen(fileName.c_str(), "rb");
-    if ( fp == nullptr ) {
-        return ( 0 );
-    }
-    std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
+#if 0
+    BtByte  buf[188] = {
+        0x00
+    };
+#endif
 
-    size_t  cbRead;
-    size_t  numPckt = 0;
-    size_t  cbTotal = 0;
-    size_t  numErr  = 0;
-    size_t  numScr  = 0;
-
-    int     flgPAT  = 1;
-    int     numPMTs = 0;
-
-    for ( int i = 0; i < 8192; ++ i ) {
-        pid_map[i].sid  = -1;
-        pid_map[i].text[0]  = '\0';
-    }
-
-    memset(PIDs, 0, sizeof(PIDs));
-    for (;;) {
-        cbRead  = fread(buf, 1, 188, fp);
-        cbTotal += cbRead;
-        if ( cbRead != 188 ) {
-            break;
-        }
-        ++ numPckt;
-        if ( buf[0] != 0x47 ) {
-            ++ numErr;
-        }
-        if ( buf[3] & 0xC0 ) {
-            ++ numScr;
-        }
-
-        const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
-        ++ PIDs[pid];
-
-        if ( flgPAT && pid == 0x0000 ) {
-            parsePAT(buf, PMTs);
-
-            for ( int i = 0; i < 65536; ++ i ) {
-                if ( PMTs[i] > 0 ) {
-                    ++ numPMTs;
-                }
+    uint32_t crc = 0xFFFFFFFF;
+    for ( int i = 0; i < 28 ; ++ i ) {
+        BtByte  dat = buf[i];
+        for ( int b = 0; b < 8; ++ b ) {
+            if ( crc & 0x80000000 ) {
+                crc = (crc << 1) ^ 0x04C11DB7;
+            } else {
+                crc = (crc << 1);
             }
-            flgPAT  = 0;
-        }
-
-        if ( numPMTs >= 1 ) {
-            for ( int i = 0; i < 65536; ++ i ) {
-                if ( PMTs[i] == pid ) {
-                    parsePMT(i, pid, buf, pid_map);
-                    -- numPMTs;
-                    PMTs[i] |= 65536;
-                    break;
-                }
+            if ( dat & 0x80 ) {
+                crc ^= 0x04C11DB7;
             }
-        }
-
-        if ( (numPckt & 65535) == 0 ) {
-            std::cerr   <<  "\r# of Packet = "  <<  numPckt
-                        <<  ", total "  <<  cbTotal << " bytes, "
-                        <<  "#Error = " <<  numErr
-                        <<  ", #Scramble = "    <<  numScr;
-
+            dat <<= 1;
         }
     }
-    std::cerr   <<  "\r# of Packet = "  <<  numPckt
-                <<  ", total "  <<  cbTotal << " bytes, "
-                <<  "#Error = " <<  numErr
-                <<  ", #Scramble = "  <<  numScr;
-    std::cerr   <<  std::endl;
-
-    std::cerr   <<  "Total : "  <<  numPckt <<  " packets.\n"
-                <<  "Last Read = "  <<  cbRead  <<  " bytes."
-                <<  std::endl;
-    fclose(fp);
-
-    for ( int i = 0; i < 8192; ++ i ) {
-        if ( PIDs[i] ) {
-            sprintf(text,
-                    "PID: 0x%04x  Total:%9ld\t%s\n",
-                    i, PIDs[i], pid_map[i].text);
-            std::cout   <<  text;
-        }
-    }
-
-    return ( numPckt );
+    printf("CRC = %08x\n", crc);
 }
 
 int  main(int argc, char * argv[])
 {
+    testCrc32();
+
     if ( argc >= 2 ) {
         fr.parseTsFile(argv[1]);
     }
