@@ -40,6 +40,8 @@ class  TsCrc32Test : public  TestFixture
     CPPUNIT_TEST(testComputeCrc2);
     CPPUNIT_TEST(testComputeCrc3);
     CPPUNIT_TEST(testComputeCrc4);
+    CPPUNIT_TEST(testComputeCrc5);
+    CPPUNIT_TEST(testComputeCrc6);
     CPPUNIT_TEST(testCrcConstTable);
     CPPUNIT_TEST_SUITE_END();
 
@@ -52,6 +54,8 @@ private:
     void  testComputeCrc2();
     void  testComputeCrc3();
     void  testComputeCrc4();
+    void  testComputeCrc5();
+    void  testComputeCrc6();
     void  testCrcConstTable();
 };
 
@@ -110,6 +114,26 @@ void  TsCrc32Test::testComputeCrc4()
     TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
     CPPUNIT_ASSERT_EQUAL(0xCDD4EAE8u, crc);
 
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc5()
+{
+    BtByte  data[] = {
+        0x00, 0xb0, 0x1d, 0x7f, 0xd4, 0xff, 0x00, 0x00,
+        0x00, 0x00, 0xe0, 0x10, 0x08, 0x20, 0xe1, 0x01,
+        0x08, 0x21, 0xe1, 0x02, 0x08, 0x22, 0xe1, 0x03,
+        0x09, 0xa0, 0xff, 0xc8,
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0x6A5FBB09u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc6()
+{
     return;
 }
 
