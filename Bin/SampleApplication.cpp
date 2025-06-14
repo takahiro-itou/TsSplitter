@@ -146,40 +146,6 @@ parsePMT(
     return ( numComp );
 }
 
-void
-testCrc32()
-{
-    BtByte  buf[188] = {
-        0x00, 0xb0, 0x1d, 0x7f, 0xd1, 0xc1, 0x00, 0x00,
-        0x00, 0x00, 0xe0, 0x10, 0x08, 0x08, 0xe1, 0xf0,
-        0x08, 0x09, 0xe3, 0xf0, 0x08, 0x0a, 0xe4, 0xf0,
-        0x09, 0x88, 0xff, 0xc8, 0xcd, 0xd4, 0xea, 0xe8,
-    };
-
-#if 0
-    BtByte  buf[188] = {
-        0x00
-    };
-#endif
-
-    uint32_t crc = 0xFFFFFFFF;
-    for ( int i = 0; i < 28 ; ++ i ) {
-        BtByte  dat = buf[i];
-        for ( int b = 0; b < 8; ++ b ) {
-            if ( crc & 0x80000000 ) {
-                crc = (crc << 1) ^ 0x04C11DB7;
-            } else {
-                crc = (crc << 1);
-            }
-            if ( dat & 0x80 ) {
-                crc ^= 0x04C11DB7;
-            }
-            dat <<= 1;
-        }
-    }
-    printf("CRC = %08x\n", crc);
-}
-
 int  main(int argc, char * argv[])
 {
     if ( argc >= 2 ) {
