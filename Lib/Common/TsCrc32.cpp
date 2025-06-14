@@ -91,7 +91,24 @@ TsCrc32::computeCrc32(
         const   LpcReadBuf  inBuf,
         const   FileLength  cbBuf)
 {
+    const   LpcByteReadBuf  pcData  = static_cast<LpcByteReadBuf>(inBuf);
+
     CrcVal  crc = 0xFFFFFFFF;
+
+    for ( int i = 0; i < cbBuf ; ++ i ) {
+        BtByte  dat = pcData[i];
+        for ( int b = 0; b < 8; ++ b ) {
+            if ( crc & 0x80000000 ) {
+                crc = (crc << 1) ^ 0x04C11DB7;
+            } else {
+                crc = (crc << 1);
+            }
+            if ( dat & 0x80 ) {
+                crc ^= 0x04C11DB7;
+            }
+            dat <<= 1;
+        }
+    }
 
     return ( crc );
 }
