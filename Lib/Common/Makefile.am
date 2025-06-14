@@ -26,6 +26,7 @@ library_source_files        +=  \
         FileReader.cpp                 \
         FileWriter.cpp                 \
         ServicePmtTable.cpp            \
+        TsCrc32.cpp                    \
         ${extra_library_source_files}
 
 library_instantiations      +=
@@ -41,6 +42,7 @@ inclib_header_files         +=  \
         ${inclib_source_dir}/FileReader.h           \
         ${inclib_source_dir}/FileWriter.h           \
         ${inclib_source_dir}/ServicePmtTable.h      \
+        ${inclib_source_dir}/TsCrc32.h              \
         ${inclib_source_dir}/TsSplitterProject.h    \
         ${inclib_source_dir}/TsSplitterTypes.h      \
         ${extra_library_header_files}
