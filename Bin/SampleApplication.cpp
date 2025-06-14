@@ -182,8 +182,6 @@ testCrc32()
 
 int  main(int argc, char * argv[])
 {
-    testCrc32();
-
     if ( argc >= 2 ) {
         fr.parseTsFile(argv[1]);
     }

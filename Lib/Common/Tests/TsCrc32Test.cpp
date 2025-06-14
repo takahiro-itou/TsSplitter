@@ -1,0 +1,183 @@
+﻿//  -*-  coding: utf-8-with-signature;  mode: c++  -*-  //
+/*************************************************************************
+**                                                                      **
+**                      -- TS Splitter Project. --                      **
+**                                                                      **
+**          Copyright (C), 2025-2025, Takahiro Itou                     **
+**          All Rights Reserved.                                        **
+**                                                                      **
+**          License: (See COPYING or LICENSE files)                     **
+**          GNU Affero General Public License (AGPL) version 3,         **
+**          or (at your option) any later version.                      **
+**                                                                      **
+*************************************************************************/
+
+/**
+**      An Implementation of Test Case 'TsCrc32'.
+**
+**      @file       Common/Tests/TsCrc32Test.cpp
+**/
+
+#include    "TestDriver.h"
+#include    "TsSplitter/Common/TsCrc32.h"
+
+
+TSSPLITTER_NAMESPACE_BEGIN
+namespace  Common  {
+
+//========================================================================
+//
+//    TsCrc32Test  class.
+//
+/**
+**    クラス TsCrc32  の単体テスト。
+**/
+
+class  TsCrc32Test : public  TestFixture
+{
+    CPPUNIT_TEST_SUITE(TsCrc32Test);
+    CPPUNIT_TEST(testComputeCrc1);
+    CPPUNIT_TEST(testComputeCrc2);
+    CPPUNIT_TEST(testComputeCrc3);
+    CPPUNIT_TEST(testComputeCrc4);
+    CPPUNIT_TEST(testComputeCrc5);
+    CPPUNIT_TEST(testComputeCrc6);
+    CPPUNIT_TEST(testCrcConstTable);
+    CPPUNIT_TEST_SUITE_END();
+
+public:
+    virtual  void   setUp()     override    { }
+    virtual  void   tearDown()  override    { }
+
+private:
+    void  testComputeCrc1();
+    void  testComputeCrc2();
+    void  testComputeCrc3();
+    void  testComputeCrc4();
+    void  testComputeCrc5();
+    void  testComputeCrc6();
+    void  testCrcConstTable();
+};
+
+CPPUNIT_TEST_SUITE_REGISTRATION( TsCrc32Test );
+
+//========================================================================
+//
+//    Tests.
+//
+
+void  TsCrc32Test::testComputeCrc1()
+{
+    BtByte  data[] = {
+        0x00
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0x4E08BFB4u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc2()
+{
+    BtByte  data[] = {
+        0xFE
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0xFB3EE2B7u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc3()
+{
+    BtByte  data[] = {
+        0xFF
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0xFFFFFF00u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc4()
+{
+    BtByte  data[] = {
+        0x00, 0xb0, 0x1d, 0x7f, 0xd1, 0xc1, 0x00, 0x00,
+        0x00, 0x00, 0xe0, 0x10, 0x08, 0x08, 0xe1, 0xf0,
+        0x08, 0x09, 0xe3, 0xf0, 0x08, 0x0a, 0xe4, 0xf0,
+        0x09, 0x88, 0xff, 0xc8,
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0xCDD4EAE8u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc5()
+{
+    BtByte  data[] = {
+        0x00, 0xb0, 0x1d, 0x7f, 0xd4, 0xff, 0x00, 0x00,
+        0x00, 0x00, 0xe0, 0x10, 0x08, 0x20, 0xe1, 0x01,
+        0x08, 0x21, 0xe1, 0x02, 0x08, 0x22, 0xe1, 0x03,
+        0x09, 0xa0, 0xff, 0xc8,
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0x6A5FBB09u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc6()
+{
+    BtByte  data[] = {
+        0x40, 0xF0, 0x93, 0x7F, 0xD1, 0xD9, 0x00, 0x00,
+        0xF0, 0x10, 0x40, 0x0A, 0x36, 0x61, 0x35, 0x26,
+        0x39, 0x2D, 0x30, 0x68, 0x23, 0x31, 0xFE, 0x02,
+        0x03, 0x01, 0xF0, 0x76, 0x7F, 0xD1, 0x7F, 0xD1,
+        0xF0, 0x70, 0x41, 0x0C, 0x08, 0x08, 0x01, 0x08,
+        0x09, 0x01, 0x08, 0x0A, 0x01, 0x09, 0x88, 0xC0,
+        0xFA, 0x3C, 0x8D, 0x5A, 0x0C, 0xF0, 0x0D, 0xEC,
+        0x0E, 0x16, 0x0E, 0x40, 0x0E, 0xBE, 0x0E, 0xE8,
+        0x0F, 0x12, 0x0F, 0x3C, 0x0F, 0x66, 0x0F, 0x90,
+        0x0F, 0xBA, 0x0F, 0xE4, 0x10, 0x0E, 0x10, 0x38,
+        0x10, 0x8C, 0x10, 0xB6, 0x10, 0xE0, 0x11, 0x0A,
+        0x11, 0x34, 0x11, 0x5E, 0x11, 0x88, 0x11, 0xB2,
+        0x11, 0xDC, 0x12, 0x06, 0x12, 0x5A, 0x12, 0xAE,
+        0x12, 0xD8, 0x13, 0x02, 0x13, 0x2C, 0xFB, 0x02,
+        0x09, 0x88, 0xCD, 0x1E, 0x02, 0x42, 0x23, 0x4E,
+        0x23, 0x48, 0x23, 0x4B, 0x23, 0x45, 0x25, 0x46,
+        0x25, 0x6C, 0x42, 0x67, 0x3A, 0x65, 0x0F, 0x03,
+        0x08, 0x08, 0x08, 0x09, 0x08, 0x0A, 0xAF, 0x01,
+        0x09, 0x88,
+    };
+
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0x710AA278u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testCrcConstTable()
+{
+    //  今はまだテーブルが無いので何もしない。  //
+    return;
+}
+
+}   //  End of namespace  Common
+TSSPLITTER_NAMESPACE_END
+
+//========================================================================
+//
+//    エントリポイント。
+//
+
+int  main(int argc, char * argv[])
+{
+    return ( executeCppUnitTests(argc, argv) );
+}
