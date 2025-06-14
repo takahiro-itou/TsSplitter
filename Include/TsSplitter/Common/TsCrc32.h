@@ -41,6 +41,9 @@ class  TsCrc32
 //
 //    Internal Type Definitions.
 //
+public:
+
+    typedef     uint32_t    CrcVal;
 
 //========================================================================
 //
@@ -86,6 +89,18 @@ public:
 //
 //    Public Member Functions.
 //
+public:
+
+    //----------------------------------------------------------------
+    /**   CRC の値を計算する。
+    **
+    **  @param [in] inBuf   入力データのアドレス。
+    **  @param [in] cbBuf   入力データのバイト数。
+    **/
+    static  const   CrcVal
+    computeCrc32(
+            const   LpcReadBuf  inBuf,
+            const   FileLength  cbBuf);
 
 //========================================================================
 //

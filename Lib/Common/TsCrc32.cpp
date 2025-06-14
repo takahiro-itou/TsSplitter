@@ -82,6 +82,20 @@ TsCrc32::~TsCrc32()
 //    Public Member Functions.
 //
 
+//----------------------------------------------------------------
+//    CRC の値を計算する。
+//
+
+const   TsCrc32::CrcVal
+TsCrc32::computeCrc32(
+        const   LpcReadBuf  inBuf,
+        const   FileLength  cbBuf)
+{
+    CrcVal  crc = 0xFFFFFFFF;
+
+    return ( crc );
+}
+
 //========================================================================
 //
 //    Accessors.
