@@ -44,6 +44,7 @@ class  TsCrc32Test : public  TestFixture
     CPPUNIT_TEST(testComputeCrc6);
     CPPUNIT_TEST(testComputeCrc7);
     CPPUNIT_TEST(testComputeCrc8);
+    CPPUNIT_TEST(testComputeCrc9);
     CPPUNIT_TEST(testCrcConstTable);
     CPPUNIT_TEST_SUITE_END();
 
