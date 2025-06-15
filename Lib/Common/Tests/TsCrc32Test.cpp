@@ -74,10 +74,11 @@ CPPUNIT_TEST_SUITE_REGISTRATION( TsCrc32Test );
 void  TsCrc32Test::testComputeCrc1()
 {
     BtByte  data[] = {
-        0x00
+        0x00,
+        0x4E, 0x08, 0xBF, 0xB4,
     };
 
-    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0x4E08BFB4u, crc);
 
     return;
@@ -86,10 +87,11 @@ void  TsCrc32Test::testComputeCrc1()
 void  TsCrc32Test::testComputeCrc2()
 {
     BtByte  data[] = {
-        0xFE
+        0xFE,
+        0xFB, 0x3E, 0xE2, 0xB7,
     };
 
-    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0xFB3EE2B7u, crc);
 
     return;
