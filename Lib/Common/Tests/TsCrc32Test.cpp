@@ -60,6 +60,7 @@ private:
     void  testComputeCrc6();
     void  testComputeCrc7();
     void  testComputeCrc8();
+    void  testComputeCrc9();
     void  testCrcConstTable();
 };
 
@@ -208,7 +209,19 @@ void  TsCrc32Test::testComputeCrc8()
     };
 
     TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
-    CPPUNIT_ASSERT_EQUAL(0xB61F6A43, crc);
+    CPPUNIT_ASSERT_EQUAL(0xB61F6A43u, crc);
+
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc9()
+{
+    BtByte  data[] = {
+        0xFF, 0xFF, 0xFF, 0xFF, 0x01,
+    };
+
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0x04C11DB7u, crc);
 
     return;
 }
