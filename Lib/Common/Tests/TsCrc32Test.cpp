@@ -78,7 +78,10 @@ void  TsCrc32Test::testComputeCrc1()
         0x4E, 0x08, 0xBF, 0xB4,
     };
 
-    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0u, crc);
+
+    crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0x4E08BFB4u, crc);
 
     return;
