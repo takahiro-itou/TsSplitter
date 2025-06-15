@@ -226,9 +226,10 @@ void  TsCrc32Test::testComputeCrc9()
 {
     BtByte  data[] = {
         0xFF, 0xFF, 0xFF, 0xFF, 0x01,
+        0x04, 0xC1, 0x1D, 0xB7
     };
 
-    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0x04C11DB7u, crc);
 
     return;
