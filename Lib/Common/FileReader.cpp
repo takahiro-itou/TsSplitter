@@ -122,8 +122,8 @@ FileReader::parsePAT(
 
     const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
     const  TsCrc32::CrcVal  crcRec  = (
-            (p[secLen - 4] << 24) | (p[secLen - 3] << 16) |
-            (p[secLen - 2] <<  8) | (p[secLen - 1]      )
+            (p[secLen + 5 + 3 - 4] << 24) | (p[secLen + 5 + 3 - 3] << 16) |
+            (p[secLen + 5 + 3 - 2] <<  8) | (p[secLen + 5 + 3 - 1]      )
     );
     printf("CRC(Actual) = %08x, CRC(Record) = %08x\n", crcAct, crcRec);
     return ( crcAct );
