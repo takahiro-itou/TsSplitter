@@ -95,7 +95,7 @@ TsCrc32::computeCrc32(
 
     CrcVal  crc = 0xFFFFFFFF;
 
-    for ( int i = 0; i < cbBuf ; ++ i ) {
+    for ( FileLength i = 0; i < cbBuf ; ++ i ) {
         BtByte  dat = pcData[i];
         for ( int b = 0; b < 8; ++ b ) {
             if ( crc & 0x80000000 ) {

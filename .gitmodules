@@ -7,6 +7,3 @@
 [submodule "Lib/Tests"]
 	path = Lib/Tests
 	url = ../CppUnitDriver.git
-[submodule "submodules/Hashes"]
-	path = submodules/Hashes
-	url = ../Hashes.git
