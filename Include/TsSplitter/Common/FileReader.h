@@ -25,6 +25,10 @@
 #    include    "TsSplitterTypes.h"
 #endif
 
+#if !defined( TSSPLITTER_COMMON_INCLUDED_TS_CRC32_H )
+#    include    "TsCrc32.h"
+#endif
+
 #if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
 #    include    <string>
 #    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
@@ -104,7 +108,7 @@ public:
     /**
     **
     **/
-    void
+    TsCrc32::CrcVal
     parsePAT(
             const  uint8_t * p,
             int  (& pmt)[65536]);
