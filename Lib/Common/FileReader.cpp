@@ -86,7 +86,7 @@ FileReader::~FileReader()
 //    Public Member Functions.
 //
 
-void
+TsCrc32::CrcVal
 FileReader::parsePAT(
         const  uint8_t * p,
         int  (& pmt)[65536])
@@ -111,6 +111,7 @@ FileReader::parsePAT(
     int program_number;
     int program_PMT;
     printf(" PAT section length : %d\n", secLen);
+
     for ( int idx = 13; idx < 4 + 1 + secLen - 4; idx += 4 ) {
         program_number  = ((p[idx] << 8) & 0xFF00) | (p[idx+1] & 0x00FF);
         program_PMT = ((p[idx+2] << 8) & 0x1F00) | (p[idx+3] & 0x00FF);
@@ -118,6 +119,14 @@ FileReader::parsePAT(
                program_number, program_number, program_PMT);
         pmt[program_number] = program_PMT;
     }
+
+    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
+    const  TsCrc32::CrcVal  crcRec  = (
+            (p[secLen + 5 + 3 - 4] << 24) | (p[secLen + 5 + 3 - 3] << 16) |
+            (p[secLen + 5 + 3 - 2] <<  8) | (p[secLen + 5 + 3 - 1]      )
+    );
+    printf("CRC(Actual) = %08x, CRC(Record) = %08x\n", crcAct, crcRec);
+    return ( crcAct );
 }
 
 int
@@ -202,7 +211,7 @@ FileReader::parseTsFile(
 {
     size_t  PIDs[8192] = { 0 };
     int     PMTs[65536] = { 0 };
-    uint8_t buf[204];
+    uint8_t buf[408];
     char    text[1024];
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");

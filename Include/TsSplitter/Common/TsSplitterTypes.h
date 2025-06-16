@@ -72,6 +72,13 @@ enum class  ErrCode
 
 //----------------------------------------------------------------
 /**
+**    ファイルの長さを表す型。
+**/
+
+typedef     size_t              FileLength;
+
+//----------------------------------------------------------------
+/**
 **    読み取り専用バッファ。
 **/
 
@@ -145,6 +152,17 @@ T  pointer_cast(const  void  *  p)
     return ( static_cast<T>(p) );
 }
 
+//========================================================================
+/**
+**    配列の要素数を取得する。
+**/
+
+template  <typename  T,  size_t  N>
+CONSTEXPR_FUNC
+size_t  getArraySize(T  (&)[N])
+{
+    return ( N );
+}
 
 TSSPLITTER_NAMESPACE_END
 

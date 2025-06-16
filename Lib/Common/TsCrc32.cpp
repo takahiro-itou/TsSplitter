@@ -13,70 +13,49 @@
 *************************************************************************/
 
 /**
-**      An Interface of FileReader class.
+**      An Implementation of TsCrc32 class.
 **
-**      @file       Common/FileReader.h
+**      @file       Common/TsCrc32.cpp
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_READER_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_FILE_READER_H
-
-#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
-#    include    "TsSplitterTypes.h"
-#endif
-
-#if !defined( TSSPLITTER_COMMON_INCLUDED_TS_CRC32_H )
-#    include    "TsCrc32.h"
-#endif
-
-#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
-#    include    <string>
-#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
-#endif
+#include    "TsSplitter/Common/TsCrc32.h"
 
 
 TSSPLITTER_NAMESPACE_BEGIN
 namespace  Common  {
 
-//========================================================================
-//
-//    FileReader  class.
-//
+namespace  {
 
-class  FileReader
-{
+}   //  End of (Unnamed) namespace.
+
 
 //========================================================================
 //
-//    Internal Type Definitions.
+//    TsCrc32  class.
 //
-public:
-
-    struct  PID_Map  {
-        int     sid;
-        int     stream_type;
-        char    text[256];
-    };
 
 //========================================================================
 //
 //    Constructor(s) and Destructor.
 //
-public:
 
-    //----------------------------------------------------------------
-    /**   インスタンスを初期化する
-    **  （デフォルトコンストラクタ）。
-    **
-    **/
-    FileReader();
+//----------------------------------------------------------------
+//    インスタンスを初期化する
+//  （デフォルトコンストラクタ）。
+//
 
-    //----------------------------------------------------------------
-    /**   インスタンスを破棄する
-    **  （デストラクタ）。
-    **
-    **/
-    virtual  ~FileReader();
+TsCrc32::TsCrc32()
+{
+}
+
+//----------------------------------------------------------------
+//    インスタンスを破棄する
+//  （デストラクタ）。
+//
+
+TsCrc32::~TsCrc32()
+{
+}
 
 //========================================================================
 //
@@ -102,31 +81,37 @@ public:
 //
 //    Public Member Functions.
 //
-public:
 
-    //----------------------------------------------------------------
-    /**
-    **
-    **/
-    TsCrc32::CrcVal
-    parsePAT(
-            const  uint8_t * p,
-            int  (& pmt)[65536]);
+//----------------------------------------------------------------
+//    CRC の値を計算する。
+//
 
-    int
-    parsePMT(
-            const  int  sid,
-            const  int  pmt_pid,
-            const  uint8_t *  pmt,
-            PID_Map  (& pid_map)[8192]);
+const   TsCrc32::CrcVal
+TsCrc32::computeCrc32(
+        const   LpcReadBuf  inBuf,
+        const   FileLength  cbBuf)
+{
+    const   LpcByteReadBuf  pcData  = static_cast<LpcByteReadBuf>(inBuf);
 
-    size_t
-    parseTsFile(
-            const  std::string  &fileName);
+    CrcVal  crc = 0xFFFFFFFF;
 
-    size_t
-    parseTsFile(
-            FILE *  fp);
+    for ( FileLength i = 0; i < cbBuf ; ++ i ) {
+        BtByte  dat = pcData[i];
+        for ( int b = 0; b < 8; ++ b ) {
+            if ( crc & 0x80000000 ) {
+                crc = (crc << 1) ^ 0x04C11DB7;
+            } else {
+                crc = (crc << 1);
+            }
+            if ( dat & 0x80 ) {
+                crc ^= 0x04C11DB7;
+            }
+            dat <<= 1;
+        }
+    }
+
+    return ( crc );
+}
 
 //========================================================================
 //
@@ -148,16 +133,5 @@ public:
 //    Member Variables.
 //
 
-//========================================================================
-//
-//    Other Features.
-//
-public:
-    //  テストクラス。  //
-    friend  class   FileReaderTest;
-};
-
 }   //  End of namespace  Common
 TSSPLITTER_NAMESPACE_END
-
-#endif

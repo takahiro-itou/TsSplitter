@@ -21,6 +21,7 @@
 #if !defined( TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H )
 #    define   TSSPLITTER_CONFIG_INCLUDED_CONFIGURED_TSSPLITTER_H
 
+
 //========================================================================
 //
 //    Name Space.

@@ -13,25 +13,16 @@
 *************************************************************************/
 
 /**
-**      An Interface of FileReader class.
+**      An Interface of TsCrc32 class.
 **
-**      @file       Common/FileReader.h
+**      @file       Common/TsCrc32.h
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_READER_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_FILE_READER_H
+#if !defined( TSSPLITTER_COMMON_INCLUDED_TS_CRC32_H )
+#    define   TSSPLITTER_COMMON_INCLUDED_TS_CRC32_H
 
 #if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
 #    include    "TsSplitterTypes.h"
-#endif
-
-#if !defined( TSSPLITTER_COMMON_INCLUDED_TS_CRC32_H )
-#    include    "TsCrc32.h"
-#endif
-
-#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
-#    include    <string>
-#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
 #endif
 
 
@@ -40,10 +31,10 @@ namespace  Common  {
 
 //========================================================================
 //
-//    FileReader  class.
+//    TsCrc32  class.
 //
 
-class  FileReader
+class  TsCrc32
 {
 
 //========================================================================
@@ -52,11 +43,7 @@ class  FileReader
 //
 public:
 
-    struct  PID_Map  {
-        int     sid;
-        int     stream_type;
-        char    text[256];
-    };
+    typedef     uint32_t    CrcVal;
 
 //========================================================================
 //
@@ -69,14 +56,14 @@ public:
     **  （デフォルトコンストラクタ）。
     **
     **/
-    FileReader();
+    TsCrc32();
 
     //----------------------------------------------------------------
     /**   インスタンスを破棄する
     **  （デストラクタ）。
     **
     **/
-    virtual  ~FileReader();
+    virtual  ~TsCrc32();
 
 //========================================================================
 //
@@ -105,28 +92,15 @@ public:
 public:
 
     //----------------------------------------------------------------
-    /**
+    /**   CRC の値を計算する。
     **
+    **  @param [in] inBuf   入力データのアドレス。
+    **  @param [in] cbBuf   入力データのバイト数。
     **/
-    TsCrc32::CrcVal
-    parsePAT(
-            const  uint8_t * p,
-            int  (& pmt)[65536]);
-
-    int
-    parsePMT(
-            const  int  sid,
-            const  int  pmt_pid,
-            const  uint8_t *  pmt,
-            PID_Map  (& pid_map)[8192]);
-
-    size_t
-    parseTsFile(
-            const  std::string  &fileName);
-
-    size_t
-    parseTsFile(
-            FILE *  fp);
+    static  const   CrcVal
+    computeCrc32(
+            const   LpcReadBuf  inBuf,
+            const   FileLength  cbBuf);
 
 //========================================================================
 //
@@ -154,7 +128,7 @@ public:
 //
 public:
     //  テストクラス。  //
-    friend  class   FileReaderTest;
+    friend  class   TsCrc32Test;
 };
 
 }   //  End of namespace  Common
