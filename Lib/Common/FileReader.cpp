@@ -120,7 +120,7 @@ FileReader::parsePAT(
         pmt[program_number] = program_PMT;
     }
 
-    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen - 4);
+    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
     const  TsCrc32::CrcVal  crcRec  = (
             (p[secLen - 4] << 24) | (p[secLen - 3] << 16) |
             (p[secLen - 2] <<  8) | (p[secLen - 1]      )
