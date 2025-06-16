@@ -202,7 +202,7 @@ FileReader::parseTsFile(
 {
     size_t  PIDs[8192] = { 0 };
     int     PMTs[65536] = { 0 };
-    uint8_t buf[204];
+    uint8_t buf[408];
     char    text[1024];
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");
