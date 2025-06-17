@@ -89,6 +89,7 @@ FileReader::~FileReader()
 TsCrc32::CrcVal
 FileReader::parsePAT(
         const  uint8_t * p,
+        const  TsCrc32::CrcVal  prvCrc,
         int  (& pmt)[65536])
 {
     printf("DUMP of PAT:\n");
@@ -227,6 +228,8 @@ FileReader::parseTsFile(
     size_t  numScr  = 0;
 
     int     flgPAT  = 1;
+    TsCrc32::CrcVal crcPAT  = 0;
+    TsCrc32::CrcVal crcPrv  = 0;
     int     numPMTs = 0;
 
     for ( int i = 0; i < 8192; ++ i ) {
@@ -253,7 +256,8 @@ FileReader::parseTsFile(
         ++ PIDs[pid];
 
         if ( flgPAT && pid == 0x0000 ) {
-            parsePAT(buf, PMTs);
+            crcPrv  = crcPAT;
+            crcPAT  = parsePAT(buf, crcPrv, PMTs);
 
             for ( int i = 0; i < 65536; ++ i ) {
                 if ( PMTs[i] > 0 ) {
