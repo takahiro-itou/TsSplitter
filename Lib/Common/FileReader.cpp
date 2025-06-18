@@ -92,6 +92,13 @@ FileReader::parsePAT(
         const  TsCrc32::CrcVal  prvCrc,
         int  (& pmt)[65536])
 {
+    int secLen  = ((p[4 + 2] << 8) & 0x0F00) | (p[4 + 3] & 0x00FF);
+    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
+    const  TsCrc32::CrcVal  crcRec  = (
+            (p[secLen + 5 + 3 - 4] << 24) | (p[secLen + 5 + 3 - 3] << 16) |
+            (p[secLen + 5 + 3 - 2] <<  8) | (p[secLen + 5 + 3 - 1]      )
+    );
+
     printf("DUMP of PAT:\n");
     for ( int y = 0; y < 188; y += 16 ) {
         printf("%02x:", y);
@@ -108,7 +115,6 @@ FileReader::parsePAT(
         pmt[pg] = -1;
     }
 
-    int secLen  = ((p[4 + 2] << 8) & 0x0F00) | (p[4 + 3] & 0x00FF);
     int program_number;
     int program_PMT;
     printf(" PAT section length : %d\n", secLen);
@@ -121,11 +127,6 @@ FileReader::parsePAT(
         pmt[program_number] = program_PMT;
     }
 
-    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
-    const  TsCrc32::CrcVal  crcRec  = (
-            (p[secLen + 5 + 3 - 4] << 24) | (p[secLen + 5 + 3 - 3] << 16) |
-            (p[secLen + 5 + 3 - 2] <<  8) | (p[secLen + 5 + 3 - 1]      )
-    );
     printf("CRC(Actual) = %08x, CRC(Record) = %08x\n", crcAct, crcRec);
     return ( crcAct );
 }
