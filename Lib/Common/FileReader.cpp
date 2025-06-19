@@ -256,16 +256,18 @@ FileReader::parseTsFile(
         const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
         ++ PIDs[pid];
 
-        if ( flgPAT && pid == 0x0000 ) {
+        if ( pid == 0x0000 ) {
             crcPrv  = crcPAT;
             crcPAT  = parsePAT(buf, crcPrv, PMTs);
 
-            for ( int i = 0; i < 65536; ++ i ) {
-                if ( PMTs[i] > 0 ) {
-                    ++ numPMTs;
+            if ( crcPAT != crcPrv ) {
+                for ( int i = 0; i < 65536; ++ i ) {
+                    if ( PMTs[i] > 0 ) {
+                        ++ numPMTs;
+                    }
                 }
+                std::cerr   <<  "\nDetected PAT changed."   <<  std::endl;
             }
-            flgPAT  = 0;
         }
 
         if ( numPMTs >= 1 ) {
