@@ -111,6 +111,7 @@ public:
     TsCrc32::CrcVal
     parsePAT(
             const  uint8_t * p,
+            const  TsCrc32::CrcVal  prvCrc,
             int  (& pmt)[65536]);
 
     int

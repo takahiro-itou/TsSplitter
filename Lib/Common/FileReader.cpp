@@ -89,8 +89,20 @@ FileReader::~FileReader()
 TsCrc32::CrcVal
 FileReader::parsePAT(
         const  uint8_t * p,
+        const  TsCrc32::CrcVal  prvCrc,
         int  (& pmt)[65536])
 {
+    const  int  secLen  = ((p[4 + 2] << 8) & 0x0F00) | (p[4 + 3] & 0x00FF);
+    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
+    const  TsCrc32::CrcVal  crcRec  = (
+            (p[secLen + 5 + 3 - 4] << 24) | (p[secLen + 5 + 3 - 3] << 16) |
+            (p[secLen + 5 + 3 - 2] <<  8) | (p[secLen + 5 + 3 - 1]      )
+    );
+
+    if ( crcAct == prvCrc ) {
+        return ( crcAct );
+    }
+
     printf("DUMP of PAT:\n");
     for ( int y = 0; y < 188; y += 16 ) {
         printf("%02x:", y);
@@ -107,7 +119,6 @@ FileReader::parsePAT(
         pmt[pg] = -1;
     }
 
-    int secLen  = ((p[4 + 2] << 8) & 0x0F00) | (p[4 + 3] & 0x00FF);
     int program_number;
     int program_PMT;
     printf(" PAT section length : %d\n", secLen);
@@ -120,11 +131,6 @@ FileReader::parsePAT(
         pmt[program_number] = program_PMT;
     }
 
-    const  TsCrc32::CrcVal  crcAct  = TsCrc32::computeCrc32(p + 5, secLen + 3 - 4);
-    const  TsCrc32::CrcVal  crcRec  = (
-            (p[secLen + 5 + 3 - 4] << 24) | (p[secLen + 5 + 3 - 3] << 16) |
-            (p[secLen + 5 + 3 - 2] <<  8) | (p[secLen + 5 + 3 - 1]      )
-    );
     printf("CRC(Actual) = %08x, CRC(Record) = %08x\n", crcAct, crcRec);
     return ( crcAct );
 }
@@ -227,6 +233,8 @@ FileReader::parseTsFile(
     size_t  numScr  = 0;
 
     int     flgPAT  = 1;
+    TsCrc32::CrcVal crcPAT  = 0;
+    TsCrc32::CrcVal crcPrv  = 0;
     int     numPMTs = 0;
 
     for ( int i = 0; i < 8192; ++ i ) {
@@ -252,15 +260,18 @@ FileReader::parseTsFile(
         const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
         ++ PIDs[pid];
 
-        if ( flgPAT && pid == 0x0000 ) {
-            parsePAT(buf, PMTs);
+        if ( pid == 0x0000 ) {
+            crcPrv  = crcPAT;
+            crcPAT  = parsePAT(buf, crcPrv, PMTs);
 
-            for ( int i = 0; i < 65536; ++ i ) {
-                if ( PMTs[i] > 0 ) {
-                    ++ numPMTs;
+            if ( crcPAT != crcPrv ) {
+                for ( int i = 0; i < 65536; ++ i ) {
+                    if ( PMTs[i] > 0 ) {
+                        ++ numPMTs;
+                    }
                 }
+                std::cerr   <<  "\nDetected PAT changed."   <<  std::endl;
             }
-            flgPAT  = 0;
         }
 
         if ( numPMTs >= 1 ) {
