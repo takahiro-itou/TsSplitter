@@ -338,5 +338,15 @@ FileReader::parseTsFile(
 //    For Internal Use Only.
 //
 
+//----------------------------------------------------------------
+//    次のパケットを読みだす。
+//
+
+FileLength
+FileReader::readNextPacket()
+{
+    return ( 0 );
+}
+
 }   //  End of namespace  Common
 TSSPLITTER_NAMESPACE_END
