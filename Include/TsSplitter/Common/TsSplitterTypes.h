@@ -135,6 +135,16 @@ typedef     int                 BtProgramId;
 
 typedef     BtProgramId         PmtPid;
 
+/**
+**    パケットの内容。
+**/
+
+struct  Packet
+{
+    BtProgramId     pid;
+    LpcByteReadBuf  packets;
+};
+
 //========================================================================
 //
 //    安全なポインタ型のキャスト。
