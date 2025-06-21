@@ -164,7 +164,7 @@ private:
     FILE  *         m_fp;
 
     /**   最後に読みだしたパケット。    **/
-    Packet          m_lastPacket;
+    PacketData      m_lastPacket;
 
     /**   現在読み出した総パケット数。  **/
     PacketCount     m_numPackets;

@@ -139,8 +139,9 @@ typedef     BtProgramId         PmtPid;
 **    パケットの内容。
 **/
 
-struct  Packet
+struct  PacketData
 {
+    FileLength      offset;
     BtProgramId     pid;
     LpcByteReadBuf  packets;
 };
