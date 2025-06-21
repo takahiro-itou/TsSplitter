@@ -245,11 +245,10 @@ FileReader::parseTsFile(
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
         cbRead  = fread(buf, 1, 188, fp);
-        cbTotal += cbRead;
         if ( cbRead != 188 ) {
             break;
         }
-        ++ numPckt;
+
         if ( buf[0] != 0x47 ) {
             ++ numErr;
         }
@@ -285,6 +284,8 @@ FileReader::parseTsFile(
             }
         }
 
+        cbTotal += cbRead;
+        ++ numPckt;
         if ( (numPckt & 65535) == 0 ) {
             std::cerr   <<  "\r# of Packet = "  <<  numPckt
                         <<  ", total "  <<  cbTotal << " bytes, "
