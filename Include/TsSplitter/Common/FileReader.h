@@ -161,10 +161,16 @@ private:
 private:
 
     /**   入力ストリーム。  **/
-    FILE *      m_fp;
+    FILE  *         m_fp;
 
     /**   最後に読みだしたパケット。    **/
-    Packet      m_lastPacket;
+    Packet          m_lastPacket;
+
+    /**   現在読み出した総パケット数。  **/
+    PacketCount     m_numPackets;
+
+    /**   現在読み出した総バイト数。    **/
+    FileLength      m_cbTotalRead;
 
 //========================================================================
 //
