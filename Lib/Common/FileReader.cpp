@@ -354,7 +354,19 @@ FileReader::parseTsFile(
 FileLength
 FileReader::readNextPacket()
 {
-    return ( 0 );
+    const   FileLength  cbRead =
+        fread(this->m_lastPacket.buf, 1, 188, this->m_fp);
+
+    LpcByteReadBuf  const   buf = this->m_lastPacket.buf;
+
+    this->m_lastPacket.offset   = this->m_cbTotalRead;
+    this->m_lastPacket.packets  = buf;
+    this->m_lastPacket.pid  = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
+
+    this->m_cbTotalRead += cbRead;
+    ++  this->m_numPackets;
+
+    return ( cbRead );
 }
 
 }   //  End of namespace  Common
