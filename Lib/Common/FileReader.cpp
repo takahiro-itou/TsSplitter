@@ -221,7 +221,8 @@ FileReader::parseTsFile(
 {
     size_t  PIDs[8192] = { 0 };
     int     PMTs[65536] = { 0 };
-    uint8_t buf[408];
+    //uint8_t buf[408];
+    PacketData  lastPacket;
     char    text[1024];
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");
@@ -249,11 +250,12 @@ FileReader::parseTsFile(
 
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
-        cbRead  = fread(buf, 1, 188, fp);
+        cbRead  = fread(lastPacket.buf, 1, 188, this->m_fp);
         if ( cbRead != 188 ) {
             break;
         }
 
+        LpcByteReadBuf  const   buf = lastPacket.buf;
         if ( buf[0] != 0x47 ) {
             ++ numErr;
         }
