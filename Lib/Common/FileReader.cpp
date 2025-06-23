@@ -224,6 +224,7 @@ FileReader::parseTsFile(
     if ( fp == nullptr ) {
         return ( 0 );
     }
+    this->m_fp  = fp;
     std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
 
     size_t  cbRead;
@@ -303,6 +304,7 @@ FileReader::parseTsFile(
     std::cerr   <<  "Total : "  <<  numPckt <<  " packets.\n"
                 <<  "Last Read = "  <<  cbRead  <<  " bytes."
                 <<  std::endl;
+    this->m_fp  = nullptr;
     fclose(fp);
 
     for ( int i = 0; i < 8192; ++ i ) {
