@@ -176,6 +176,10 @@ private:
 //
 //    Other Features.
 //
+private:
+    typedef     FileReader      This;
+    FileReader          (const  This  &);
+    This &  operator =  (const  This  &);
 public:
     //  テストクラス。  //
     friend  class   FileReaderTest;
