@@ -141,16 +141,7 @@ FileReader::parsePMT(
            " 0x%08" PRIu64 "x, %08" PRIu64 "x\n",
            sid, sid, pmt_pid, this->m_cbTotalRead - 188, this->m_numPackets);
     printf("DUMP of PMT:\n");
-    for ( int y = 0; y < 188; y += 16 ) {
-        printf("%02x:", y);
-        for ( int x = 0; x < 16; ++ x ) {
-            int idx = y + x;
-            if ( idx >= 188 ) { break; }
-            printf(" %02x", pmt[idx]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    dumpCurrentPacket();
 
     int secLen  = ((pmt[6] << 8) & 0x0F00) | (pmt[4 + 3] & 0x00FF);
     int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
