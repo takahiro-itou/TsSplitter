@@ -45,6 +45,7 @@ class  TsCrc32Test : public  TestFixture
     CPPUNIT_TEST(testComputeCrc7);
     CPPUNIT_TEST(testComputeCrc8);
     CPPUNIT_TEST(testComputeCrc9);
+    CPPUNIT_TEST(testComputeCrc10);
     CPPUNIT_TEST(testCrcConstTable);
     CPPUNIT_TEST_SUITE_END();
 
@@ -62,6 +63,7 @@ private:
     void  testComputeCrc7();
     void  testComputeCrc8();
     void  testComputeCrc9();
+    void  testComputeCrc10();
     void  testCrcConstTable();
 };
 
@@ -236,6 +238,11 @@ void  TsCrc32Test::testComputeCrc9()
     TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0x04C11DB7u, crc);
 
+    return;
+}
+
+void  TsCrc32Test::testComputeCrc10()
+{
     return;
 }
 
