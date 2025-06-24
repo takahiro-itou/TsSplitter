@@ -146,8 +146,8 @@ FileReader::parsePMT(
         const  uint8_t *  pmt,
         PID_Map  (& pid_map)[8192])
 {
-    printf("SID = 0x%04x(%05d), PMT PID = 0x%04x\n",
-           sid, sid, pmt_pid);
+    printf("SID = 0x%04x(%05d), PMT PID = 0x%04x @ 0x%08x, %08x\n",
+           sid, sid, pmt_pid, this->m_cbTotalRead - 188, this->m_numPackets);
     printf("DUMP of PMT:\n");
     for ( int y = 0; y < 188; y += 16 ) {
         printf("%02x:", y);
@@ -254,6 +254,8 @@ FileReader::parseTsFile(
         if ( cbRead != 188 ) {
             break;
         }
+        this->m_cbTotalRead += cbRead;
+        ++  this->m_numPackets;
 
         LpcByteReadBuf  const   buf = lastPacket.buf;
         if ( buf[0] != 0x47 ) {
