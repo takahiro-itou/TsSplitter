@@ -146,6 +146,9 @@ public:
 private:
 
     void
+    dumpCurrentPacket();
+
+    void
     dumpPacket(
             const  PacketData  &packet);
 
