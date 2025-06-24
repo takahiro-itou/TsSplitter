@@ -248,6 +248,8 @@ FileReader::parseTsFile(
         pid_map[i].text[0]  = '\0';
     }
 
+    size_t  numShow = 0;
+
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
         cbRead  = fread(lastPacket.buf, 1, 188, this->m_fp);
@@ -287,7 +289,8 @@ FileReader::parseTsFile(
                 if ( PMTs[i] == pid ) {
                     parsePMT(i, pid, buf, pid_map);
                     -- numPMTs;
-                    PMTs[i] |= 65536;
+                    //  PMTs[i] |= 65536;
+                    ++ numShow;
                     break;
                 }
             }
