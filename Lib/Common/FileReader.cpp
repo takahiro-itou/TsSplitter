@@ -108,16 +108,7 @@ FileReader::parsePAT(
     }
 
     printf("DUMP of PAT:\n");
-    for ( int y = 0; y < 188; y += 16 ) {
-        printf("%02x:", y);
-        for ( int x = 0; x < 16; ++ x ) {
-            int idx = y + x;
-            if ( idx >= 188 ) { break; }
-            printf(" %02x", p[idx]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    dumpCurrentPacket();
 
     for ( int pg = 0; pg < 65536; ++ pg ) {
         pmt[pg] = -1;
@@ -360,6 +351,19 @@ void
 FileReader::dumpPacket(
         const  PacketData  &packet)
 {
+    LpcByteReadBuf const p  = this->m_lastPacket.buf;
+
+    for ( int y = 0; y < 188; y += 16 ) {
+        printf("%02x:", y);
+        for ( int x = 0; x < 16; ++ x ) {
+            int idx = y + x;
+            if ( idx >= 188 ) { break; }
+            printf(" %02x", p[idx]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
     return;
 }
 
