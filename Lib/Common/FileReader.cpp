@@ -352,6 +352,19 @@ FileReader::parseTsFile(
 //    For Internal Use Only.
 //
 
+void
+FileReader::dumpCurrentPacket()
+{
+    return  dumpPacket(this->m_lastPacket);
+}
+
+void
+FileReader::dumpPacket(
+        const  PacketData  &packet)
+{
+    return;
+}
+
 //----------------------------------------------------------------
 //    次のパケットを読みだす。
 //
