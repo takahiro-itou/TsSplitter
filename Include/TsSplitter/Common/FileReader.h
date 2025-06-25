@@ -58,6 +58,10 @@ public:
         char    text[256];
     };
 
+private:
+
+    typedef     FileReader      This;
+
 //========================================================================
 //
 //    Constructor(s) and Destructor.
@@ -133,6 +137,31 @@ public:
 //
 //    Accessors.
 //
+public:
+
+    //----------------------------------------------------------------
+    /**   次のファイルアクセス位置を取得する。
+    **
+    **  @return     現在の値。
+    **/
+    FileLength
+    getCurrentFileOffset()  const
+    {
+        return ( this->m_curFilePos );
+    }
+
+    //----------------------------------------------------------------
+    /**   次のファイルアクセス位置を設定する。
+    **
+    **  @param [in] posNew    設定する値。
+    **/
+    This  &
+    setCurrentFileOffset(
+            const   FileLength  posNew)
+    {
+        this->m_curFilePos  = posNew;
+        return ( *this );
+    }
 
 //========================================================================
 //
@@ -171,6 +200,9 @@ private:
     /**   入力ストリーム。  **/
     FILE  *         m_fp;
 
+    /**   現在のファイルアクセス位置。  **/
+    FileLength      m_curFilePos;
+
     /**   現在読み出した総バイト数。    **/
     FileLength      m_cbTotalRead;
 
@@ -185,7 +217,6 @@ private:
 //    Other Features.
 //
 private:
-    typedef     FileReader      This;
     FileReader          (const  This  &);
     This &  operator =  (const  This  &);
 public:

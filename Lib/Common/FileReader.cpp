@@ -50,6 +50,7 @@ FileReader::PID_Map     pid_map[8192];
 
 FileReader::FileReader()
     : m_fp(nullptr),
+      m_curFilePos(0),
       m_cbTotalRead(0),
       m_lastPacket(),
       m_numPackets(0)
