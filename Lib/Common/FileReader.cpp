@@ -138,8 +138,9 @@ FileReader::parsePMT(
         PID_Map  (& pid_map)[8192])
 {
     printf("SID = 0x%04x(%05d), PMT PID = 0x%04x @"
-           " 0x%08" PRIu64 "x, %08" PRIu64 "x\n",
-           sid, sid, pmt_pid, this->m_cbTotalRead - 188, this->m_numPackets);
+           " 0x%08" PRIx64 ", %08" PRIx64 "\n",
+           sid, sid, pmt_pid,
+           this->m_cbTotalRead - 188, this->m_numPackets);
     printf("DUMP of PMT:\n");
     dumpCurrentPacket();
 
