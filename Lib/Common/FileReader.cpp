@@ -90,6 +90,8 @@ FileReader::~FileReader()
 //    Public Member Functions.
 //
 
+//----------------------------------------------------------------
+
 TsCrc32::CrcVal
 FileReader::parsePAT(
         const  uint8_t * p,
@@ -240,7 +242,7 @@ FileReader::parseTsFile(
 
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
-        cbRead  = readNextPacket();
+        cbRead  = readNextPacket(this->m_lastPacket);
         if ( cbRead != 188 ) {
             break;
         }
@@ -369,17 +371,18 @@ FileReader::dumpPacket(
 //
 
 FileLength
-FileReader::readNextPacket()
+FileReader::readNextPacket(
+        PacketData  &packet)
 {
     const   FileLength  cbRead =
-        fread(this->m_lastPacket.buf, 1, 188, this->m_fp);
+        fread(packet.buf, 1, 188, this->m_fp);
 
-    LpcByteReadBuf  const   buf = this->m_lastPacket.buf;
+    LpcByteReadBuf  const   buf = packet.buf;
     const  BtProgramId  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
 
-    this->m_lastPacket.offset   = this->m_cbTotalRead;
-    this->m_lastPacket.pid      = pid;
-    this->m_lastPacket.packets  = buf;
+    packet.offset   = this->m_cbTotalRead;
+    packet.pid      = pid;
+    packet.packets  = buf;
 
     this->m_cbTotalRead += cbRead;
     ++  this->m_numPackets;
