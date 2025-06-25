@@ -92,6 +92,17 @@ FileReader::~FileReader()
 //
 
 //----------------------------------------------------------------
+//    特定の Program ID を持つパケットを検索する。
+//
+
+PacketData
+FileReader::findNextPacket(
+        const  BtProgramId  pid)
+{
+    return ( this->m_lastPacket );
+}
+
+//----------------------------------------------------------------
 
 TsCrc32::CrcVal
 FileReader::parsePAT(
@@ -326,6 +337,26 @@ FileReader::parseTsFile(
     return ( 0 );
 }
 
+//----------------------------------------------------------------
+//    スタックからファイルアクセス位置を取り出す。
+//
+
+FileLength
+FileReader::popFileOffset()
+{
+    FileLength  pos = this->m_curFilePos;
+    return  this->setCurrentFileOffset(pos);
+}
+
+//----------------------------------------------------------------
+//    スタックにファイルアクセス位置を詰む。
+//
+
+void
+FileReader::pushFileOffset()
+{
+}
+
 //========================================================================
 //
 //    Accessors.
@@ -335,15 +366,14 @@ FileReader::parseTsFile(
 //    次のファイルアクセス位置を設定する。
 //
 
-FileReader  &
+FileLength
 FileReader::setCurrentFileOffset(
         const   FileLength  posNew)
 {
-    this->m_curFilePos  = posNew;
     if ( this->m_fp != nullptr ) {
         fseek(this->m_fp, posNew, SEEK_SET);
     }
-    return ( *this );
+    return ( this->m_curFilePos  = posNew );
 }
 
 //========================================================================
