@@ -331,6 +331,21 @@ FileReader::parseTsFile(
 //    Accessors.
 //
 
+//----------------------------------------------------------------
+//    次のファイルアクセス位置を設定する。
+//
+
+FileReader  &
+FileReader::setCurrentFileOffset(
+        const   FileLength  posNew)
+{
+    this->m_curFilePos  = posNew;
+    if ( this->m_fp != nullptr ) {
+        fseek(this->m_fp, posNew, SEEK_SET);
+    }
+    return ( *this );
+}
+
 //========================================================================
 //
 //    Protected Member Functions.
@@ -381,11 +396,11 @@ FileReader::readNextPacket(
     LpcByteReadBuf  const   buf = packet.buf;
     const  BtProgramId  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
 
-    packet.offset   = this->m_cbTotalRead;
+    packet.offset   = this->m_curFilePos;
     packet.pid      = pid;
     packet.packets  = buf;
 
-    this->m_cbTotalRead += cbRead;
+    this->m_curFilePos  += cbRead;
     ++  this->m_numPackets;
 
     return ( cbRead );

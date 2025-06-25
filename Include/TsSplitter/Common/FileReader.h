@@ -157,11 +157,7 @@ public:
     **/
     This  &
     setCurrentFileOffset(
-            const   FileLength  posNew)
-    {
-        this->m_curFilePos  = posNew;
-        return ( *this );
-    }
+            const   FileLength  posNew);
 
 //========================================================================
 //
