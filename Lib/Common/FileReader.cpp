@@ -143,6 +143,11 @@ FileReader::parsePMT(
     printf("DUMP of PMT:\n");
     dumpCurrentPacket();
 
+    if ( !(pmt[1] & 0x40) ) {
+        printf("Payload Unit Start Indicator = 0\n");
+        return ( -1 );
+    }
+
     int secLen  = ((pmt[6] << 8) & 0x0F00) | (pmt[4 + 3] & 0x00FF);
     int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
     printf("  PMT section length : %d\n", secLen);
