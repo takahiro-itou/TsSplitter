@@ -29,6 +29,11 @@
 #    include    "TsCrc32.h"
 #endif
 
+#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STACK )
+#    include    <stack>
+#    define   TSSPLITTER_SYS_STL_INCLUDED_STACK
+#endif
+
 #if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
 #    include    <string>
 #    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
@@ -61,6 +66,11 @@ public:
 private:
 
     typedef     FileReader      This;
+
+    /**
+    **    ファイルアクセス位置（ファイルオフセット）のスタック型。
+    **/
+    typedef     std::stack<FileLength>      OffsetStack;
 
 //========================================================================
 //
@@ -231,6 +241,9 @@ private:
 
     /**   現在読み出した総パケット数。  **/
     PacketCount     m_numPackets;
+
+    /**   ファイルオフセットスタック。  **/
+    OffsetStack     m_offsetStack;
 
 //========================================================================
 //

@@ -53,7 +53,8 @@ FileReader::FileReader()
       m_curFilePos(0),
       m_cbTotalRead(0),
       m_lastPacket(),
-      m_numPackets(0)
+      m_numPackets(0),
+      m_offsetStack()
 {
 }
 
