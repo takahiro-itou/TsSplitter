@@ -113,7 +113,10 @@ void  TsCrc32Test::testComputeCrc3()
         0xFF, 0xFF, 0xFF, 0x00,
     };
 
-    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0u, crc);
+
+    crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0xFFFFFF00u, crc);
 
     return;
@@ -129,7 +132,10 @@ void  TsCrc32Test::testComputeCrc4()
         0xCD, 0xD4, 0xEA, 0xE8,
     };
 
-    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
+    TsCrc32::CrcVal crc = TsCrc32::computeCrc32(data, getArraySize(data));
+    CPPUNIT_ASSERT_EQUAL(0u, crc);
+
+    crc = TsCrc32::computeCrc32(data, getArraySize(data) - 4);
     CPPUNIT_ASSERT_EQUAL(0xCDD4EAE8u, crc);
 
     return;
