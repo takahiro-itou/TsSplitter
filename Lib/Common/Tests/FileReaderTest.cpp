@@ -37,6 +37,7 @@ class  FileReaderTest : public  TestFixture
 {
     CPPUNIT_TEST_SUITE(FileReaderTest);
     CPPUNIT_TEST(testFileReader);
+    CPPUNIT_TEST(testOffsetStack);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -45,6 +46,7 @@ public:
 
 private:
     void  testFileReader();
+    void  testOffsetStack();
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( FileReaderTest );
@@ -57,6 +59,18 @@ CPPUNIT_TEST_SUITE_REGISTRATION( FileReaderTest );
 void  FileReaderTest::testFileReader()
 {
     FileReader  testee;
+    return;
+}
+
+void  FileReaderTest::testOffsetStack()
+{
+    FileReader  testee;
+
+    CPPUNIT_ASSERT_EQUAL(0UL, testee.getCurrentFileOffset());
+
+    CPPUNIT_ASSERT_EQUAL(188UL, testee.setCurrentFileOffset(188));
+    CPPUNIT_ASSERT_EQUAL(188UL, testee.getCurrentFileOffset());
+
     return;
 }
 
