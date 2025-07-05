@@ -49,6 +49,12 @@ FileReader::PID_Map     pid_map[8192];
 //
 
 FileReader::FileReader()
+    : m_fp(nullptr),
+      m_curFilePos(0),
+      m_cbTotalRead(0),
+      m_lastPacket(),
+      m_numPackets(0),
+      m_offsetStack()
 {
 }
 
@@ -86,6 +92,19 @@ FileReader::~FileReader()
 //    Public Member Functions.
 //
 
+//----------------------------------------------------------------
+//    特定の Program ID を持つパケットを検索する。
+//
+
+PacketData
+FileReader::findNextPacket(
+        const  BtProgramId  pid)
+{
+    return ( this->m_lastPacket );
+}
+
+//----------------------------------------------------------------
+
 TsCrc32::CrcVal
 FileReader::parsePAT(
         const  uint8_t * p,
@@ -104,16 +123,7 @@ FileReader::parsePAT(
     }
 
     printf("DUMP of PAT:\n");
-    for ( int y = 0; y < 188; y += 16 ) {
-        printf("%02x:", y);
-        for ( int x = 0; x < 16; ++ x ) {
-            int idx = y + x;
-            if ( idx >= 188 ) { break; }
-            printf(" %02x", p[idx]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    dumpCurrentPacket();
 
     for ( int pg = 0; pg < 65536; ++ pg ) {
         pmt[pg] = -1;
@@ -142,19 +152,17 @@ FileReader::parsePMT(
         const  uint8_t *  pmt,
         PID_Map  (& pid_map)[8192])
 {
-    printf("SID = 0x%04x(%05d), PMT PID = 0x%04x\n",
-           sid, sid, pmt_pid);
+    printf("SID = 0x%04x(%05d), PMT PID = 0x%04x @"
+           " 0x%08" PRIx64 ", %08" PRIx64 "\n",
+           sid, sid, pmt_pid,
+           this->m_cbTotalRead - 188, this->m_numPackets);
     printf("DUMP of PMT:\n");
-    for ( int y = 0; y < 188; y += 16 ) {
-        printf("%02x:", y);
-        for ( int x = 0; x < 16; ++ x ) {
-            int idx = y + x;
-            if ( idx >= 188 ) { break; }
-            printf(" %02x", pmt[idx]);
-        }
-        printf("\n");
+    dumpCurrentPacket();
+
+    if ( !(pmt[1] & 0x40) ) {
+        printf("Payload Unit Start Indicator = 0\n");
+        return ( -1 );
     }
-    printf("\n");
 
     int secLen  = ((pmt[6] << 8) & 0x0F00) | (pmt[4 + 3] & 0x00FF);
     int n1  = ((pmt[15] << 8) & 0x0F00) | (pmt[16] & 0x00FF);
@@ -217,13 +225,14 @@ FileReader::parseTsFile(
 {
     size_t  PIDs[8192] = { 0 };
     int     PMTs[65536] = { 0 };
-    uint8_t buf[408];
+    //uint8_t buf[408];
     char    text[1024];
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");
     if ( fp == nullptr ) {
         return ( 0 );
     }
+    this->m_fp  = fp;
     std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
 
     size_t  cbRead;
@@ -242,13 +251,16 @@ FileReader::parseTsFile(
         pid_map[i].text[0]  = '\0';
     }
 
+    size_t  numShow = 0;
+
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
-        cbRead  = fread(buf, 1, 188, fp);
+        cbRead  = readNextPacket(this->m_lastPacket);
         if ( cbRead != 188 ) {
             break;
         }
 
+        LpcByteReadBuf  const   buf = this->m_lastPacket.buf;
         if ( buf[0] != 0x47 ) {
             ++ numErr;
         }
@@ -278,7 +290,8 @@ FileReader::parseTsFile(
                 if ( PMTs[i] == pid ) {
                     parsePMT(i, pid, buf, pid_map);
                     -- numPMTs;
-                    PMTs[i] |= 65536;
+                    //  PMTs[i] |= 65536;
+                    ++ numShow;
                     break;
                 }
             }
@@ -303,6 +316,7 @@ FileReader::parseTsFile(
     std::cerr   <<  "Total : "  <<  numPckt <<  " packets.\n"
                 <<  "Last Read = "  <<  cbRead  <<  " bytes."
                 <<  std::endl;
+    this->m_fp  = nullptr;
     fclose(fp);
 
     for ( int i = 0; i < 8192; ++ i ) {
@@ -324,10 +338,44 @@ FileReader::parseTsFile(
     return ( 0 );
 }
 
+//----------------------------------------------------------------
+//    スタックからファイルアクセス位置を取り出す。
+//
+
+FileLength
+FileReader::popFileOffset()
+{
+    FileLength  pos = this->m_curFilePos;
+    return  this->setCurrentFileOffset(pos);
+}
+
+//----------------------------------------------------------------
+//    スタックにファイルアクセス位置を詰む。
+//
+
+void
+FileReader::pushFileOffset()
+{
+}
+
 //========================================================================
 //
 //    Accessors.
 //
+
+//----------------------------------------------------------------
+//    次のファイルアクセス位置を設定する。
+//
+
+FileLength
+FileReader::setCurrentFileOffset(
+        const   FileLength  posNew)
+{
+    if ( this->m_fp != nullptr ) {
+        fseek(this->m_fp, posNew, SEEK_SET);
+    }
+    return ( this->m_curFilePos  = posNew );
+}
 
 //========================================================================
 //
@@ -339,14 +387,54 @@ FileReader::parseTsFile(
 //    For Internal Use Only.
 //
 
+void
+FileReader::dumpCurrentPacket()
+{
+    return  dumpPacket(this->m_lastPacket);
+}
+
+void
+FileReader::dumpPacket(
+        const  PacketData  &packet)
+{
+    LpcByteReadBuf const p  = this->m_lastPacket.buf;
+
+    for ( int y = 0; y < 188; y += 16 ) {
+        printf("%02x:", y);
+        for ( int x = 0; x < 16; ++ x ) {
+            int idx = y + x;
+            if ( idx >= 188 ) { break; }
+            printf(" %02x", p[idx]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
+    return;
+}
+
 //----------------------------------------------------------------
 //    次のパケットを読みだす。
 //
 
 FileLength
-FileReader::readNextPacket()
+FileReader::readNextPacket(
+        PacketData  &packet)
 {
-    return ( 0 );
+    const   FileLength  cbRead =
+        fread(packet.buf, 1, 188, this->m_fp);
+
+    LpcByteReadBuf  const   buf = packet.buf;
+    const  BtProgramId  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
+
+    packet.offset   = this->m_curFilePos;
+    packet.pid      = pid;
+    packet.packets  = buf;
+
+    this->m_curFilePos  += cbRead;
+    ++  this->m_numPackets;
+
+    return ( cbRead );
 }
 
 }   //  End of namespace  Common

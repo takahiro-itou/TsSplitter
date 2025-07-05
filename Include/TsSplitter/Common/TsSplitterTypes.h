@@ -30,6 +30,11 @@
 #    define   TSSPLITTER_SYS_INCLUDED_CSTDINT
 #endif
 
+#if !defined( TSSPLITTER_SYS_INCLUDED_INTTYPES_H )
+#    include    <inttypes.h>
+#    define   TSSPLITTER_SYS_INCLUDED_INTTYPES_H
+#endif
+
 #if !defined( TSSPLITTER_SYS_INCLUDED_STDDEF_H )
 #    include    <stddef.h>
 #    define   TSSPLITTER_SYS_INCLUDED_STDDEF_H
@@ -142,6 +147,8 @@ typedef     BtProgramId         PmtPid;
 struct  PacketData
 {
     FileLength      offset;
+    BtByte          buf[408];
+
     BtProgramId     pid;
     LpcByteReadBuf  packets;
 };
