@@ -29,6 +29,11 @@
 #    include    "TsCrc32.h"
 #endif
 
+#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STACK )
+#    include    <stack>
+#    define   TSSPLITTER_SYS_STL_INCLUDED_STACK
+#endif
+
 #if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
 #    include    <string>
 #    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
@@ -57,6 +62,15 @@ public:
         int     stream_type;
         char    text[256];
     };
+
+private:
+
+    typedef     FileReader      This;
+
+    /**
+    **    ファイルアクセス位置（ファイルオフセット）のスタック型。
+    **/
+    typedef     std::stack<FileLength>      OffsetStack;
 
 //========================================================================
 //
@@ -105,12 +119,23 @@ public:
 public:
 
     //----------------------------------------------------------------
+    /**   特定の Program ID を持つパケットを検索する。
+    **
+    **  @param [in] pid   検索する PID
+    **  @return     見つかったパケット。
+    **/
+    PacketData
+    findNextPacket(
+            const  BtProgramId  pid);
+
+    //----------------------------------------------------------------
     /**
     **
     **/
     TsCrc32::CrcVal
     parsePAT(
             const  uint8_t * p,
+            const  TsCrc32::CrcVal  prvCrc,
             int  (& pmt)[65536]);
 
     int
@@ -128,10 +153,45 @@ public:
     parseTsFile(
             FILE *  fp);
 
+    //----------------------------------------------------------------
+    /**   スタックからファイルアクセス位置を取り出す。
+    **
+    **/
+    FileLength
+    popFileOffset();
+
+    //----------------------------------------------------------------
+    /**   スタックにファイルアクセス位置を詰む。
+    **
+    **/
+    void
+    pushFileOffset();
+
 //========================================================================
 //
 //    Accessors.
 //
+public:
+
+    //----------------------------------------------------------------
+    /**   次のファイルアクセス位置を取得する。
+    **
+    **  @return     現在の値。
+    **/
+    FileLength
+    getCurrentFileOffset()  const
+    {
+        return ( this->m_curFilePos );
+    }
+
+    //----------------------------------------------------------------
+    /**   次のファイルアクセス位置を設定する。
+    **
+    **  @param [in] posNew    設定する値。
+    **/
+    FileLength
+    setCurrentFileOffset(
+            const   FileLength  posNew);
 
 //========================================================================
 //
@@ -142,16 +202,56 @@ public:
 //
 //    For Internal Use Only.
 //
+private:
+
+    void
+    dumpCurrentPacket();
+
+    void
+    dumpPacket(
+            const  PacketData  &packet);
+
+    //----------------------------------------------------------------
+    /**   次のパケットを読みだす。
+    **
+    **  @param[out] packet    読み出したパケット。
+    **  @return     読みだしたバイト数。
+    **/
+    FileLength
+    readNextPacket(
+            PacketData  &packet);
 
 //========================================================================
 //
 //    Member Variables.
 //
+private:
+
+    /**   入力ストリーム。  **/
+    FILE  *         m_fp;
+
+    /**   現在のファイルアクセス位置。  **/
+    FileLength      m_curFilePos;
+
+    /**   現在読み出した総バイト数。    **/
+    FileLength      m_cbTotalRead;
+
+    /**   最後に読みだしたパケット。    **/
+    PacketData      m_lastPacket;
+
+    /**   現在読み出した総パケット数。  **/
+    PacketCount     m_numPackets;
+
+    /**   ファイルオフセットスタック。  **/
+    OffsetStack     m_offsetStack;
 
 //========================================================================
 //
 //    Other Features.
 //
+private:
+    FileReader          (const  This  &);
+    This &  operator =  (const  This  &);
 public:
     //  テストクラス。  //
     friend  class   FileReaderTest;
