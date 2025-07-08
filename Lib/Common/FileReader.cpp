@@ -345,7 +345,8 @@ FileReader::parseTsFile(
 FileLength
 FileReader::popFileOffset()
 {
-    FileLength  pos = this->m_curFilePos;
+    FileLength  pos = this->m_offsetStack.top();
+    this->m_offsetStack.pop();
     return  this->setCurrentFileOffset(pos);
 }
 
@@ -356,6 +357,7 @@ FileReader::popFileOffset()
 void
 FileReader::pushFileOffset()
 {
+    this->m_offsetStack.push(this->m_curFilePos);
 }
 
 //========================================================================

@@ -5,6 +5,7 @@
 
 extra_tests             =
 TESTS                   =  \
+        FileReaderTest          \
         TsCrc32Test             \
         TsSplitterProjectTest   \
         ${extra_tests}
@@ -32,6 +33,7 @@ test_ldflags_common         +=
 ##    Test Programs.
 ##
 
+FileReaderTest_SOURCES          =  FileReaderTest.cpp
 TsCrc32Test_SOURCES             =  TsCrc32Test.cpp
 TsSplitterProjectTest_SOURCES   =  TsSplitterProjectTest.cpp
 
