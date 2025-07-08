@@ -75,6 +75,16 @@ void  FileReaderTest::testOffsetStack()
     CPPUNIT_ASSERT_EQUAL(3760UL, testee.setCurrentFileOffset(3760));
     CPPUNIT_ASSERT_EQUAL(3760UL, testee.getCurrentFileOffset());
 
+    testee.pushFileOffset();
+    CPPUNIT_ASSERT_EQUAL(940UL, testee.setCurrentFileOffset(940UL));
+    CPPUNIT_ASSERT_EQUAL(940UL, testee.getCurrentFileOffset());
+
+    CPPUNIT_ASSERT_EQUAL(3760UL, testee.popFileOffset());
+    CPPUNIT_ASSERT_EQUAL(3760UL, testee.getCurrentFileOffset());
+
+    CPPUNIT_ASSERT_EQUAL(188UL, testee.popFileOffset());
+    CPPUNIT_ASSERT_EQUAL(188UL, testee.getCurrentFileOffset());
+
     return;
 }
 
