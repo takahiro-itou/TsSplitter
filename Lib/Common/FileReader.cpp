@@ -399,8 +399,9 @@ void
 FileReader::dumpPacket(
         const  PacketData  &packet)
 {
-    LpcByteReadBuf const p  = this->m_lastPacket.buf;
+    LpcByteReadBuf const p  = packet.buf;
 
+    printf("Offet: 0x%08" PRIx64 "\n", packet.offset);
     for ( int y = 0; y < 188; y += 16 ) {
         printf("%02x:", y);
         for ( int x = 0; x < 16; ++ x ) {
@@ -410,6 +411,20 @@ FileReader::dumpPacket(
         }
         printf("\n");
     }
+    printf("Header.TransportErrorIndicator   = 0x%02x\n",
+           packet.transportErrorIndicator ? 0x80 : 0);
+    printf("Header.PayloadUnitStartIndicator = 0x%02x\n",
+           packet.payloadUnitStartIndicator ? 0x40 : 0);
+    printf("Header.TransportPriority         = 0x%02x\n",
+           packet.transportPriority);
+    printf("Header.PID                       = 0x%04x\n",
+           packet.pid);
+    printf("Header.TransportScrambleControl  = %d\n",
+           packet.transportScrambleControl);
+    printf("Header.AdaptationFieldControl    = 0x%01x\n",
+           packet.adaptationFieldControl);
+    printf("Header.ContinuityCounter         = %d\n",
+           packet.continuityCounter);
     printf("\n");
 
     return;
