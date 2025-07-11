@@ -451,9 +451,9 @@ FileReader::readNextPacket(
     packet.pluStart = (buf[1] & 0x40);
     packet.priority = (buf[1] & 0x20);
     packet.pid                          = pid;
-    packet.transportScrambleControl     = (buf[3] >> 6) & 0x03;
-    packet.adaptationFieldControl       = (buf[3] >> 4) & 0x03;
-    packet.continuityCounter            = (buf[3]     ) & 0x0F;
+    packet.ctlScramble  = (buf[3] >> 6) & 0x03;
+    packet.ctlAdaptFld  = (buf[3] >> 4) & 0x03;
+    packet.contCounter  = (buf[3]     ) & 0x0F;
 
     packet.packets  = buf;
 
