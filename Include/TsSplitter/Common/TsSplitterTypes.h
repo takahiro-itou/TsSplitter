@@ -161,6 +161,16 @@ struct  PacketData
     LpcByteReadBuf  packets;
 };
 
+/**
+**    アダプテーションフィールドの内容。
+**/
+
+struct  AdaptationField
+{
+    BtByte          adaptationFieldLength;  //  8 bit
+};
+
+
 //========================================================================
 //
 //    安全なポインタ型のキャスト。
