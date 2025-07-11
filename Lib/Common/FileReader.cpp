@@ -421,7 +421,7 @@ FileReader::dumpPacket(
            packet.phProgramId);
     printf("Header.TransportScrambleControl  = %d\n",
            packet.ctlScramble);
-    printf("Header.AdaptationFieldControl    = 0x%01x\n",
+    printf("Header.AdaptationFieldControl    = %1x\n",
            packet.ctlAdaptFld);
     printf("Header.ContinuityCounter         = %d\n",
            packet.contCounter);
