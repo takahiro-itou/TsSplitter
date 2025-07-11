@@ -412,11 +412,11 @@ FileReader::dumpPacket(
         printf("\n");
     }
     printf("Header.TransportErrorIndicator   = 0x%02x\n",
-           packet.transportErrorIndicator ? 0x80 : 0);
+           packet.tspError ? 0x80 : 0);
     printf("Header.PayloadUnitStartIndicator = 0x%02x\n",
-           packet.payloadUnitStartIndicator ? 0x40 : 0);
+           packet.pluStart ? 0x40 : 0);
     printf("Header.TransportPriority         = 0x%02x\n",
-           packet.transportPriority);
+           packet.priority);
     printf("Header.PID                       = 0x%04x\n",
            packet.pid);
     printf("Header.TransportScrambleControl  = %d\n",
@@ -447,9 +447,9 @@ FileReader::readNextPacket(
     packet.offset   = this->m_curFilePos;
 
     packet.syncByte = buf[0];
-    packet.transportErrorIndicator      = (buf[1] & 0x80);
-    packet.payloadUnitStartIndicator    = (buf[1] & 0x40);
-    packet.transportPriority            = (buf[1] & 0x20);
+    packet.tspError = (buf[1] & 0x80);
+    packet.pluStart = (buf[1] & 0x40);
+    packet.priority = (buf[1] & 0x20);
     packet.pid                          = pid;
     packet.transportScrambleControl     = (buf[3] >> 6) & 0x03;
     packet.adaptationFieldControl       = (buf[3] >> 4) & 0x03;
