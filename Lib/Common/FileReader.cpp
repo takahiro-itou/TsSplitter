@@ -414,7 +414,7 @@ FileReader::dumpPacket(
     printf("Header.TransportErrorIndicator   = 0x%02x\n",
            packet.tsErrorIdctr ? 0x80 : 0);
     printf("Header.PayloadUnitStartIndicator = 0x%02x\n",
-           packet.payloadStart ? 0x40 : 0);
+           packet.puStartIdctr ? 0x40 : 0);
     printf("Header.TransportPriority         = 0x%02x\n",
            packet.tspPriority);
     printf("Header.PID                       = 0x%04x\n",
@@ -448,7 +448,7 @@ FileReader::readNextPacket(
 
     packet.headSyncByte = buf[0];
     packet.tsErrorIdctr = (buf[1] & 0x80);
-    packet.payloadStart = (buf[1] & 0x40);
+    packet.puStartIdctr = (buf[1] & 0x40);
     packet.tspPriority  = (buf[1] & 0x20);
     packet.phProgramId  =  pid;
     packet.ctlScramble  = (buf[3] >> 6) & 0x03;
@@ -470,7 +470,7 @@ FileReader::readNextPacket(
     }
 
     //  ペイロードの開始位置を求める。  //
-    if ( packet.payloadStart ) {
+    if ( packet.puStartIdctr ) {
         ++ plStart;
     }
 

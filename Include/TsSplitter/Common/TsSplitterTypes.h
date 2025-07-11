@@ -160,7 +160,7 @@ struct  PacketData
 
     BtByte          headSyncByte;   //  8 bit (Sync Byte)
     BtByte          tsErrorIdctr;   //  1 bit (Transport Error Indicator)
-    BtByte          payloadStart;   //  1 bit (Payload Unit Start Indicator)
+    BtByte          puStartIdctr;   //  1 bit (Payload Unit Start Indicator)
     BtByte          tspPriority;    //  1 bit (Transport Priority)
     BtProgramId     phProgramId;    //  13bit (PID : Program ID)
     BtByte          ctlScramble;    //  2 bit (Transport Scramble Control)
