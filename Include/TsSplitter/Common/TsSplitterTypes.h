@@ -149,7 +149,7 @@ struct  PacketData
     FileLength      offset;
     BtByte          buf[408];
 
-    BtByte          sync;                       //  8 bit
+    BtByte          syncByte;       //  8 bit
     bool            transportErrorIndicator;    //  1 bit
     bool            payloadUnitStartIndicator;  //  1 bit
     BtByte          transportPriority;          //  1 bit

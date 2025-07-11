@@ -446,7 +446,7 @@ FileReader::readNextPacket(
 
     packet.offset   = this->m_curFilePos;
 
-    packet.sync                         = buf[0];
+    packet.syncByte = buf[0];
     packet.transportErrorIndicator      = (buf[1] & 0x80);
     packet.payloadUnitStartIndicator    = (buf[1] & 0x40);
     packet.transportPriority            = (buf[1] & 0x20);
