@@ -455,12 +455,23 @@ FileReader::readNextPacket(
     packet.ctlAdaptFld  = (buf[3] >> 4) & 0x03;
     packet.contCounter  = (buf[3]     ) & 0x0F;
 
+    BtByte  plStart = 4;
+    BtByte  adptLen = 0;
+
     //  アダプテーションフィールドの解析。  //
+    if ( packet.ctlAdaptFld & 0x02 ) {
+        adptLen = buf[4];
+        ++ plStart;
+    }
+    packet.adaptation.adaptationFieldLength = adptLen;
+    if ( adptLen > 0 ) {
+        packet.adptBuf  = packet.packets + plStart;
+        plStart += adptLen;
+    }
 
     //  ペイロードの開始位置を求める。  //
-    BtByte  plStart = 4;
     if ( packet.payloadStart ) {
-        plStart = 5;
+        ++ plStart;
     }
 
     packet.packets  = buf;

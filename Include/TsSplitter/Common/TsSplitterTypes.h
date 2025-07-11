@@ -141,6 +141,15 @@ typedef     int                 BtProgramId;
 typedef     BtProgramId         PmtPid;
 
 /**
+**    アダプテーションフィールドの内容。
+**/
+
+struct  AdaptationField
+{
+    BtByte          adaptationFieldLength;  //  8 bit
+};
+
+/**
 **    パケットの内容。
 **/
 
@@ -159,16 +168,10 @@ struct  PacketData
     BtByte          contCounter;    //  4 bit (Continuity Counter)
 
     LpcByteReadBuf  packets;
-    LpByteWriteBuf  payload;
-};
+    LpcByteReadBuf  adptBuf;
+    LpcByteReadBuf  payload;
 
-/**
-**    アダプテーションフィールドの内容。
-**/
-
-struct  AdaptationField
-{
-    BtByte          adaptationFieldLength;  //  8 bit
+    AdaptationField adaptation;
 };
 
 
