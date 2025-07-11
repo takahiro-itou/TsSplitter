@@ -455,7 +455,16 @@ FileReader::readNextPacket(
     packet.ctlAdaptFld  = (buf[3] >> 4) & 0x03;
     packet.contCounter  = (buf[3]     ) & 0x0F;
 
+    //  アダプテーションフィールドの解析。  //
+
+    //  ペイロードの開始位置を求める。  //
+    BtByte  plStart = 4;
+    if ( packet.payloadStart ) {
+        plStart = 5;
+    }
+
     packet.packets  = buf;
+    packet.payload  = packet.packets + plStart;
 
     this->m_curFilePos  += cbRead;
     ++  this->m_numPackets;

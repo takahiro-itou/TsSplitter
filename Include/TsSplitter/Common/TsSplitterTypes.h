@@ -159,6 +159,7 @@ struct  PacketData
     BtByte          contCounter;    //  4 bit (Continuity Counter)
 
     LpcByteReadBuf  packets;
+    LpByteWriteBuf  payload;
 };
 
 /**
