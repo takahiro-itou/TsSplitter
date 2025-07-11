@@ -149,14 +149,14 @@ struct  PacketData
     FileLength      offset;
     BtByte          buf[408];
 
-    BtByte          syncByte;   //  8 bit (Sync Byte)
-    BtByte          tspError;       //  1 bit (Transport Error Indicator)
-    BtByte          pluStart;       //  1 bit (Payload Unit Start Indicator)
-    BtByte          priority;       //  1 bit (Transport Priority)
-    BtProgramId     pid;            //  13bit
+    BtByte          headSyncByte;   //  8 bit (Sync Byte)
+    BtByte          tsErrorIdctr;   //  1 bit (Transport Error Indicator)
+    BtByte          payloadStart;   //  1 bit (Payload Unit Start Indicator)
+    BtByte          tspPriority;    //  1 bit (Transport Priority)
+    BtProgramId     phProgramId;    //  13bit (PID : Program ID)
     BtByte          ctlScramble;    //  2 bit (Transport Scramble Control)
     BtByte          ctlAdaptFld;    //  2 bit (Adaptation Field Control)
-    BtByte          contCounter;
+    BtByte          contCounter;    //  4 bit (Continuity Counter)
 
     LpcByteReadBuf  packets;
 };

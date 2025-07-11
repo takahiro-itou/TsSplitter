@@ -412,19 +412,19 @@ FileReader::dumpPacket(
         printf("\n");
     }
     printf("Header.TransportErrorIndicator   = 0x%02x\n",
-           packet.tspError ? 0x80 : 0);
+           packet.tsErrorIdctr ? 0x80 : 0);
     printf("Header.PayloadUnitStartIndicator = 0x%02x\n",
-           packet.pluStart ? 0x40 : 0);
+           packet.payloadStart ? 0x40 : 0);
     printf("Header.TransportPriority         = 0x%02x\n",
-           packet.priority);
+           packet.tspPriority);
     printf("Header.PID                       = 0x%04x\n",
-           packet.pid);
+           packet.phProgramId);
     printf("Header.TransportScrambleControl  = %d\n",
-           packet.transportScrambleControl);
+           packet.ctlScramble);
     printf("Header.AdaptationFieldControl    = 0x%01x\n",
-           packet.adaptationFieldControl);
+           packet.ctlAdaptFld);
     printf("Header.ContinuityCounter         = %d\n",
-           packet.continuityCounter);
+           packet.contCounter);
     printf("\n");
 
     return;
@@ -446,11 +446,11 @@ FileReader::readNextPacket(
 
     packet.offset   = this->m_curFilePos;
 
-    packet.syncByte = buf[0];
-    packet.tspError = (buf[1] & 0x80);
-    packet.pluStart = (buf[1] & 0x40);
-    packet.priority = (buf[1] & 0x20);
-    packet.pid                          = pid;
+    packet.headSyncByte = buf[0];
+    packet.tsErrorIdctr = (buf[1] & 0x80);
+    packet.payloadStart = (buf[1] & 0x40);
+    packet.tspPriority  = (buf[1] & 0x20);
+    packet.phProgramId  =  pid;
     packet.ctlScramble  = (buf[3] >> 6) & 0x03;
     packet.ctlAdaptFld  = (buf[3] >> 4) & 0x03;
     packet.contCounter  = (buf[3]     ) & 0x0F;
