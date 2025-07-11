@@ -445,7 +445,16 @@ FileReader::readNextPacket(
     const  BtProgramId  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
 
     packet.offset   = this->m_curFilePos;
-    packet.pid      = pid;
+
+    packet.sync                         = buf[0];
+    packet.transportErrorIndicator      = (buf[1] & 0x80);
+    packet.payloadUnitStartIndicator    = (buf[1] & 0x40);
+    packet.transportPriority            = (buf[1] & 0x20);
+    packet.pid                          = pid;
+    packet.transportScrambleControl     = (buf[3] >> 6) & 0x03;
+    packet.adaptationFieldControl       = (buf[3] >> 4) & 0x03;
+    packet.continuityCounter            = (buf[3]     ) & 0x0F;
+
     packet.packets  = buf;
 
     this->m_curFilePos  += cbRead;
