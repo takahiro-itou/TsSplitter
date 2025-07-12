@@ -167,6 +167,8 @@ struct  PacketData
     BtByte          ctlAdaptFld;    //  2 bit (Adaptation Field Control)
     BtByte          contCounter;    //  4 bit (Continuity Counter)
 
+    BtByte          payloadStart;
+
     LpcByteReadBuf  packets;
     LpcByteReadBuf  adptBuf;
     LpcByteReadBuf  payload;

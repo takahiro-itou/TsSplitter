@@ -476,6 +476,7 @@ FileReader::readNextPacket(
                     plStart, buf[plStart]
             );
         }
+        packet.payloadStart = buf[plStart];
         ++ plStart;
     }
 
