@@ -271,6 +271,10 @@ FileReader::parseTsFile(
         const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
         ++ PIDs[pid];
 
+        // if ( this->m_lastPacket.payloadStart != 0 ) {
+        //     dumpCurrentPacket();
+        // }
+
         if ( pid == 0x0000 ) {
             crcPrv  = crcPAT;
             crcPAT  = parsePAT(buf, crcPrv, PMTs);
@@ -425,6 +429,8 @@ FileReader::dumpPacket(
            packet.ctlAdaptFld);
     printf("Header.ContinuityCounter         = %d\n",
            packet.contCounter);
+    printf("Payload Start Position           = %d\n",
+           packet.payloadStart);
     printf("\n");
 
     return;
@@ -472,9 +478,9 @@ FileReader::readNextPacket(
     //  ペイロードの開始位置を求める。  //
     if ( packet.puStartIdctr ) {
         if ( buf[plStart] != 0 ) {
-            fprintf(stderr, "Not Implemented: Payload Start != 0 @[%d], %d\n",
-                    plStart, buf[plStart]
-            );
+            // fprintf(stderr, "Not Implemented: Payload Start != 0 @[%d], %d\n",
+            //         plStart, buf[plStart]
+            // );
         }
         packet.payloadStart = buf[plStart];
         ++ plStart;
