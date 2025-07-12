@@ -141,6 +141,15 @@ typedef     int                 BtProgramId;
 typedef     BtProgramId         PmtPid;
 
 /**
+**    アダプテーションフィールドの内容。
+**/
+
+struct  AdaptationField
+{
+    BtByte          adaptationFieldLength;  //  8 bit
+};
+
+/**
 **    パケットの内容。
 **/
 
@@ -149,9 +158,24 @@ struct  PacketData
     FileLength      offset;
     BtByte          buf[408];
 
-    BtProgramId     pid;
+    BtByte          headSyncByte;   //  8 bit (Sync Byte)
+    BtByte          tsErrorIdctr;   //  1 bit (Transport Error Indicator)
+    BtByte          puStartIdctr;   //  1 bit (Payload Unit Start Indicator)
+    BtByte          tspPriority;    //  1 bit (Transport Priority)
+    BtProgramId     phProgramId;    //  13bit (PID : Program ID)
+    BtByte          ctlScramble;    //  2 bit (Transport Scramble Control)
+    BtByte          ctlAdaptFld;    //  2 bit (Adaptation Field Control)
+    BtByte          contCounter;    //  4 bit (Continuity Counter)
+
+    BtByte          payloadStart;
+
     LpcByteReadBuf  packets;
+    LpcByteReadBuf  adptBuf;
+    LpcByteReadBuf  payload;
+
+    AdaptationField adaptation;
 };
+
 
 //========================================================================
 //

@@ -271,6 +271,10 @@ FileReader::parseTsFile(
         const  int  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
         ++ PIDs[pid];
 
+        // if ( this->m_lastPacket.payloadStart != 0 ) {
+        //     dumpCurrentPacket();
+        // }
+
         if ( pid == 0x0000 ) {
             crcPrv  = crcPAT;
             crcPAT  = parsePAT(buf, crcPrv, PMTs);
@@ -399,8 +403,9 @@ void
 FileReader::dumpPacket(
         const  PacketData  &packet)
 {
-    LpcByteReadBuf const p  = this->m_lastPacket.buf;
+    LpcByteReadBuf const p  = packet.buf;
 
+    printf("Offet: 0x%08" PRIx64 "\n", packet.offset);
     for ( int y = 0; y < 188; y += 16 ) {
         printf("%02x:", y);
         for ( int x = 0; x < 16; ++ x ) {
@@ -410,6 +415,22 @@ FileReader::dumpPacket(
         }
         printf("\n");
     }
+    printf("Header.TransportErrorIndicator   = 0x%02x\n",
+           packet.tsErrorIdctr ? 0x80 : 0);
+    printf("Header.PayloadUnitStartIndicator = 0x%02x\n",
+           packet.puStartIdctr ? 0x40 : 0);
+    printf("Header.TransportPriority         = 0x%02x\n",
+           packet.tspPriority);
+    printf("Header.PID                       = 0x%04x\n",
+           packet.phProgramId);
+    printf("Header.TransportScrambleControl  = %d\n",
+           packet.ctlScramble);
+    printf("Header.AdaptationFieldControl    = %1x\n",
+           packet.ctlAdaptFld);
+    printf("Header.ContinuityCounter         = %d\n",
+           packet.contCounter);
+    printf("Payload Start Position           = %d\n",
+           packet.payloadStart);
     printf("\n");
 
     return;
@@ -430,8 +451,43 @@ FileReader::readNextPacket(
     const  BtProgramId  pid = ((buf[1] << 8) & 0x1F00) | (buf[2] & 0x00FF);
 
     packet.offset   = this->m_curFilePos;
-    packet.pid      = pid;
+
+    packet.headSyncByte = buf[0];
+    packet.tsErrorIdctr = (buf[1] & 0x80);
+    packet.puStartIdctr = (buf[1] & 0x40);
+    packet.tspPriority  = (buf[1] & 0x20);
+    packet.phProgramId  =  pid;
+    packet.ctlScramble  = (buf[3] >> 6) & 0x03;
+    packet.ctlAdaptFld  = (buf[3] >> 4) & 0x03;
+    packet.contCounter  = (buf[3]     ) & 0x0F;
+
+    BtByte  plStart = 4;
+    BtByte  adptLen = 0;
+
+    //  アダプテーションフィールドの解析。  //
+    if ( packet.ctlAdaptFld & 0x02 ) {
+        adptLen = buf[4];
+        ++ plStart;
+    }
+    packet.adaptation.adaptationFieldLength = adptLen;
+    if ( adptLen > 0 ) {
+        packet.adptBuf  = packet.packets + plStart;
+        plStart += adptLen;
+    }
+
+    //  ペイロードの開始位置を求める。  //
+    if ( packet.puStartIdctr ) {
+        if ( buf[plStart] != 0 ) {
+            // fprintf(stderr, "Not Implemented: Payload Start != 0 @[%d], %d\n",
+            //         plStart, buf[plStart]
+            // );
+        }
+        packet.payloadStart = buf[plStart];
+        ++ plStart;
+    }
+
     packet.packets  = buf;
+    packet.payload  = packet.packets + plStart;
 
     this->m_curFilePos  += cbRead;
     ++  this->m_numPackets;
