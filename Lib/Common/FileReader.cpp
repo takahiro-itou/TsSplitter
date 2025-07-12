@@ -471,6 +471,9 @@ FileReader::readNextPacket(
 
     //  ペイロードの開始位置を求める。  //
     if ( packet.puStartIdctr ) {
+        if ( buf[plStart] != 0 ) {
+            fprintf(stderr, "Not Implemented: Payload Start != 0\n");
+        }
         ++ plStart;
     }
 
