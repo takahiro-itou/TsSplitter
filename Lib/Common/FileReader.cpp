@@ -104,6 +104,17 @@ FileReader::findNextPacket(
 }
 
 //----------------------------------------------------------------
+//    特定の Program ID を持つパケットを検索する。
+//
+
+PacketCount
+FileReader::findPacketsWithPid(
+        const  BtProgramId  pid)
+{
+    return ( 0 );
+}
+
+//----------------------------------------------------------------
 
 TsCrc32::CrcVal
 FileReader::parsePAT(
@@ -362,6 +373,17 @@ void
 FileReader::pushFileOffset()
 {
     this->m_offsetStack.push(this->m_curFilePos);
+}
+
+//----------------------------------------------------------------
+//    特定の Program ID を持つパケットを読み出す。
+//
+
+PacketData
+FileReader::readCompletePackets(
+        const  BtProgramId  pid)
+{
+    return ( this->m_lastPacket );
 }
 
 //========================================================================
