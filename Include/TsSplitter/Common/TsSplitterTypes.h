@@ -176,6 +176,15 @@ struct  PacketData
     AdaptationField adaptation;
 };
 
+/**
+**    パケットの検索結果。
+**/
+
+struct  FindResult
+{
+    PacketCount     numFind;        /**<  ヒットしたパケット数。    **/
+};
+
 
 //========================================================================
 //
