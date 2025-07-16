@@ -109,9 +109,13 @@ FileReader::findNextPacket(
 
 PacketCount
 FileReader::findPacketsWithPid(
-        const  BtProgramId  pid)
+        const  BtProgramId  pid,
+        FindResult        & result)
 {
-    return ( 0 );
+    FindResult  tmp = { 0 };
+
+    result  = tmp;
+    return ( result.numFind = tmp.numFind );
 }
 
 //----------------------------------------------------------------

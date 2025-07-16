@@ -137,7 +137,8 @@ public:
     **/
     PacketCount
     findPacketsWithPid(
-            const  BtProgramId  pid);
+            const  BtProgramId  pid,
+            FindResult        & result);
 
     //----------------------------------------------------------------
     /**
