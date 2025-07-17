@@ -183,6 +183,7 @@ struct  PacketData
 struct  FindResult
 {
     PacketCount     numFind;        /**<  ヒットしたパケット数。    **/
+    PacketCount     numUniq;        /**<  ユニークなパケット数。    **/
 };
 
 
