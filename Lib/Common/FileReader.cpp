@@ -113,6 +113,20 @@ FileReader::findPacketsWithPid(
         FindResult        & result)
 {
     FindResult  tmp = { 0 };
+    PacketData  packet;
+    size_t      cbRead;
+
+    for (;;) {
+        cbRead  = readNextPacket(packet);
+        if ( cbRead != 188 ) {
+            break;
+        }
+        if ( packet.phProgramId != pid ) {
+            //  PID が異なるので無視する。  //
+            continue;
+        }
+        ++  tmp.numFind;
+    }
 
     result  = tmp;
     return ( result.numFind = tmp.numFind );
