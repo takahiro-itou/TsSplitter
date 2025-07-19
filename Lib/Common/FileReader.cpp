@@ -115,6 +115,7 @@ FileReader::findPacketsWithPid(
     FindResult  tmp = { 0 };
     PacketData  packet;
     size_t      cbRead;
+    size_t      payloadSize = 0;
 
     for (;;) {
         cbRead  = readNextPacket(packet);
@@ -125,6 +126,11 @@ FileReader::findPacketsWithPid(
             //  PID が異なるので無視する。  //
             continue;
         }
+
+        if ( packet.puStartIdctr ) {
+            //  このパケットに新しいペイロードが含まれる。  //
+        }
+
         ++  tmp.numFind;
     }
 
