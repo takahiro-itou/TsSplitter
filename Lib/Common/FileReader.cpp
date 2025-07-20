@@ -469,6 +469,13 @@ FileReader::splitTsPid(
 
         cbTotal += cbRead;
         ++ numPckt;
+        if ( (numPckt & 65535) == 0 ) {
+            std::cerr   <<  "\r# of Packet = "  <<  numPckt
+                        <<  ", total "  <<  cbTotal << " bytes, "
+                        <<  "#Error = " <<  numErr
+                        <<  ", #Scramble = "    <<  numScr;
+
+        }
     }
 
     this->m_fp  = nullptr;
