@@ -29,6 +29,8 @@ using   namespace   TSSPLITTER_NAMESPACE;
 
 int  main(int argc, char * argv[])
 {
+    Common::FileReader  fr;
+
     if ( argc >= 2 ) {
         fr.parseTsFile(argv[1]);
     }
