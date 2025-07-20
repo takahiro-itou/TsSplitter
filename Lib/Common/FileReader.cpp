@@ -410,6 +410,18 @@ FileReader::readCompletePackets(
     return ( this->m_lastPacket );
 }
 
+//----------------------------------------------------------------
+//    入力を PID  毎のファイルに分割する。
+//
+
+PacketCount
+FileReader::splitTsPid(
+        const  std::string  &fileName,
+        const  std::string  &outPrefix)
+{
+    return ( 0 );
+}
+
 //========================================================================
 //
 //    Accessors.

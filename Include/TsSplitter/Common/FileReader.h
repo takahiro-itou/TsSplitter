@@ -189,6 +189,15 @@ public:
     readCompletePackets(
             const  BtProgramId  pid);
 
+    //----------------------------------------------------------------
+    /**   入力を PID  毎のファイルに分割する。
+    **
+    **/
+    PacketCount
+    splitTsPid(
+            const  std::string  &fileName,
+            const  std::string  &outPrefix);
+
 //========================================================================
 //
 //    Accessors.
