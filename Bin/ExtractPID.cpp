@@ -31,8 +31,10 @@ int  main(int argc, char * argv[])
 {
     Common::FileReader  fr;
 
-    if ( argc >= 2 ) {
-        fr.parseTsFile(argv[1]);
+    if ( argc >= 3 ) {
+        fr.splitTsPid(argv[1], argv[2]);
+    } else if ( argc >= 2 ) {
+        fr.splitTsPid(argv[1], "out");
     }
 
     return ( 0 );
