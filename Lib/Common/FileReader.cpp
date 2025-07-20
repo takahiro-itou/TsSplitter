@@ -22,6 +22,7 @@
 
 #include    <cstring>
 #include    <iostream>
+#include    <vector>
 
 
 TSSPLITTER_NAMESPACE_BEGIN
@@ -131,7 +132,7 @@ FileReader::findPacketsWithPid(
             //  このパケットに新しいペイロードが含まれる。  //
         }
 
-        ++  tmp.numFind;
+        ++ tmp.numFind;
     }
 
     result  = tmp;
@@ -419,7 +420,75 @@ FileReader::splitTsPid(
         const  std::string  &fileName,
         const  std::string  &outPrefix)
 {
-    return ( 0 );
+    std::vector<FILE *> pid_fp;
+
+    pid_fp.clear();
+    pid_fp.resize(8192);
+
+    for ( BtProgramId i = 0; i < 8192; ++ i ) {
+        pid_fp[i]   = nullptr;
+    }
+
+    FILE *  fp  = fopen(fileName.c_str(), "rb");
+    if ( fp == nullptr ) {
+        return ( 0 );
+    }
+    this->m_fp  = fp;
+    std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
+
+    size_t  cbRead;
+    size_t  numPckt = 0;
+    size_t  cbTotal = 0;
+    size_t  numErr  = 0;
+    size_t  numScr  = 0;
+
+    PacketData  packet;
+
+    for (;;) {
+        cbRead  = readNextPacket(packet);
+        if ( cbRead != 188 ) {
+            break;
+        }
+
+        LpcByteReadBuf  const   buf = packet.buf;
+        if ( buf[0] != 0x47 ) {
+            ++ numErr;
+        }
+        if ( buf[3] & 0xC0 ) {
+            ++ numScr;
+        }
+        const  BtProgramId  pid = packet.phProgramId;
+
+        if ( pid_fp[pid] == nullptr ) {
+            char    outName[1024];
+            sprintf(outName, "%s-%04x", outPrefix.c_str(), pid);
+            pid_fp[pid] = fopen(outName, "wb");
+        }
+
+        fwrite(buf, 1, cbRead, pid_fp[pid]);
+
+        cbTotal += cbRead;
+        ++ numPckt;
+        if ( (numPckt & 65535) == 0 ) {
+            std::cerr   <<  "\r# of Packet = "  <<  numPckt
+                        <<  ", total "  <<  cbTotal << " bytes, "
+                        <<  "#Error = " <<  numErr
+                        <<  ", #Scramble = "    <<  numScr;
+
+        }
+    }
+
+    this->m_fp  = nullptr;
+    fclose(fp);
+
+    for ( BtProgramId i = 0; i < 8192; ++ i ) {
+        if ( pid_fp[i] != nullptr ) {
+            fclose(pid_fp[i]);
+        }
+        pid_fp[i]   = nullptr;
+    }
+
+    return ( numPckt );
 }
 
 //========================================================================
