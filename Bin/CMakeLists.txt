@@ -1,8 +1,8 @@
 
 Include (${common_cmake_dir}/BuildCommon/ConfigTarget.cmake)
 
-add_executable       (ExtractPIDs           ExtractPIDs.cpp)
-target_link_libraries(ExtractPIDs           ${project_target_prefix}Common)
+add_executable       (ExtractPID            ExtractPID.cpp)
+target_link_libraries(ExtractPID            ${project_target_prefix}Common)
 
 add_executable       (SampleApplication     SampleApplication.cpp)
 target_link_libraries(SampleApplication     ${project_target_prefix}Common)

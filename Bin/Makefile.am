@@ -35,7 +35,7 @@ AM_LDFLAGS              =  -L${libtop_binary_dir}
 ##
 
 bin_PROGRAMS            =  \
-        ExtractPIDs         \
+        ExtractPID          \
         SampleApplication
 
 dist_noinst_DATA        =  \
@@ -45,8 +45,8 @@ dist_noinst_DATA        =  \
 ##    Build Executables.
 ##
 
-ExtractPIDs_SOURCES         =  ExtractPIDs.cpp
-ExtractPIDs_LDADD           =  -lsampleCommon
+ExtractPID_SOURCES          =  ExtractPID.cpp
+ExtractPID_LDADD            =  -lsampleCommon
 
 SampleApplication_SOURCES   =  SampleApplication.cpp
 SampleApplication_LDADD     =  -lsampleCommon
