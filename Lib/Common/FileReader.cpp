@@ -104,6 +104,41 @@ FileReader::findNextPacket(
 }
 
 //----------------------------------------------------------------
+//    特定の Program ID を持つパケットを検索する。
+//
+
+PacketCount
+FileReader::findPacketsWithPid(
+        const  BtProgramId  pid,
+        FindResult        & result)
+{
+    FindResult  tmp = { 0 };
+    PacketData  packet;
+    size_t      cbRead;
+    size_t      payloadSize = 0;
+
+    for (;;) {
+        cbRead  = readNextPacket(packet);
+        if ( cbRead != 188 ) {
+            break;
+        }
+        if ( packet.phProgramId != pid ) {
+            //  PID が異なるので無視する。  //
+            continue;
+        }
+
+        if ( packet.puStartIdctr ) {
+            //  このパケットに新しいペイロードが含まれる。  //
+        }
+
+        ++  tmp.numFind;
+    }
+
+    result  = tmp;
+    return ( result.numFind = tmp.numFind );
+}
+
+//----------------------------------------------------------------
 
 TsCrc32::CrcVal
 FileReader::parsePAT(
@@ -362,6 +397,29 @@ void
 FileReader::pushFileOffset()
 {
     this->m_offsetStack.push(this->m_curFilePos);
+}
+
+//----------------------------------------------------------------
+//    特定の Program ID を持つパケットを読み出す。
+//
+
+PacketData
+FileReader::readCompletePackets(
+        const  BtProgramId  pid)
+{
+    return ( this->m_lastPacket );
+}
+
+//----------------------------------------------------------------
+//    入力を PID  毎のファイルに分割する。
+//
+
+PacketCount
+FileReader::splitTsPid(
+        const  std::string  &fileName,
+        const  std::string  &outPrefix)
+{
+    return ( 0 );
 }
 
 //========================================================================

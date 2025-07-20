@@ -129,6 +129,18 @@ public:
             const  BtProgramId  pid);
 
     //----------------------------------------------------------------
+    /**   特定の Program ID を持つパケットを検索する。
+    **
+    **  @param [in] pid       検索する PID
+    **  @param[out] result    検索結果を格納する変数。
+    **  @return     見つかったパケットの数。
+    **/
+    PacketCount
+    findPacketsWithPid(
+            const  BtProgramId  pid,
+            FindResult        & result);
+
+    //----------------------------------------------------------------
     /**
     **
     **/
@@ -166,6 +178,25 @@ public:
     **/
     void
     pushFileOffset();
+
+    //----------------------------------------------------------------
+    /**   特定の Program ID を持つパケットを読み出す。
+    **
+    **  @param [in] pid   検索する PID
+    **  @return     見つかったパケット。
+    **/
+    PacketData
+    readCompletePackets(
+            const  BtProgramId  pid);
+
+    //----------------------------------------------------------------
+    /**   入力を PID  毎のファイルに分割する。
+    **
+    **/
+    PacketCount
+    splitTsPid(
+            const  std::string  &fileName,
+            const  std::string  &outPrefix);
 
 //========================================================================
 //
