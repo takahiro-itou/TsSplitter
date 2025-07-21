@@ -82,6 +82,27 @@ FileWriter::~FileWriter()
 //    Public Member Functions.
 //
 
+//----------------------------------------------------------------
+//    ファイルを閉じる。
+//
+
+ErrCode
+FileWriter::closeFile()
+{
+    return ( ErrCode::FAILURE );
+}
+
+//----------------------------------------------------------------
+//    ファイルを書き込み用に開く。
+//
+
+ErrCode
+FileWriter::createFile(
+        const  std::string  &fileName)
+{
+    return ( ErrCode::FAILURE );
+}
+
 //========================================================================
 //
 //    Accessors.
