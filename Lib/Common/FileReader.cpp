@@ -420,13 +420,22 @@ FileReader::splitTsPid(
         const  std::string  &fileName,
         const  std::string  &outPrefix)
 {
-    std::vector<FILE *> pid_fp;
+    std::vector<FILE *>     pid_fp;
+    std::vector<int64_t>    pid_skip;
+    std::vector<int>        pid_cnts;
 
     pid_fp.clear();
+    pid_skip.clear();
+    pid_cnts.clear();
+
     pid_fp.resize(8192);
+    pid_skip.resize(8192);
+    pid_cnts.resize(8192);
 
     for ( BtProgramId i = 0; i < 8192; ++ i ) {
         pid_fp[i]   = nullptr;
+        pid_skip[i] = 0;
+        pid_cnts[i] = 0;
     }
 
     FILE *  fp  = fopen(fileName.c_str(), "rb");
@@ -461,11 +470,32 @@ FileReader::splitTsPid(
 
         if ( pid_fp[pid] == nullptr ) {
             char    outName[1024];
-            sprintf(outName, "%s-%04x", outPrefix.c_str(), pid);
+            sprintf(outName, "%s-%04x-%d.ts",
+                    outPrefix.c_str(), pid, pid_cnts[pid]
+            );
             pid_fp[pid] = fopen(outName, "wb");
+            fprintf(stderr,
+                    "\nOpen PID %s\n", outName);
+            ++ pid_cnts[pid];
+            pid_skip[pid]   = 0;
         }
 
         fwrite(buf, 1, cbRead, pid_fp[pid]);
+        pid_skip[pid]   = 0;
+
+        for ( BtProgramId i = 0; i < 8192; ++ i ) {
+            if ( pid_fp[i] == nullptr ) {
+                continue;
+            }
+            if ( ++ pid_skip[i] >= 8388608 ) {
+                //  しばらく出現していない ID は一旦閉じる  //
+                fprintf(stderr,
+                        "\nClose PID %04x\n", i);
+                fclose(pid_fp[i]);
+                pid_fp[i]   = nullptr;
+                pid_skip[i] = 0;
+            }
+        }
 
         cbTotal += cbRead;
         ++ numPckt;
