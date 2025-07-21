@@ -461,7 +461,7 @@ FileReader::splitTsPid(
 
         if ( pid_fp[pid] == nullptr ) {
             char    outName[1024];
-            sprintf(outName, "%s-%04x", outPrefix.c_str(), pid);
+            sprintf(outName, "%s-%04x.ts", outPrefix.c_str(), pid);
             pid_fp[pid] = fopen(outName, "wb");
         }
 
