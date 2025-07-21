@@ -474,7 +474,7 @@ FileReader::splitTsPid(
                     outPrefix.c_str(), pid, pid_cnts[pid]
             );
             pid_fp[pid] = fopen(outName, "wb");
-            sprintf(stderr,
+            fprintf(stderr,
                     "\nOpen PID %s\n", outName);
             ++ pid_cnts[pid];
             pid_skip[pid]   = 0;
@@ -489,7 +489,7 @@ FileReader::splitTsPid(
             }
             if ( ++ pid_skip[i] >= 8388608 ) {
                 //  しばらく出現していない ID は一旦閉じる  //
-                sprintf(stderr,
+                fprintf(stderr,
                         "\nClose PID %04x\n", i);
                 fclose(pid_fp[i]);
                 pid_fp[i]   = nullptr;
