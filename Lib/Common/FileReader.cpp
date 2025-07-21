@@ -22,6 +22,7 @@
 
 #include    <cstring>
 #include    <iostream>
+#include    <vector>
 
 
 TSSPLITTER_NAMESPACE_BEGIN
@@ -101,6 +102,41 @@ FileReader::findNextPacket(
         const  BtProgramId  pid)
 {
     return ( this->m_lastPacket );
+}
+
+//----------------------------------------------------------------
+//    特定の Program ID を持つパケットを検索する。
+//
+
+PacketCount
+FileReader::findPacketsWithPid(
+        const  BtProgramId  pid,
+        FindResult        & result)
+{
+    FindResult  tmp = { 0 };
+    PacketData  packet;
+    size_t      cbRead;
+    size_t      payloadSize = 0;
+
+    for (;;) {
+        cbRead  = readNextPacket(packet);
+        if ( cbRead != 188 ) {
+            break;
+        }
+        if ( packet.phProgramId != pid ) {
+            //  PID が異なるので無視する。  //
+            continue;
+        }
+
+        if ( packet.puStartIdctr ) {
+            //  このパケットに新しいペイロードが含まれる。  //
+        }
+
+        ++ tmp.numFind;
+    }
+
+    result  = tmp;
+    return ( result.numFind = tmp.numFind );
 }
 
 //----------------------------------------------------------------
@@ -362,6 +398,127 @@ void
 FileReader::pushFileOffset()
 {
     this->m_offsetStack.push(this->m_curFilePos);
+}
+
+//----------------------------------------------------------------
+//    特定の Program ID を持つパケットを読み出す。
+//
+
+PacketData
+FileReader::readCompletePackets(
+        const  BtProgramId  pid)
+{
+    return ( this->m_lastPacket );
+}
+
+//----------------------------------------------------------------
+//    入力を PID  毎のファイルに分割する。
+//
+
+PacketCount
+FileReader::splitTsPid(
+        const  std::string  &fileName,
+        const  std::string  &outPrefix)
+{
+    std::vector<FILE *>     pid_fp;
+    std::vector<int64_t>    pid_skip;
+    std::vector<int>        pid_cnts;
+
+    pid_fp.clear();
+    pid_skip.clear();
+    pid_cnts.clear();
+
+    pid_fp.resize(8192);
+    pid_skip.resize(8192);
+    pid_cnts.resize(8192);
+
+    for ( BtProgramId i = 0; i < 8192; ++ i ) {
+        pid_fp[i]   = nullptr;
+        pid_skip[i] = 0;
+        pid_cnts[i] = 0;
+    }
+
+    FILE *  fp  = fopen(fileName.c_str(), "rb");
+    if ( fp == nullptr ) {
+        return ( 0 );
+    }
+    this->m_fp  = fp;
+    std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
+
+    size_t  cbRead;
+    size_t  numPckt = 0;
+    size_t  cbTotal = 0;
+    size_t  numErr  = 0;
+    size_t  numScr  = 0;
+
+    PacketData  packet;
+
+    for (;;) {
+        cbRead  = readNextPacket(packet);
+        if ( cbRead != 188 ) {
+            break;
+        }
+
+        LpcByteReadBuf  const   buf = packet.buf;
+        if ( buf[0] != 0x47 ) {
+            ++ numErr;
+        }
+        if ( buf[3] & 0xC0 ) {
+            ++ numScr;
+        }
+        const  BtProgramId  pid = packet.phProgramId;
+
+        if ( pid_fp[pid] == nullptr ) {
+            char    outName[1024];
+            sprintf(outName, "%s-%04x-%d.ts",
+                    outPrefix.c_str(), pid, pid_cnts[pid]
+            );
+            pid_fp[pid] = fopen(outName, "wb");
+            fprintf(stderr,
+                    "\nOpen PID %s\n", outName);
+            ++ pid_cnts[pid];
+            pid_skip[pid]   = 0;
+        }
+
+        fwrite(buf, 1, cbRead, pid_fp[pid]);
+        pid_skip[pid]   = 0;
+
+        for ( BtProgramId i = 0; i < 8192; ++ i ) {
+            if ( pid_fp[i] == nullptr ) {
+                continue;
+            }
+            if ( ++ pid_skip[i] >= 8388608 ) {
+                //  しばらく出現していない ID は一旦閉じる  //
+                fprintf(stderr,
+                        "\nClose PID %04x\n", i);
+                fclose(pid_fp[i]);
+                pid_fp[i]   = nullptr;
+                pid_skip[i] = 0;
+            }
+        }
+
+        cbTotal += cbRead;
+        ++ numPckt;
+        if ( (numPckt & 65535) == 0 ) {
+            std::cerr   <<  "\r# of Packet = "  <<  numPckt
+                        <<  ", total "  <<  cbTotal << " bytes, "
+                        <<  "#Error = " <<  numErr
+                        <<  ", #Scramble = "    <<  numScr;
+
+        }
+    }
+
+    this->m_fp  = nullptr;
+    fclose(fp);
+
+    for ( BtProgramId i = 0; i < 8192; ++ i ) {
+        if ( pid_fp[i] != nullptr ) {
+            fclose(pid_fp[i]);
+        }
+        pid_fp[i]   = nullptr;
+    }
+
+    return ( numPckt );
 }
 
 //========================================================================
