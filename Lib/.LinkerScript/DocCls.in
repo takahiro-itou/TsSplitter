@@ -1,6 +1,6 @@
 
 /*  Linker Script.  */
-INPUT( AS_NEEDED(Common/libsampleDocCls.static.a) )
+INPUT( AS_NEEDED(DocCls/libsampleDocCls.static.a) )
 
 INPUT( AS_NEEDED(-lsampleCommon) )
 
