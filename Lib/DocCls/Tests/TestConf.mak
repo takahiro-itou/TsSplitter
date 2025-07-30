@@ -12,7 +12,7 @@ TESTS                   =  \
 ##    Test Configurations.
 ##
 
-target_testee_library       +=  -lsampleCommon
+target_testee_library       +=  -lsampleDocCls
 
 dist_noinst_data_files      +=
 dist_noinst_header_files    +=
