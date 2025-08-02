@@ -1,5 +1,4 @@
 
-set(libraries_target_prefix     ts)
 Include (${common_cmake_dir}/BuildCommon/ConfigTarget.cmake)
 
 add_executable       (ExtractPID            ExtractPID.cpp)

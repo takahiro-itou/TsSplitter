@@ -52,6 +52,13 @@ Include (${common_cmake_dir}/DefaultBuildOptions.cmake)
 set(TSSPLITTER_CNF_NAMESPACE    TsSplitter)
 
 
+##
+##    Output Name
+##
+
+set(libraries_target_prefix     ts)
+
+
 ##----------------------------------------------------------------
 ##
 ##    ディレクトリ名。
