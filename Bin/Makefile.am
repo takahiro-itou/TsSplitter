@@ -46,7 +46,8 @@ dist_noinst_DATA        =  \
 ##
 
 ExtractPID_SOURCES          =  ExtractPID.cpp
-ExtractPID_LDADD            =  -lsampleCommon
+ExtractPID_LDADD            =  -ltsDocCls
 
 SampleApplication_SOURCES   =  SampleApplication.cpp
-SampleApplication_LDADD     =  -lsampleCommon
+SampleApplication_LDADD     =  -ltsDocCls
+

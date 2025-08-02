@@ -7,7 +7,7 @@
 ##    List of Directories.
 ##
 
-module_dir_name     =  Common
+module_dir_name     =  DocCls
 SUBDIRS             =  .  Tests
 
 include  $(top_srcdir)/.M4/BuildCommon/DirList.inc
@@ -23,10 +23,7 @@ extra_noinst_data_files     =
 extra_noinst_header_files   =
 
 library_source_files        +=  \
-        FileReader.cpp                 \
-        FileWriter.cpp                 \
-        ServicePmtTable.cpp            \
-        TsCrc32.cpp                    \
+        TsFileSplitter.cpp             \
         ${extra_library_source_files}
 
 library_instantiations      +=
@@ -39,12 +36,7 @@ dist_noinst_header_files    +=  \
         ${extra_noinst_header_files}
 
 inclib_header_files         +=  \
-        ${inclib_source_dir}/FileReader.h           \
-        ${inclib_source_dir}/FileWriter.h           \
-        ${inclib_source_dir}/ServicePmtTable.h      \
-        ${inclib_source_dir}/TsCrc32.h              \
-        ${inclib_source_dir}/TsSplitterProject.h    \
-        ${inclib_source_dir}/TsSplitterTypes.h      \
+        ${inclib_source_dir}/TsFileSplitter.h       \
         ${extra_library_header_files}
 
 inclib_nodist_header_files  +=
@@ -60,7 +52,7 @@ library_compile_srcfiles    +=  \
 ##    List of Libraries.
 ##
 
-static_libraries_list   +=  libtsCommon.static.a
+static_libraries_list   +=  libtsDocCls.static.a
 shared_libraries_list   +=
 
 ##
@@ -77,5 +69,5 @@ include  $(top_srcdir)/.M4/BuildCommon/Install.inc
 ##    Build Libraries.
 ##
 
-libtsCommon_static_a_SOURCES    =  ${library_source_files}
+libtsDocCls_static_a_SOURCES    =  ${library_source_files}
 

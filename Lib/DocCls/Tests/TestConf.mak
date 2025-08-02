@@ -5,16 +5,14 @@
 
 extra_tests             =
 TESTS                   =  \
-        FileReaderTest          \
-        TsCrc32Test             \
-        TsSplitterProjectTest   \
+        TsFileSplitterTest      \
         ${extra_tests}
 
 ##
 ##    Test Configurations.
 ##
 
-target_testee_library       +=  -ltsCommon
+target_testee_library       +=  -ltsDocCls
 
 dist_noinst_data_files      +=
 dist_noinst_header_files    +=
@@ -33,7 +31,5 @@ test_ldflags_common         +=
 ##    Test Programs.
 ##
 
-FileReaderTest_SOURCES          =  FileReaderTest.cpp
-TsCrc32Test_SOURCES             =  TsCrc32Test.cpp
-TsSplitterProjectTest_SOURCES   =  TsSplitterProjectTest.cpp
+TsFileSplitterTest_SOURCES      =  TsFileSplitterTest.cpp
 

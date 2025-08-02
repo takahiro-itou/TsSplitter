@@ -13,33 +13,28 @@
 *************************************************************************/
 
 /**
-**      An Interface of FileWriter class.
+**      An Interface of TsFileSplitter class.
 **
-**      @file       Common/FileWriter.h
+**      @file       DocCls/TsFileSplitter.h
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_WRITER_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_FILE_WRITER_H
+#if !defined( TSSPLITTER_DOCCLS_INCLUDED_TS_FILE_SPLITTER_H )
+#    define   TSSPLITTER_DOCCLS_INCLUDED_TS_FILE_SPLITTER_H
 
 #if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
-#    include    "TsSplitterTypes.h"
-#endif
-
-#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
-#    include    <string>
-#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
+#    include    "TsSplitter/Common/TsSplitterTypes.h"
 #endif
 
 
 TSSPLITTER_NAMESPACE_BEGIN
-namespace  Common  {
+namespace  DocCls  {
 
 //========================================================================
 //
-//    FileWriter  class.
+//    TsFileSplitter  class.
 //
 
-class  FileWriter
+class  TsFileSplitter
 {
 
 //========================================================================
@@ -58,14 +53,14 @@ public:
     **  （デフォルトコンストラクタ）。
     **
     **/
-    FileWriter();
+    TsFileSplitter();
 
     //----------------------------------------------------------------
     /**   インスタンスを破棄する
     **  （デストラクタ）。
     **
     **/
-    virtual  ~FileWriter();
+    virtual  ~TsFileSplitter();
 
 //========================================================================
 //
@@ -91,22 +86,6 @@ public:
 //
 //    Public Member Functions.
 //
-public:
-
-    //----------------------------------------------------------------
-    /**   ファイルを閉じる。
-    **
-    **/
-    ErrCode
-    closeFile();
-
-    //----------------------------------------------------------------
-    /**   ファイルを書き込み用に開く。
-    **
-    **/
-    ErrCode
-    createFile(
-            const  std::string  &fileName);
 
 //========================================================================
 //
@@ -134,10 +113,10 @@ public:
 //
 public:
     //  テストクラス。  //
-    friend  class   FileWriterTest;
+    friend  class   TsFileSplitterTest;
 };
 
-}   //  End of namespace  Common
+}   //  End of namespace  DocCls
 TSSPLITTER_NAMESPACE_END
 
 #endif
