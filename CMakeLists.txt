@@ -57,6 +57,7 @@ set(TSSPLITTER_CNF_NAMESPACE    TsSplitter)
 ##
 
 set(libraries_target_prefix     ts)
+set(libraries_name_prefix       ts)
 
 
 ##----------------------------------------------------------------
