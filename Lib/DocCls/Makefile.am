@@ -52,7 +52,7 @@ library_compile_srcfiles    +=  \
 ##    List of Libraries.
 ##
 
-static_libraries_list   +=  libsampleDocCls.static.a
+static_libraries_list   +=  libtsDocCls.static.a
 shared_libraries_list   +=
 
 ##
@@ -69,5 +69,5 @@ include  $(top_srcdir)/.M4/BuildCommon/Install.inc
 ##    Build Libraries.
 ##
 
-libsampleDocCls_static_a_SOURCES    =  ${library_source_files}
+libtsDocCls_static_a_SOURCES    =  ${library_source_files}
 
