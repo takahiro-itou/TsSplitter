@@ -4,7 +4,7 @@
 ##    プロジェクトの基本設定。
 ##
 
-set(libraries_target_prefix)
+set(libraries_target_prefix     ts)
 
 ##----------------------------------------------------------------
 ##
