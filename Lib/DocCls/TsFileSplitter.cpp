@@ -13,59 +13,49 @@
 *************************************************************************/
 
 /**
-**      An Interface of FileWriter class.
+**      An Implementation of TsFileSplitter class.
 **
-**      @file       Common/FileWriter.h
+**      @file       DocCls/TsFileSplitter.cpp
 **/
 
-#if !defined( TSSPLITTER_COMMON_INCLUDED_FILE_WRITER_H )
-#    define   TSSPLITTER_COMMON_INCLUDED_FILE_WRITER_H
-
-#if !defined( TSSPLITTER_COMMON_INCLUDED_TSSPLITTER_TYPES_H )
-#    include    "TsSplitterTypes.h"
-#endif
-
-#if !defined( TSSPLITTER_SYS_STL_INCLUDED_STRING )
-#    include    <string>
-#    define   TSSPLITTER_SYS_STL_INCLUDED_STRING
-#endif
+#include    "TsSplitter/DocCls/TsFileSplitter.h"
 
 
 TSSPLITTER_NAMESPACE_BEGIN
-namespace  Common  {
+namespace  DocCls  {
+
+namespace  {
+
+}   //  End of (Unnamed) namespace.
+
 
 //========================================================================
 //
-//    FileWriter  class.
-//
-
-class  FileWriter
-{
-
-//========================================================================
-//
-//    Internal Type Definitions.
+//    TsFileSplitter  class.
 //
 
 //========================================================================
 //
 //    Constructor(s) and Destructor.
 //
-public:
 
-    //----------------------------------------------------------------
-    /**   インスタンスを初期化する
-    **  （デフォルトコンストラクタ）。
-    **
-    **/
-    FileWriter();
+//----------------------------------------------------------------
+//    インスタンスを初期化する
+//  （デフォルトコンストラクタ）。
+//
 
-    //----------------------------------------------------------------
-    /**   インスタンスを破棄する
-    **  （デストラクタ）。
-    **
-    **/
-    virtual  ~FileWriter();
+TsFileSplitter::TsFileSplitter()
+{
+}
+
+//----------------------------------------------------------------
+//    インスタンスを破棄する
+//  （デストラクタ）。
+//
+
+TsFileSplitter::~TsFileSplitter()
+{
+}
 
 //========================================================================
 //
@@ -91,22 +81,6 @@ public:
 //
 //    Public Member Functions.
 //
-public:
-
-    //----------------------------------------------------------------
-    /**   ファイルを閉じる。
-    **
-    **/
-    ErrCode
-    closeFile();
-
-    //----------------------------------------------------------------
-    /**   ファイルを書き込み用に開く。
-    **
-    **/
-    ErrCode
-    createFile(
-            const  std::string  &fileName);
 
 //========================================================================
 //
@@ -123,21 +97,5 @@ public:
 //    For Internal Use Only.
 //
 
-//========================================================================
-//
-//    Member Variables.
-//
-
-//========================================================================
-//
-//    Other Features.
-//
-public:
-    //  テストクラス。  //
-    friend  class   FileWriterTest;
-};
-
-}   //  End of namespace  Common
+}   //  End of namespace  DocCls
 TSSPLITTER_NAMESPACE_END
-
-#endif

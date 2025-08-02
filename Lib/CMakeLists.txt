@@ -4,7 +4,6 @@
 ##    プロジェクトの基本設定。
 ##
 
-set(libraries_target_prefix)
 
 ##----------------------------------------------------------------
 ##
@@ -15,3 +14,5 @@ add_subdirectory(Tests)
 add_subdirectory(.Config)
 
 add_subdirectory(Common)
+add_subdirectory(DocCls)
+
