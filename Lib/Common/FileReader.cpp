@@ -362,7 +362,7 @@ FileReader::parseTsFile(
     for ( int i = 0; i < 8192; ++ i ) {
         if ( PIDs[i] ) {
             sprintf(text,
-                    "PID: 0x%04x  Total:%9ld\t%s\n",
+                    "PID: 0x%04" PRIx32 "  Total:%9" PRIx64 "\t%s\n",
                     i, PIDs[i], pid_map[i].text);
             std::cout   <<  text;
         }
@@ -535,7 +535,7 @@ FileReader::setCurrentFileOffset(
         const   FileLength  posNew)
 {
     if ( this->m_fp != nullptr ) {
-        fseek(this->m_fp, posNew, SEEK_SET);
+        fseek(this->m_fp, static_cast<long>(posNew), SEEK_SET);
     }
     return ( this->m_curFilePos  = posNew );
 }
