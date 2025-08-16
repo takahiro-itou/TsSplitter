@@ -44,9 +44,11 @@ jobs :
 
       - name : Build
         run  : cd build && make
+        shell : bash
 
       - name : Run Test
         run  : cd build && make check
+        shell : bash
 
       - name : make distcheck
         run  : |
