@@ -256,11 +256,11 @@ FileReader::parsePMT(
     return ( numComp );
 }
 
-size_t
+PacketCount
 FileReader::parseTsFile(
         const  std::string  &fileName)
 {
-    size_t  PIDs[8192] = { 0 };
+    PacketCount PIDs[8192] = { 0 };
     int     PMTs[65536] = { 0 };
     //uint8_t buf[408];
     char    text[1024];
@@ -272,11 +272,11 @@ FileReader::parseTsFile(
     this->m_fp  = fp;
     std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
 
-    size_t  cbRead;
-    size_t  numPckt = 0;
-    size_t  cbTotal = 0;
-    size_t  numErr  = 0;
-    size_t  numScr  = 0;
+    FileLength  cbRead;
+    PacketCount numPckt = 0;
+    FileLength  cbTotal = 0;
+    PacketCount numErr  = 0;
+    PacketCount numScr  = 0;
 
     int     flgPAT  = 1;
     TSSPLITTER_UNUSED_VAR(flgPAT);
@@ -290,7 +290,7 @@ FileReader::parseTsFile(
         pid_map[i].text[0]  = '\0';
     }
 
-    size_t  numShow = 0;
+    PacketCount numShow = 0;
 
     memset(PIDs, 0, sizeof(PIDs));
     for (;;) {
@@ -374,7 +374,7 @@ FileReader::parseTsFile(
     return ( numPckt );
 }
 
-size_t
+PacketCount
 FileReader::parseTsFile(
         FILE *  fp)
 {
