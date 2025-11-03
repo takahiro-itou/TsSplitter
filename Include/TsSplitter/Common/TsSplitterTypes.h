@@ -120,7 +120,7 @@ typedef     BtByte  *           LpByteWriteBuf;
 **    パケット数。
 **/
 
-typedef     size_t              PacketCount;
+typedef     uint64_t            PacketCount;
 
 /**
 **    サービス ID
