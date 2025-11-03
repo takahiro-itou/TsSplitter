@@ -117,6 +117,7 @@ FileReader::findPacketsWithPid(
     PacketData  packet;
     size_t      cbRead;
     size_t      payloadSize = 0;
+    (void)(payloadSize);
 
     for (;;) {
         cbRead  = readNextPacket(packet);
