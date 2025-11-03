@@ -117,7 +117,7 @@ FileReader::findPacketsWithPid(
     PacketData  packet;
     size_t      cbRead;
     size_t      payloadSize = 0;
-    (void)(payloadSize);
+    TSSPLITTER_UNUSED_VAR(payloadSize);
 
     for (;;) {
         cbRead  = readNextPacket(packet);
@@ -279,6 +279,8 @@ FileReader::parseTsFile(
     size_t  numScr  = 0;
 
     int     flgPAT  = 1;
+    TSSPLITTER_UNUSED_VAR(flgPAT);
+
     TsCrc32::CrcVal crcPAT  = 0;
     TsCrc32::CrcVal crcPrv  = 0;
     int     numPMTs = 0;

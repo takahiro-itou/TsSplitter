@@ -216,6 +216,15 @@ size_t  getArraySize(T  (&)[N])
     return ( N );
 }
 
+//========================================================================
+//
+//    補助マクロ
+//
+
+#define     TSSPLITTER_UNUSED_VAR(var)      (void)(var)
+#define     TSSPLITTER_UNUSED_ARG(var)      (void)(var)
+
+
 TSSPLITTER_NAMESPACE_END
 
 #endif
