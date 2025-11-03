@@ -30,11 +30,18 @@ using   namespace   TSSPLITTER_NAMESPACE;
 int  main(int argc, char * argv[])
 {
     Common::FileReader  fr;
+    int64_t             thSkip  = 8388608;
+
+    if ( argc >= 4 ) {
+        thSkip  = std::stoll(argv[3], nullptr, 0);
+    }
+    std::cerr   <<  "Skip Threshold: "  <<  thSkip
+                <<  std::endl;
 
     if ( argc >= 3 ) {
-        fr.splitTsPid(argv[1], argv[2]);
+        fr.splitTsPid(argv[1], argv[2], thSkip);
     } else if ( argc >= 2 ) {
-        fr.splitTsPid(argv[1], "out");
+        fr.splitTsPid(argv[1], "out", thSkip);
     }
 
     return ( 0 );
