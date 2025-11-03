@@ -418,7 +418,8 @@ FileReader::readCompletePackets(
 PacketCount
 FileReader::splitTsPid(
         const  std::string  &fileName,
-        const  std::string  &outPrefix)
+        const  std::string  &outPrefix,
+        const  int64_t      thSkip)
 {
     std::vector<FILE *>     pid_fp;
     std::vector<int64_t>    pid_skip;
@@ -487,7 +488,7 @@ FileReader::splitTsPid(
             if ( pid_fp[i] == nullptr ) {
                 continue;
             }
-            if ( ++ pid_skip[i] >= 8388608 ) {
+            if ( ++ pid_skip[i] >= thSkip ) {
                 //  しばらく出現していない ID は一旦閉じる  //
                 fprintf(stderr,
                         "\nClose PID %04x\n", i);
