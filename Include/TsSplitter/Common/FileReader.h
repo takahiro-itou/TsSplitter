@@ -192,11 +192,17 @@ public:
     //----------------------------------------------------------------
     /**   入力を PID  毎のファイルに分割する。
     **
+    **  @param [in] fileName    入力ファイル名
+    **  @param [in] outPrefix   出力ファイル名のプレフィックス
+    **  @param [in] thSkip      ファイルを分割する閾値。
+    **      しばらく出現していない ID は別ファイルに出力する。
+    **      その「しばらく」の判定基準にするパケット数。
     **/
     PacketCount
     splitTsPid(
             const  std::string  &fileName,
-            const  std::string  &outPrefix);
+            const  std::string  &outPrefix,
+            const  int64_t      thSkip = 8388608);
 
 //========================================================================
 //
