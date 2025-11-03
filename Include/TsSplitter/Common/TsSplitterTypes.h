@@ -80,7 +80,7 @@ enum class  ErrCode
 **    ファイルの長さを表す型。
 **/
 
-typedef     size_t              FileLength;
+typedef     uint64_t            FileLength;
 
 //----------------------------------------------------------------
 /**
