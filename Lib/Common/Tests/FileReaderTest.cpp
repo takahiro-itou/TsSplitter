@@ -66,24 +66,34 @@ void  FileReaderTest::testOffsetStack()
 {
     FileReader  testee;
 
-    CPPUNIT_ASSERT_EQUAL(0UL, testee.getCurrentFileOffset());
+    CPPUNIT_ASSERT_EQUAL(FileLength(0UL), testee.getCurrentFileOffset());
 
-    CPPUNIT_ASSERT_EQUAL(188UL, testee.setCurrentFileOffset(188));
-    CPPUNIT_ASSERT_EQUAL(188UL, testee.getCurrentFileOffset());
-
-    testee.pushFileOffset();
-    CPPUNIT_ASSERT_EQUAL(3760UL, testee.setCurrentFileOffset(3760));
-    CPPUNIT_ASSERT_EQUAL(3760UL, testee.getCurrentFileOffset());
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(188UL), testee.setCurrentFileOffset(188));
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(188UL), testee.getCurrentFileOffset());
 
     testee.pushFileOffset();
-    CPPUNIT_ASSERT_EQUAL(940UL, testee.setCurrentFileOffset(940UL));
-    CPPUNIT_ASSERT_EQUAL(940UL, testee.getCurrentFileOffset());
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(3760UL), testee.setCurrentFileOffset(3760));
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(3760UL), testee.getCurrentFileOffset());
 
-    CPPUNIT_ASSERT_EQUAL(3760UL, testee.popFileOffset());
-    CPPUNIT_ASSERT_EQUAL(3760UL, testee.getCurrentFileOffset());
+    testee.pushFileOffset();
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(940UL), testee.setCurrentFileOffset(940UL));
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(940UL), testee.getCurrentFileOffset());
 
-    CPPUNIT_ASSERT_EQUAL(188UL, testee.popFileOffset());
-    CPPUNIT_ASSERT_EQUAL(188UL, testee.getCurrentFileOffset());
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(3760UL), testee.popFileOffset());
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(3760UL), testee.getCurrentFileOffset());
+
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(188UL), testee.popFileOffset());
+    CPPUNIT_ASSERT_EQUAL(
+            FileLength(188UL), testee.getCurrentFileOffset());
 
     return;
 }
