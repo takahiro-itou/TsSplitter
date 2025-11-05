@@ -449,11 +449,11 @@ FileReader::splitTsPid(
     this->m_fp  = fp;
     std::cerr   <<  "Open : " <<  fileName  <<  std::endl;
 
-    size_t  cbRead;
-    size_t  numPckt = 0;
-    size_t  cbTotal = 0;
-    size_t  numErr  = 0;
-    size_t  numScr  = 0;
+    FileLength  cbRead;
+    PacketCount numPckt = 0;
+    FileLength  cbTotal = 0;
+    PacketCount numErr  = 0;
+    PacketCount numScr  = 0;
 
     PacketData  packet;
 
