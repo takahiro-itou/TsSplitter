@@ -157,11 +157,11 @@ public:
             const  uint8_t *  pmt,
             PID_Map  (& pid_map)[8192]);
 
-    size_t
+    PacketCount
     parseTsFile(
             const  std::string  &fileName);
 
-    size_t
+    PacketCount
     parseTsFile(
             FILE *  fp);
 

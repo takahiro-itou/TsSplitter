@@ -4,4 +4,7 @@ script_dir=$(readlink -f "$(dirname "$0")")
 
 env  \
     AUTOMAKE_BUILD_TYPE=Release     \
+    CXXFLAGS=' -static-libgcc -static-libstdc++ -static'    \
+    CFLAGS=' -static-libgcc -static-libstdc++ -static'      \
+    LDFLAGS=' -static-libgcc -static-libstdc++ -static'     \
 "${script_dir}/run-autoconf"  "$@"

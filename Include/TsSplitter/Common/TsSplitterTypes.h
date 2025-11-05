@@ -80,7 +80,7 @@ enum class  ErrCode
 **    ファイルの長さを表す型。
 **/
 
-typedef     size_t              FileLength;
+typedef     uint64_t            FileLength;
 
 //----------------------------------------------------------------
 /**
@@ -120,7 +120,7 @@ typedef     BtByte  *           LpByteWriteBuf;
 **    パケット数。
 **/
 
-typedef     size_t              PacketCount;
+typedef     uint64_t            PacketCount;
 
 /**
 **    サービス ID
@@ -215,6 +215,15 @@ size_t  getArraySize(T  (&)[N])
 {
     return ( N );
 }
+
+//========================================================================
+//
+//    補助マクロ
+//
+
+#define     TSSPLITTER_UNUSED_VAR(var)      (void)(var)
+#define     TSSPLITTER_UNUSED_ARG(var)      (void)(var)
+
 
 TSSPLITTER_NAMESPACE_END
 
